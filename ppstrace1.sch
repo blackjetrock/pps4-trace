@@ -1,0 +1,403 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L bluepill:BP U2
+U 1 1 5F95E419
+P 4800 2200
+F 0 "U2" H 4800 3453 60  0000 C CNN
+F 1 "BP" H 4800 3347 60  0000 C CNN
+F 2 "BP:BLUEPILL" H 4700 2950 60  0001 C CNN
+F 3 "" H 4700 2950 60  0001 C CNN
+	1    4800 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R1
+U 1 1 5F95F17B
+P 2250 1250
+F 0 "R1" H 2309 1296 50  0000 L CNN
+F 1 "R_Small" H 2309 1205 50  0000 L CNN
+F 2 "" H 2250 1250 50  0001 C CNN
+F 3 "~" H 2250 1250 50  0001 C CNN
+	1    2250 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R2
+U 1 1 5F95F99C
+P 2250 1600
+F 0 "R2" H 2309 1646 50  0000 L CNN
+F 1 "R_Small" H 2309 1555 50  0000 L CNN
+F 2 "" H 2250 1600 50  0001 C CNN
+F 3 "~" H 2250 1600 50  0001 C CNN
+	1    2250 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0101
+U 1 1 5F95FE68
+P 2250 1850
+F 0 "#PWR0101" H 2250 1850 30  0001 C CNN
+F 1 "GND" H 2250 1780 30  0001 C CNN
+F 2 "" H 2250 1850 60  0000 C CNN
+F 3 "" H 2250 1850 60  0000 C CNN
+	1    2250 1850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2250 1050 2250 1150
+Wire Wire Line
+	2250 1350 2250 1400
+Wire Wire Line
+	2250 1700 2250 1850
+$Comp
+L Connector:Conn_01x08_Male J1
+U 1 1 5F960E4E
+P 1350 1350
+F 0 "J1" H 1458 1831 50  0000 C CNN
+F 1 "Conn_01x08_Male" H 1458 1740 50  0000 C CNN
+F 2 "" H 1350 1350 50  0001 C CNN
+F 3 "~" H 1350 1350 50  0001 C CNN
+	1    1350 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x12_Male J2
+U 1 1 5F963A74
+P 1350 2650
+F 0 "J2" H 1458 3331 50  0000 C CNN
+F 1 "Conn_01x12_Male" H 1458 3240 50  0000 C CNN
+F 2 "" H 1350 2650 50  0001 C CNN
+F 3 "~" H 1350 2650 50  0001 C CNN
+	1    1350 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x02_Male J3
+U 1 1 5F96510F
+P 1350 4000
+F 0 "J3" H 1458 4181 50  0000 C CNN
+F 1 "Conn_01x02_Male" H 1458 4090 50  0000 C CNN
+F 2 "" H 1350 4000 50  0001 C CNN
+F 3 "~" H 1350 4000 50  0001 C CNN
+	1    1350 4000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 1050 2250 1050
+Wire Wire Line
+	2250 1400 2800 1400
+Connection ~ 2250 1400
+Wire Wire Line
+	2250 1400 2250 1500
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0102
+U 1 1 5F9695E1
+P 1650 4250
+F 0 "#PWR0102" H 1650 4250 30  0001 C CNN
+F 1 "GND" H 1650 4180 30  0001 C CNN
+F 2 "" H 1650 4250 60  0000 C CNN
+F 3 "" H 1650 4250 60  0000 C CNN
+	1    1650 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 4100 1650 4100
+Wire Wire Line
+	1650 4100 1650 4250
+$Comp
+L Device:R_Small R3
+U 1 1 5F969E8D
+P 2300 4000
+F 0 "R3" V 2104 4000 50  0000 C CNN
+F 1 "R_Small" V 2195 4000 50  0000 C CNN
+F 2 "" H 2300 4000 50  0001 C CNN
+F 3 "~" H 2300 4000 50  0001 C CNN
+	1    2300 4000
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:D_Zener D1
+U 1 1 5F96A4D7
+P 2550 4250
+F 0 "D1" V 2504 4330 50  0000 L CNN
+F 1 "D_Zener" V 2595 4330 50  0000 L CNN
+F 2 "" H 2550 4250 50  0001 C CNN
+F 3 "~" H 2550 4250 50  0001 C CNN
+	1    2550 4250
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1550 4000 2200 4000
+Wire Wire Line
+	2400 4000 2550 4000
+Wire Wire Line
+	2550 4000 2550 4100
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0103
+U 1 1 5F96B0C1
+P 2550 4600
+F 0 "#PWR0103" H 2550 4600 30  0001 C CNN
+F 1 "GND" H 2550 4530 30  0001 C CNN
+F 2 "" H 2550 4600 60  0000 C CNN
+F 3 "" H 2550 4600 60  0000 C CNN
+	1    2550 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2550 4600 2550 4400
+$Comp
+L Device:C_Small C2
+U 1 1 5F96BB5D
+P 3050 4300
+F 0 "C2" H 3142 4346 50  0000 L CNN
+F 1 "C_Small" H 3142 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3050 4300 50  0001 C CNN
+F 3 "~" H 3050 4300 50  0001 C CNN
+	1    3050 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0104
+U 1 1 5F96C40D
+P 3050 4600
+F 0 "#PWR0104" H 3050 4600 30  0001 C CNN
+F 1 "GND" H 3050 4530 30  0001 C CNN
+F 2 "" H 3050 4600 60  0000 C CNN
+F 3 "" H 3050 4600 60  0000 C CNN
+	1    3050 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3050 4600 3050 4400
+Wire Wire Line
+	3050 4200 3050 4000
+Wire Wire Line
+	3050 4000 2550 4000
+Connection ~ 2550 4000
+$Comp
+L Regulator_Linear:LM7805_TO220 U1
+U 1 1 5F96CB37
+P 3950 4000
+F 0 "U1" H 3950 4242 50  0000 C CNN
+F 1 "LM7805_TO220" H 3950 4151 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" H 3950 4225 50  0001 C CIN
+F 3 "http://www.fairchildsemi.com/ds/LM/LM7805.pdf" H 3950 3950 50  0001 C CNN
+	1    3950 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0105
+U 1 1 5F96DB69
+P 3950 4600
+F 0 "#PWR0105" H 3950 4600 30  0001 C CNN
+F 1 "GND" H 3950 4530 30  0001 C CNN
+F 2 "" H 3950 4600 60  0000 C CNN
+F 3 "" H 3950 4600 60  0000 C CNN
+	1    3950 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3950 4600 3950 4300
+Wire Wire Line
+	3050 4000 3550 4000
+Connection ~ 3050 4000
+$Comp
+L Device:C_Small C4
+U 1 1 5F96E81F
+P 4400 4250
+F 0 "C4" H 4492 4296 50  0000 L CNN
+F 1 "C_Small" H 4492 4205 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 4400 4250 50  0001 C CNN
+F 3 "~" H 4400 4250 50  0001 C CNN
+	1    4400 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C3
+U 1 1 5F96F012
+P 3550 4300
+F 0 "C3" H 3642 4346 50  0000 L CNN
+F 1 "C_Small" H 3642 4255 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3550 4300 50  0001 C CNN
+F 3 "~" H 3550 4300 50  0001 C CNN
+	1    3550 4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3550 4000 3550 4200
+Connection ~ 3550 4000
+Wire Wire Line
+	3550 4000 3650 4000
+Wire Wire Line
+	4250 4000 4400 4000
+Wire Wire Line
+	4400 4000 4400 4150
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0106
+U 1 1 5F96FE89
+P 4400 4600
+F 0 "#PWR0106" H 4400 4600 30  0001 C CNN
+F 1 "GND" H 4400 4530 30  0001 C CNN
+F 2 "" H 4400 4600 60  0000 C CNN
+F 3 "" H 4400 4600 60  0000 C CNN
+	1    4400 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0107
+U 1 1 5F970677
+P 3550 4600
+F 0 "#PWR0107" H 3550 4600 30  0001 C CNN
+F 1 "GND" H 3550 4530 30  0001 C CNN
+F 2 "" H 3550 4600 60  0000 C CNN
+F 3 "" H 3550 4600 60  0000 C CNN
+	1    3550 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3550 4400 3550 4600
+Wire Wire Line
+	4400 4350 4400 4600
+$Comp
+L Device:C_Small C1
+U 1 1 5F97169E
+P 2800 1550
+F 0 "C1" H 2892 1596 50  0000 L CNN
+F 1 "C_Small" H 2892 1505 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 2800 1550 50  0001 C CNN
+F 3 "~" H 2800 1550 50  0001 C CNN
+	1    2800 1550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 1400 2800 1450
+Connection ~ 2800 1400
+Wire Wire Line
+	2800 1400 3400 1400
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0108
+U 1 1 5F9724DE
+P 2800 1850
+F 0 "#PWR0108" H 2800 1850 30  0001 C CNN
+F 1 "GND" H 2800 1780 30  0001 C CNN
+F 2 "" H 2800 1850 60  0000 C CNN
+F 3 "" H 2800 1850 60  0000 C CNN
+	1    2800 1850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 1850 2800 1650
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0109
+U 1 1 5F97318B
+P 4950 3350
+F 0 "#PWR0109" H 4950 3350 30  0001 C CNN
+F 1 "GND" H 4950 3280 30  0001 C CNN
+F 2 "" H 4950 3350 60  0000 C CNN
+F 3 "" H 4950 3350 60  0000 C CNN
+	1    4950 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0110
+U 1 1 5F974679
+P 4950 900
+F 0 "#PWR0110" H 4950 750 50  0001 C CNN
+F 1 "+5V" H 4965 1073 50  0000 C CNN
+F 2 "" H 4950 900 50  0001 C CNN
+F 3 "" H 4950 900 50  0001 C CNN
+	1    4950 900 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4950 900  4950 1150
+Wire Wire Line
+	4950 3250 4950 3350
+$Comp
+L power:+5V #PWR0111
+U 1 1 5F97577A
+P 4950 3800
+F 0 "#PWR0111" H 4950 3650 50  0001 C CNN
+F 1 "+5V" H 4965 3973 50  0000 C CNN
+F 2 "" H 4950 3800 50  0001 C CNN
+F 3 "" H 4950 3800 50  0001 C CNN
+	1    4950 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4950 3800 4950 4000
+Wire Wire Line
+	4950 4000 4400 4000
+Connection ~ 4400 4000
+$Comp
+L Diode:1N4148 D2
+U 1 1 5F976660
+P 3400 1100
+F 0 "D2" V 3354 1180 50  0000 L CNN
+F 1 "1N4148" V 3445 1180 50  0000 L CNN
+F 2 "Diode_SMD:D_SOD-123" H 3400 925 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3400 1100 50  0001 C CNN
+	1    3400 1100
+	0    1    1    0   
+$EndComp
+$Comp
+L Diode:1N4148 D3
+U 1 1 5F9773E0
+P 3400 1650
+F 0 "D3" V 3354 1730 50  0000 L CNN
+F 1 "1N4148" V 3445 1730 50  0000 L CNN
+F 2 "Diode_SMD:D_SOD-123" H 3400 1475 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 3400 1650 50  0001 C CNN
+	1    3400 1650
+	0    1    1    0   
+$EndComp
+$Comp
+L Microtan_65_CPU-cache:GND #PWR0112
+U 1 1 5F977F9C
+P 3400 1950
+F 0 "#PWR0112" H 3400 1950 30  0001 C CNN
+F 1 "GND" H 3400 1880 30  0001 C CNN
+F 2 "" H 3400 1950 60  0000 C CNN
+F 3 "" H 3400 1950 60  0000 C CNN
+	1    3400 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0113
+U 1 1 5F9785E7
+P 3400 850
+F 0 "#PWR0113" H 3400 700 50  0001 C CNN
+F 1 "+3V3" H 3415 1023 50  0000 C CNN
+F 2 "" H 3400 850 50  0001 C CNN
+F 3 "" H 3400 850 50  0001 C CNN
+	1    3400 850 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3400 850  3400 950 
+Wire Wire Line
+	3400 1250 3400 1400
+Connection ~ 3400 1400
+Wire Wire Line
+	3400 1400 4050 1400
+Wire Wire Line
+	3400 1400 3400 1500
+Wire Wire Line
+	3400 1800 3400 1950
+Text Notes 5700 4150 0    50   ~ 0
+Outputs as well, so can drive bus.\nControl signals\nButtons, leds and non volatile storage.\n
+$EndSCHEMATC
