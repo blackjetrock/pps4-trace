@@ -1,0 +1,21 @@
+#!/usr/bin/tclsh
+
+#
+# Decodes PPS4 trace
+#
+
+
+set f [open traces_with_ido.txt]
+set txt [read $f]
+close $f
+
+
+foreach line [split $txt "\n"] {
+    if { [regexp -- {A:([0-9A-F]+) B:([0-9A-F]+) C:([0-9A-F]+)} $line all pa pb pc] } {
+	set a [expr 0x$pa]
+	set b [expr 0x$pb]
+	set c [expr 0x$pc]
+	
+    }
+    
+}
