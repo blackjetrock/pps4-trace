@@ -95,7 +95,8 @@ void setup() {
   
 }
 int last_po=0;
-
+int po_count = 0;
+ 
 void loop() {
   int i;
   char c;
@@ -112,26 +113,30 @@ void loop() {
 
   if( (po == 1) && (last_po == 0) )
     {
-      for(i=0;i<NUM_SAMPLES;i++)
+      po_count++;
+      if( po_count == 1 )
 	{
-	  pa[i] = PORT_A;
-	  pb[i] = PORT_B;
-	  pc[i] = PORT_C;
+	  for(i=0;i<NUM_SAMPLES;i++)
+	    {
+	      pa[i] = PORT_A;
+	      pb[i] = PORT_B;
+	      pc[i] = PORT_C;
+	    }
+	  
+	  for(i=0;i<NUM_SAMPLES;i++)
+	    {
+	      //	  Serial.print(i);
+	      Serial.print("A:");
+	      Serial.print(pa[i], HEX);
+	      Serial.print(" B:");
+	      Serial.print(pb[i], HEX);
+	      Serial.print(" C:");
+	      Serial.println(pc[i], HEX);
+	    }
 	}
-      
-      for(i=0;i<NUM_SAMPLES;i++)
-	{
-	  //	  Serial.print(i);
-	  Serial.print("A:");
-	  Serial.print(pa[i], HEX);
-	  Serial.print(" B:");
-	  Serial.print(pb[i], HEX);
-	  Serial.print(" C:");
-	  Serial.println(pc[i], HEX);
-	}
-      
-      last_po = po;
     }
+  last_po = po;
+
 #endif
   
   if( Serial.available() )

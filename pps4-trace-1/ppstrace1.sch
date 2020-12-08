@@ -648,4 +648,6 @@ F 3 "" H 2800 2650 60  0000 C CNN
 	1    2800 2650
 	1    0    0    -1  
 $EndComp
+Text Notes 6250 2750 0    50   ~ 0
+PA11 and PA12 are USB lines, so we have ot put those signals on something else.\nWe have spare inputs, so moving to them for V1.0\nIt will require more unjiggling, but that is fine, we get serial USB, which is\nbetter for initial bring-up.\n
 $EndSCHEMATC
