@@ -38,11 +38,16 @@ const int POPin    = PA4;
 #define PORT_B         (GPIOB->IDR)
 #define PORT_C         (GPIOC->IDR)
 
-#define NUM_SAMPLES  1900
+#define NUM_SAMPLES  1000
 
 uint16_t pa[NUM_SAMPLES];
 uint16_t pb[NUM_SAMPLES];
 uint16_t pc[NUM_SAMPLES];
+
+// ROM data
+#define ROM_SIZE 4096
+
+uint8_t rom[ROM_SIZE];
 
 void setup() {
   int i;
@@ -96,13 +101,21 @@ void setup() {
 }
 int last_po=0;
 int po_count = 0;
- 
+int reset_threshold = 200;
+
 void loop() {
+  boolean donecap = false;
+  
   int i;
   char c;
   int clkb = 0x80;
-
+  int done = 0;
+  int clk_count = 0;
+  int last_clk = 0;  
   int po;
+
+  int addr, data, clka, last_clkb = -1;
+  int phase_count, rom_addr;
   
   // Capture at reset, if we see a rising edge on
   // PO pin
@@ -116,6 +129,29 @@ void loop() {
       po_count++;
       if( po_count == 1 )
 	{
+	  po_count = 0;
+
+	  // reset has gone high, we wait for some clock
+	  // cycles before capturing
+	  clk_count = 0;
+	  
+	  while( !donecap )
+	    {
+	    pa[0] = PORT_A;
+	    clkb = pa[0] & 0x80;
+	    if( last_clk != clkb)
+	      {
+		clk_count++;
+
+		if( clk_count > reset_threshold )
+		  {
+		    donecap = true;
+		  }
+	      }
+	    last_clk = clkb;
+	    
+	    }
+	  
 	  for(i=0;i<NUM_SAMPLES;i++)
 	    {
 	      pa[i] = PORT_A;
@@ -145,6 +181,18 @@ void loop() {
 
       switch(c)
 	{
+	case '+':
+	  reset_threshold +=100;
+	  Serial.print("Reset threshold now ");
+	  Serial.println(reset_threshold);
+	  break;
+
+	case '-':
+	  reset_threshold -=100;
+	  Serial.print("Reset threshold now ");
+	  Serial.println(reset_threshold);
+	  break;
+	  
 	case 'p':
 	  for(i=0;i<NUM_SAMPLES;i++)
 	    {
@@ -156,6 +204,104 @@ void loop() {
 	      Serial.print(" C:");
 	      Serial.println(pc[i], HEX);
 	    }
+	  break;
+
+	case 'c':
+	  // Captures and processes bursts continuously
+	  // dumping ROM addresses and data out the serial port
+	  //
+	  // Capture
+	  //
+	  Serial.println("Capturing...");
+	  done = false;
+	  
+	  while( !done )
+	    {
+	      if( Serial.available() )
+		{
+		  c = Serial.read();
+
+		  if( c == 'x' )
+		    {
+		      done = true;
+		    }
+		}
+	      
+	      for(i=0;i<NUM_SAMPLES;i++)
+		{
+		  pa[i] = PORT_A;
+		  pb[i] = PORT_B;
+		  pc[i] = PORT_C;
+		}
+	      
+	      // Process
+	      for(i=0;i<NUM_SAMPLES;i++)
+		{
+		  addr = pb[i] >> 4;
+		  data = (pa[i] & 0xF) | ((pa[i] & 0x700) >> 4) | ((pb[i] & 0x02)<<6);
+		  clka = (pb[i] & 0x8) >> 3;
+		  clkb = (pa[i] & 0x80) >> 7;
+		  
+		  addr ^= 0xfff;
+		  data ^= 0xff;
+		  
+#if 0
+		  Serial.print("A:");
+		  Serial.print(addr, HEX);
+		  Serial.print(" ");
+		  Serial.print(data, HEX);
+		  Serial.print(" ");
+		  Serial.print(phase_count);
+		  Serial.println();
+#endif
+		  
+		  if ( last_clkb != clkb )
+		    {
+		      phase_count = 0;
+		    }
+		  else
+		    {
+		      phase_count++;
+		    }
+		  
+		  if ( (clka == 1) && (clkb == 0) && (phase_count == 1) )
+		    {
+		      // ROM value
+		      // Dump address
+#if 0		      
+		      Serial.print(rom_addr,HEX);
+		      Serial.print(":");
+		      Serial.println(data, HEX);
+#else
+		      // Store in ROM image
+		      rom[rom_addr] = data;		      
+#endif
+		    }
+		  
+		  if ( (clka == 0) && (clkb == 0) && (phase_count == 1) )
+		    {
+		      rom_addr = addr;
+		    }
+		  
+		  last_clkb = clkb;
+		}
+	    }
+	  Serial.println("Stopped.");
+	  break;
+	  
+	case 'r':
+	  // Dump ROM
+	  for(i=0; i<ROM_SIZE;i++)
+	    {
+	      Serial.print(rom[i],HEX);
+	      Serial.print(" ");
+
+	      if( (i%16) == 15 )
+		{
+		  Serial.println("");
+		}
+	    }
+	  Serial.println("");
 	  break;
 	  
 	case ' ':
@@ -187,6 +333,8 @@ void loop() {
 	      pc[i] = PORT_C;
 	    }
 #endif
+
+
 	  
 	  
 	  for(i=0;i<NUM_SAMPLES;i++)
