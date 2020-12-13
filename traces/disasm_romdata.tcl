@@ -34,11 +34,13 @@ proc print_transfer_long {str op arg1} {
     puts $opf "$str 0x$hexargval"
 }
 
-set f [open romdata.txt]
+set fn [lindex $argv 0]
+
+set f [open $fn]
 set romdatatext [read $f]
 close $f
 
-set opf [open "romdata.lst" w]
+set opf [open "$fn.lst" w]
 
 set romdata [split $romdatatext "\n"]
 
@@ -442,7 +444,7 @@ while { $pc < [llength $romdata] } {
 	0x02 -
 	0x03 {
 	    puts -nonewline $opf "$addrstr   $op $arg1  "
-	    print_transfer_long tl $op $arg1
+	    print_transfer_long tml $op $arg1
 	    incr pc 1
 	}
 	
