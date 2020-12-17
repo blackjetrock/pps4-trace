@@ -22,18 +22,23 @@ proc reset_pps {} {
     set ::PPS_A  0
     set ::PPS_SA 0
     set ::PPS_SB 0
-
+    set ::PPS_C_FF 0
+    set ::PPS_F1 0
+    set ::PPS_F2 0
+    set ::sag_zero 0
+    
     # Clear RAM
     for {set i 0} {$i <= 0xFFF} {incr i 1} {
-	set ::RAM($i) 0xAA
+	set ::RAM($i) 0xA
     }
 }
 
 proc pps_status {} {
 
-    puts [format "P:%03X A:%01X X:%01X B:%03X SA:%03X SB:%03X" $::PPS_P $::PPS_A $::PPS_X $::PPS_B $::PPS_SA $::PPS_SB]
+    puts [format "P:%03X A:%01X X:%01X B:%03X SA:%03X SB:%03X CFF:%d F1:%d F2:%d" $::PPS_P $::PPS_A $::PPS_X $::PPS_B $::PPS_SA $::PPS_SB $::PPS_C_FF $::PPS_F1 $::PPS_F2]
 }
 
+################################################################################
 # ::ROM holds the ROM (we may have to do some bank switching
 # ROM data came from bus traces so bank switching done for us by the hardware
 # but it does mean the ROM files may not be correct.
@@ -51,6 +56,37 @@ proc p_eq_sa_sa_swap_sb {} {
 proc sb_eq_sa_sa_eq_p {} {
     set ::PPS_SB $::PPS_SA
     set ::PPS_SA $::PPS_P
+}
+
+proc set_bm {bm} {
+    set ::PPS_B [expr ($::PPS_B & 0xF0F) | (($bm & 0xF) << 4)]
+}
+
+proc get_bl {} {
+
+    return [expr ($::PPS_B & 0xF) >> 0]
+}
+
+# reads from RAM. takes previous SAG instruction into account
+
+proc read_ram {addr} {
+    if { $::sag_zero } {
+	set ::sag_zero 0
+	return $::RAM( ($addr & 0xF))
+    } else {
+	return $::RAM($addr)
+    }
+}
+
+proc write_ram {addr data} {
+    if { $::sag_zero } {
+	set ::sag_zero 0
+	set $::RAM( ($addr & 0xF)) $data
+    } else {
+	
+	set $::RAM($addr) $data
+    }
+    
 }
 
 ################################################################################
@@ -139,14 +175,30 @@ while { !$::DONE } {
 
     switch $hex_opcode {
 	0B  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "ad"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "ad"
+	    set ::PPS_A [expr $::PPS_A + [read_ram $::PPS_B]
+	    
+	    if { $::PPS_A > 15 } {
+		set ::PPS_A [expr $::PPS_A % 16]
+		set ::PPS_C_FF 1
+	    } else {
+		set ::PPS_C_FF 0
+	    }
+	    
 	    set lb_just_executed 0
 	}
 	
 	0A {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "adc"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "adc"
+	    set ::PPS_A [expr $::PPS_A + [read_ram $::PPS_B]+$::PPS_C_FF]
+	    if { $::PPS_A > 15 } {
+		set ::PPS_A [expr $::PPS_A % 16]
+		set ::PPS_C_FF 1
+	    } else {
+		set ::PPS_C_FF 0
+	    }
 	    set lb_just_executed 0
 	}
 	
@@ -176,74 +228,93 @@ while { !$::DONE } {
 	6C -
 	6D -
 	6E {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    print_mask_arg_inv adi $op 0F
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #print_mask_arg_inv adi $op 0F
+	    set ::PPS_A [expr $::PPS_A + (($opcode & 0xf) ^ 0xf)]
+	    if { $::PPS_A > 15 } {
+		set ::PPS_A [expr $::PPS_A % 16]
+		set skip_next_rom_word 1\
+	    } else {
+	    }
+	    
+	    
 	    set lb_just_executed 0
 	}
 	
 	65 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "dc"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "dc"
+	    set ::PPS_A [expr ($::PPS_A + 0xA) % 16]
 	    set lb_just_executed 0
 	}
 
 	0D  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "and"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "and"
+	    set ::PPS_A [expr $::PPS_A & [read_ram $::PPS_B]]
 	    set lb_just_executed 0
 	}
 	
 	0F  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "or"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "or"
+	    set ::PPS_A [expr $::PPS_A | [read_ram $::PPS_B]]
 	    set lb_just_executed 0
 	}
 	
 	0C  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "eor"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "eor"
+	    set ::PPS_A [expr $::PPS_A ^ [read_ram $::PPS_B]]
 	    set lb_just_executed 0
 	}
 	
 	0E  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "comp"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "comp"
+	    set ::PPS_A [expr $::PPS_A ^ 0xf]
 	    set lb_just_executed 0
 	}
 	
 	20  {
 	    puts -nonewline $opf "$addrstr   $op       "
 	    puts $opf "sc"
+	    set ::PPS_C_FF 1
 	    set lb_just_executed 0
 	}
 	
 	24  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "rc"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "rc"
+	    set ::PPS_C_FF 0
 	    set lb_just_executed 0
 	}
 	
 	22  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "sf1"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "sf1"
+	    set ::PPS_F1 1
 	    set lb_just_executed 0
 	}
 	
 	26  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "rf1"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "rf1"
+	    set ::PPS_F1 0
 	    set lb_just_executed 0
 	}
 	
 	21 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "sf2"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "sf2"
+	    set ::PPS_F2 1
 	    set lb_just_executed 0
 	}
 	
 	25  {
-	    puts -nonewline $opf "$addrstr     $op       "
-	    puts $opf "rf2"
+	    #puts -nonewline $opf "$addrstr     $op       "
+	    #puts $opf "rf2"
+	    set ::PPS_F2 0
 	    set lb_just_executed 0
 	}
 	
@@ -255,8 +326,10 @@ while { !$::DONE } {
 	35 -
 	36 -
 	37 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    print_mask_arg_inv ld $op 07
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #print_mask_arg_inv ld $op 07
+	    set ::PPS_A [expr [read_ram $::PPS_B]]
+	    set ::PPS_B [expr $::PPS_B ^ ((($opcode & 0x7)^0x7) << 4)]
 	    set lb_just_executed 0
 	}
 	
@@ -268,8 +341,14 @@ while { !$::DONE } {
 	3D -
 	3E -
 	3F {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    print_mask_arg_inv ex $op 07
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #print_mask_arg_inv ex $op 07
+	    set temp $::PPS_A
+	    set ::PPS_A [read_ram $::PPS_B]
+	    write_ram $::PPS_B $temp
+	    puts [format "(RAM Exchange Addr:%03X)" $::PPS_B]
+	    set ::PPS_B [expr $::PPS_B ^ ((($opcode & 0x7)^0x7) << 4)]
+
 	    set lb_just_executed 0
 	}
 
@@ -282,8 +361,8 @@ while { !$::DONE } {
 	2E -
 	2F {
 	    set temp $::PPS_A
-	    set ::PPS_A $::RAM($::PPS_B)
-	    set ::RAM($::PPS_B) $temp
+	    set ::PPS_A [read_ram $::PPS_B]
+	    write_ram $::PPS_B $temp
 	    puts [format "(RAM Exchange Addr:%03X)" $::PPS_B]
 	    set ::PPS_B [expr $::PPS_B ^ ((($opcode & 0x7)^0x7) << 4)]
 
@@ -322,26 +401,30 @@ while { !$::DONE } {
 	}
 	
 	12 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "lax"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "lax"
+	    set ::PPS_X $::PPS_A
 	    set lb_just_executed 0
 	}
 	
 	1B {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "lxa"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "lxa"
+	    set ::PPS_X $::PPS_A
 	    set lb_just_executed 0
 	}
 	
 	11 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "labl"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "labl"
+	    set ::PPS_A [get_bl]
 	    set lb_just_executed 0
 	}
 	
 	10 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "lbmx"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "lbmx"
+	    set_bm $::PPS_X
 	    set lb_just_executed 0
 	}
 	
@@ -357,7 +440,7 @@ while { !$::DONE } {
 
 	    set temp $::PPS_A
 	    set ::PPS_A [expr ($::PPS_B & 0xF)]
-	    set ::PPS_B [expr ($::PPS_B & 0x FF0) | $temp]
+	    set ::PPS_B [expr ($::PPS_B & 0xFF0) | $temp]
 	    set lb_just_executed 0
 	}
 	
@@ -368,8 +451,11 @@ while { !$::DONE } {
 	}
 	
 	1A {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "xax"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "xax"
+	    set temp $::PPS_A
+	    set ::PPS_A $::PPS_X
+	    set ::PPS_X $temp
 	    set lb_just_executed 0
 	}
 	
@@ -585,7 +671,7 @@ while { !$::DONE } {
 	    puts "TL"
 	    set ::PPS_P [expr (($opcode & 0xF)<<8) | $arg1]
 	    set lb_just_executed 0
-	    set inc 2
+	    set inc 0
 
 	    set lb_just_executed 0
 	}
@@ -612,6 +698,10 @@ while { !$::DONE } {
 	    
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "skz"
+	    if { $::PPS_A == 0 } {
+		set skip_next_rom_word 1
+	    }
+	    
 	    set lb_just_executed 0
 	}
 	
@@ -699,8 +789,9 @@ while { !$::DONE } {
 	}
 	
 	13 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "sag"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "sag"
+	    
 	    set lb_just_executed 0
 	}
 
@@ -715,6 +806,31 @@ while { !$::DONE } {
     pps_status
     puts ""
 
+    set next 0
+
+    while {!$next } {
+	set in [gets stdin]
+	
+	
+	switch $in {
+	    "" {
+		set next 1
+	    }
+
+	    "a" {
+		for {set x 0} {$x <= 0xfff} {incr x 1} {
+		    puts -nonewline [format "%01X" $::RAM($x)]
+		    
+		    if { ($x % 256) == 0 } {
+			puts ""
+		    }
+		}
+		puts ""
+		
+	    }
+	}
+    }
+    
     # Increment P
     incr ::PPS_P $inc
 }
