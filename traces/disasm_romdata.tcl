@@ -60,6 +60,9 @@ while { $pc < [llength $romdata] } {
 
     set op  0x$opline
     set arg1 0x[lindex $romdata [expr $pc+1]]
+    if { $arg1 == "0x__" } {
+	set arg1 "0x00"
+    }
 
     set addrstr [format "%03X  " $pc]
 
@@ -500,7 +503,7 @@ while { $pc < [llength $romdata] } {
 	}
 	
 	0x1C {
-	    puts -nonewline $opf "$addrstr   $op       "
+	    puts -nonewline $opf "$addrstr   $op $arg1  "
 	    puts $opf "iol $arg1  "
 	    incr pc 1
 	}
