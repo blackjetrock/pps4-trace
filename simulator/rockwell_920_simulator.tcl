@@ -352,8 +352,12 @@ while { !$::DONE } {
 	}
 	
 	19 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "xabl"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "xabl"
+
+	    set temp $::PPS_A
+	    set ::PPS_A [expr ($::PPS_B & 0xF)]
+	    set ::PPS_B [expr ($::PPS_B & 0x FF0) | $temp]
 	    set lb_just_executed 0
 	}
 	
