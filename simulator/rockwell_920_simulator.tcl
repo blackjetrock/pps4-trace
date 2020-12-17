@@ -46,7 +46,11 @@ proc p_eq_sa_sa_swap_sb {} {
     set temp $::PPS_SB
     set ::PPS_SB $::PPS_SA
     set ::PPS_SA $temp
+}
 
+proc sb_eq_sa_sa_eq_p {} {
+    set ::PPS_SB $::PPS_SA
+    set ::PPS_SA $::PPS_P
 }
 
 ################################################################################
@@ -80,6 +84,7 @@ foreach line [split $rom_file_txt "\n"] {
     }
 
     if { [regexp -- {([0-9a-fA-F]+)[ ]+(0x[0-9a-fA-F]+)[ ]+(0x[0-9a-fA-F]+)} $line all addr opcode arg1] } {
+	puts $line
 	# decimal addresses and data internally so we can manipulate them
 	set dec_addr   [expr 0x$addr]
 	set dec_addr1  [expr 0x$addr+1]
@@ -89,7 +94,7 @@ foreach line [split $rom_file_txt "\n"] {
 
         # Store source for later debugging
 	set ::LINEOF($dec_addr) $line
-	
+	puts $dec_addr
 	set ::ROM($dec_addr)  $dec_opcode
 	set ::ROM($dec_addr1) $dec_arg1
     }
@@ -126,6 +131,7 @@ while { !$::DONE } {
     set hex_opcode [format "%02X" $opcode]
 
     #    puts "$opcode $arg1"
+    puts [format "Getting line for %03x"  $::PPS_P]
     puts $::LINEOF($::PPS_P)
 
     # Each instruction has to indicate how much to increment P after its done
@@ -569,19 +575,27 @@ while { !$::DONE } {
 	5D -
 	5E -
 	5F {
-	    puts -nonewline $opf "$addrstr   $op $arg1  "
-	    print_transfer_long tl $op $arg1
-	    incr pc 1
+	    #puts -nonewline $opf "$addrstr   $op $arg1  "
+	    #print_transfer_long tl $op $arg1
+	    #incr pc 1
+	    puts "TL"
+	    set ::PPS_P [expr (($opcode & 0xF)<<8) | $arg1]
+	    set lb_just_executed 0
+	    set inc 2
+
 	    set lb_just_executed 0
 	}
 	
 	01 -
 	02 -
 	03 {
-	    puts -nonewline $opf "$addrstr   $op $arg1  "
-	    print_transfer_long tml $op $arg1
-	    incr pc 1
+	    #puts -nonewline $opf "$addrstr   $op $arg1  "
+	    #print_transfer_long tml $op $arg1
+	    #incr pc 1
+	    sb_eq_sa_sa_eq_p
+	    set ::PPS_P [expr (($opcode & 0xF)<<8) | $arg1]
 	    set lb_just_executed 0
+	    set inc 0
 	}
 	
 	15  {
