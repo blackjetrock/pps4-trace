@@ -1,0 +1,44 @@
+#!/usr/bin/wish
+#
+# Simulator for Rockwell 920 series calculators.
+# Mainly a PPS-4 simulator to help decode ROMs
+#
+
+
+# Open the ROM file and read the contents
+#
+# We can open an annotated listing file, that gives us
+# assembly and comments
+
+
+################################################################################
+#
+# model of PPS-4
+
+set PPS_P 0
+set PPS_X 0
+set PPS_B 0
+set PPS_A 0
+
+# ::ROM holds the ROM (we may have to do some bank switching
+
+################################################################################
+
+set rom_file [lindex $argv 0]
+
+set f [open $rom_file]
+set rom_file_txt [read $f]
+close $f
+
+# Process the code to get ROM data into the ROM array
+
+foreach line [split $rom_file_txt "\n"] {
+    if { [regexp -- {([0-9a-fA-F]+)[ ]+(0x[0-9a-fA-F]+)} $line $addr $opcode] } {
+	# decimal addresses and data internally so we can manipulate them
+	set dec_addr   [expr 0x$addr]
+	set dec_opcode [expr $opcode]
+	
+	set ::ROM($dec_addr) $dec_opcode
+    }
+    
+}
