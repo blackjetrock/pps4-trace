@@ -53,9 +53,9 @@ proc p_eq_sa_sa_swap_sb {} {
     set ::PPS_SA $temp
 }
 
-proc sb_eq_sa_sa_eq_p {} {
+proc sb_eq_sa_sa_eq_p {delta} {
     set ::PPS_SB $::PPS_SA
-    set ::PPS_SA $::PPS_P
+    set ::PPS_SA [expr $::PPS_P + $delta]
 }
 
 proc set_bm {bm} {
@@ -74,23 +74,58 @@ proc get_bl {} {
 # reads from RAM. takes previous SAG instruction into account
 
 proc read_ram {addr} {
+
+    # Previous SAG instruction affect address we use
     if { $::sag_zero } {
 	set ::sag_zero 0
-	return $::RAM( ($addr & 0xF))
+	set effaddr [expr ($addr & 0xF)]
+
     } else {
-	return $::RAM($addr)
+	set effaddr $addr
     }
+
+    set data $::RAM($effaddr)
+    puts [format "Read RAM addr:%03X data:%01X" $effaddr $data]
+    return $data
 }
 
 proc write_ram {addr data} {
+
+    # Previous SAG instruction affect address we use
     if { $::sag_zero } {
 	set ::sag_zero 0
-	set ::RAM( ($addr & 0xF)) $data
+	set effaddr [expr ($addr & 0xF)]
+
     } else {
-	
-	set ::RAM($addr) $data
+	set effaddr $addr
     }
     
+    puts [format "Write RAM addr:%03X" $effaddr]
+    
+    set $::RAM($effaddr) $data
+}
+
+# Write and read data to and from RAM
+
+proc write_read_ram {addr wrdata} {
+
+    # Previous SAG instruction affect address we use
+    if { $::sag_zero } {
+	set ::sag_zero 0
+	set effaddr [expr ($addr & 0xF)]
+
+    } else {
+	set effaddr $addr
+    }
+
+    # Get read data
+    set data $::RAM($effaddr)
+
+    # Write data out
+    set ::RAM($effaddr) $wrdata
+    
+    puts [format "Write Read RAM addr:%03X rddata:%01X wrdata:%01X" $effaddr $data $wrdata]
+    return $data
 }
 
 ################################################################################
@@ -365,8 +400,14 @@ while { !$::DONE } {
 	2E -
 	2F {
 	    set temp $::PPS_A
-	    set ::PPS_A [read_ram $::PPS_B]
-	    write_ram $::PPS_B $temp
+
+	    # Need to write_read here as SAG can affect the cycle which is a
+	    # write and a read.
+
+	    set ::PPS_A [write_read_ram $::PPS_B $::PPS_A]
+
+	    #set ::PPS_A [read_ram $::PPS_B]
+	    #write_ram $::PPS_B $temp
 	    puts [format "(RAM Exchange Addr:%03X)" $::PPS_B]
 	    set ::PPS_B [expr $::PPS_B ^ ((($opcode & 0x7)^0x7) << 4)]
 
@@ -690,7 +731,7 @@ while { !$::DONE } {
 	    #puts -nonewline $opf "$addrstr   $op $arg1  "
 	    #print_transfer_long tml $op $arg1
 	    #incr pc 1
-	    sb_eq_sa_sa_eq_p
+	    sb_eq_sa_sa_eq_p 2
 	    set ::PPS_P [expr (($opcode & 0xF)<<8) | $arg1]
 	    set lb_just_executed 0
 	    set inc 0
@@ -799,7 +840,9 @@ while { !$::DONE } {
 	13 {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "sag"
-	    
+
+	    # Just set the flag fo rthe next cycle
+	    set ::sag_zero 1
 	    set lb_just_executed 0
 	}
 
