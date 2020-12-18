@@ -206,12 +206,59 @@ void loop() {
 	    }
 	  break;
 
+	case 'k':
+	  // Captures bursts of trace and dumps them out the serial
+	  // port. 
+	  //
+	  // x to stop
+	  Serial.println("Burst tracing...");
+	  done = false;
+	  
+	  while( !done )
+	    {
+	      if( Serial.available() )
+		{
+		  c = Serial.read();
+
+		  if( c == 'x' )
+		    {
+		      done = true;
+		    }
+		}
+
+	      // Get a burst
+	      for(i=0;i<NUM_SAMPLES;i++)
+		{
+		  pa[i] = PORT_A;
+		  pb[i] = PORT_B;
+		  pc[i] = PORT_C;
+		}
+
+	      // Dump it out the serial port
+	      for(i=0;i<NUM_SAMPLES;i++)
+		{
+		  //	  Serial.print(i);
+		  Serial.print("A:");
+		  Serial.print(pa[i], HEX);
+		  Serial.print(" B:");
+		  Serial.print(pb[i], HEX);
+		  Serial.print(" C:");
+		  Serial.println(pc[i], HEX);
+		}
+	      
+	    }
+	  Serial.println("Stopped.");
+	  break;
+
 	case 'c':
 	  // Captures and processes bursts continuously
 	  // dumping ROM addresses and data out the serial port
 	  //
-	  // Capture
+	  // Captures data in rom array at rom addresses. Only handles
+	  // 12 bit address range for now. Details of ROm chip addressing
+	  // are not worked out. One may be a 'RAM' mask setting
 	  //
+	  // x to stop
 	  Serial.println("Capturing...");
 	  done = false;
 	  
@@ -290,7 +337,9 @@ void loop() {
 	  break;
 	  
 	case 'r':
+	  //
 	  // Dump ROM
+	  // 
 	  for(i=0; i<ROM_SIZE;i++)
 	    {
 	      Serial.print(rom[i],HEX);

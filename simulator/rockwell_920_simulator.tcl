@@ -2,7 +2,7 @@
 #
 # Simulator for Rockwell 920 series calculators.
 # Mainly a PPS-4 simulator to help decode ROMs
-#    
+#
 
 
 # Open the ROM file and read the contents
@@ -62,6 +62,10 @@ proc set_bm {bm} {
     set ::PPS_B [expr ($::PPS_B & 0xF0F) | (($bm & 0xF) << 4)]
 }
 
+proc set_bu {bu} {
+    set ::PPS_B [expr ($::PPS_B & 0x0FF) | (($bu & 0xF) << 8)]
+}
+
 proc get_bl {} {
 
     return [expr ($::PPS_B & 0xF) >> 0]
@@ -81,10 +85,10 @@ proc read_ram {addr} {
 proc write_ram {addr data} {
     if { $::sag_zero } {
 	set ::sag_zero 0
-	set $::RAM( ($addr & 0xF)) $data
+	set ::RAM( ($addr & 0xF)) $data
     } else {
 	
-	set $::RAM($addr) $data
+	set ::RAM($addr) $data
     }
     
 }
@@ -429,8 +433,10 @@ while { !$::DONE } {
 	}
 	
 	04 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "lbua"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "lbua"
+	    set_bu $::PPS_A
+	    set ::PPS_A [read_ram $::PPS_B]
 	    set lb_just_executed 0
 	}
 	
@@ -503,10 +509,12 @@ while { !$::DONE } {
 	}
 	
 	00 {
-	    puts -nonewline $opf "$addrstr   $op $arg1  "
-	    puts $opf "lbl $arg1  "
-	    incr pc 1
-	    set lb_just_executed 0
+	    #puts -nonewline $opf "$addrstr   $op $arg1  "
+	    #puts $opf "lbl $arg1  "
+	    #incr pc 1
+	    set ::PPS_B [expr ($arg1 ^ 0xFF)]
+	    set inc 2
+	    set lb_just_executed 1
 	}
 	
 	17 {
