@@ -2,7 +2,7 @@
 #
 # Simulator for Rockwell 920 series calculators.
 # Mainly a PPS-4 simulator to help decode ROMs
-#
+#    
 
 
 # Open the ROM file and read the contents
