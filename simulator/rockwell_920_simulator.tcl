@@ -1,5 +1,5 @@
 #!/usr/bin/wish
- #
+#
 # Simulator for Rockwell 920 series calculators.
 # Mainly a PPS-4 simulator to help decode ROMs
 #
