@@ -206,7 +206,7 @@ while { !$::DONE } {
     set hex_opcode [format "%02X" $opcode]
 
     #    puts "$opcode $arg1"
-    puts [format "Getting line for %03x"  $::PPS_P]
+    #puts [format "Getting line for %03x"  $::PPS_P]
     puts $::LINEOF($::PPS_P)
 
     # Each instruction has to indicate how much to increment P after its done
@@ -216,7 +216,7 @@ while { !$::DONE } {
 	0B  {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "ad"
-	    set ::PPS_A [expr $::PPS_A + [read_ram $::PPS_B]
+	    set ::PPS_A [expr $::PPS_A + [read_ram $::PPS_B]]
 	    
 	    if { $::PPS_A > 15 } {
 		set ::PPS_A [expr $::PPS_A % 16]

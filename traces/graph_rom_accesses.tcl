@@ -74,6 +74,46 @@ if { [string compare [lindex $argv 0] romdata]==0 } {
     set graph_romdata 0
 }
 
+if { [string compare [lindex $argv 0] lst]==0 } {
+    set graph_lst 1
+} else {
+    set graph_lst 0
+}
+
+
+if { $graph_lst } {
+    set ::COL black
+    set num_addresses 0
+    
+    draw_grid
+
+    set f [open [lindex $argv 1]]
+    set txt [read $f]
+    close $f
+
+    set addr 0
+    
+    foreach line [split $txt "\n"] {
+	if { [regexp -- {([0-9a-fA-F]+)[ ]+0x[0-9a-fA-F]+  } $line all addr] } {
+	    puts "$addr (1)"
+	    plot_addr 0x$addr
+	    incr num_addresses 1
+	}
+
+	if { [regexp -- {([0-9a-fA-F]+)[ ]+0x[0-9a-fA-F]+[ ]+0x[0-9a-fA-F]+} $line all addr] } {
+	    puts "$addr (2)"
+	    plot_addr [expr 0x$addr+1]
+	    plot_addr 0x$addr
+	    incr num_addresses 2
+	}
+    }
+    set rom_size [expr 2**12]
+    set percent [expr int(1.0* $num_addresses / $rom_size * 100.0)]
+    puts "$num_addresses addresses captured."
+    puts "ROM size is $rom_size, so $percent% captured"
+
+}
+
 if { $graph_romdata } {
 
     draw_grid
@@ -215,7 +255,7 @@ if { $graph_bus_trace } {
 
 
 
-if { !$graph_bus_trace && !$graph_romdata } {
+if { !$graph_lst && !$graph_bus_trace && !$graph_romdata } {
     puts " Arguments: <bustrace> or <romdata>"
     puts "followed by filename"
 }
