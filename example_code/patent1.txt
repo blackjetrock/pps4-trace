@@ -1,0 +1,1344 @@
+  ______________________________________                                    
+     MICROPROCESSOR 6000 CONTROL PROGRAM                                       
+     ______________________________________                                    
+
+     *INITIALIZATION                                                           
+     *                                                                         
+     0000 81      T       #1                                                   
+     *SET O/P TO ZERO                                                          
+     0001 7F      LDI     0                                                    
+     0002 10 0E   IOL     #E                                                   
+     0004 7F      LDI     0                                                    
+     0005 10 0D   IOL     #D                                                   
+     0007 7F      LDI                                                          
+     0008 10 07   IOL     1                                                    
+     *RESET FLIP-FLOPS                                                         
+     000A 26      RF1                                                          
+     000B 25      RF2                                                          
+     *CLEAR RAM                                                                
+     000C 00 00       LBL     D15R15                                           
+     000E 7F IN10     LDI     0                                                
+     000F 2F          EXD                                                      
+     0010 9E          T       IN10                                             
+     0011 18          XBHX                                                     
+     0012 1A          XAX                                                      
+     0013 60          ADI     F                                                
+     0014 98          T       IN20                                             
+     0015 1A          XAX                                                      
+     0016 18          XBMX                                                     
+     0017 8E          T       IN10                                             
+     *SET RAM SPECIAL VALUES                                                   
+     0018 0B IN20     LB      R0D9                                             
+     0019 71          LDI     E                                                
+     001A 2B          EXD     4      KBD CHARACTER                             
+                                     (FOR INITIAL                              
+                                     CALL)                                     
+     001B 7B          LDI     4                                                
+     0010 2F          EXD     *      CONSTANT (PCC                             
+                                     BIT MASK)                                 
+     001D 07          LB      R4D5                                             
+     001E 7E          LDI     1                                                
+     001F 2F          EXD     *      SEARCHING FOR                             
+                                     ROW (NOT)                                 
+     0020 02          LB      R6D2                                             
+     0021 70          LDI     F                                                
+     0022 3A          EX      5      KBD ROUTINE                               
+                                     ADDRESS                                   
+     0023 7E          LDI     1                                                
+     0024 2A          EXD     5      KBD * (INITIAL                            
+                                     LY PAGE 1)                                
+     0025 70          LDI     F                                                
+     0026 2F          EXD                                                      
+     0027 7B          LDI     0                                                
+     0028 3F          EX                                                       
+     0029 50 40       TL      SCHED                                            
+             *                                                                 
+             *                                                                 
+                      ORG     40                                               
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *SCHEDULER                                                                
+     *CHECKS                                                                   
+     *          (1)RAR CHANGED WITH REN HIGH                                   
+     *            & SCH/RAW CHANGED (PROCESS                                   
+     *            SCH)                                                         
+     *          (2)AS (1) WITH NO SCH/RAW CHANGE                               
+     *            & RAR APPROACHING PRINT ROW                                  
+     *            (PROCESS RAR)                                                
+     *          (3) PCC CHANGED & HIGH & PRINT-                                
+     *            ING IN PROGRESS                                              
+     *            (PROCESS PRINT)                                              
+     *          (4)LBD HELD FOR 1 MILLISEC AT                                  
+     *            LEAST (PRECESS KBD)                                          
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *SCH HAS HIGHEST PRIORITY FOR CHECK                                       
+     *ING CHANGES 110 MICROSEC (22 CYCLES)                                     
+     *BEFORE RAR CHANGES & IS LATCHED UN-                                      
+     *TIL NEW ONE AVAILABLE. RAW DENOTES                                       
+     *ROW TO WHICH IT APPLIES. IF UNCHANGED                                    
+     *SCH FOR THIS RAW EITHER NOT CHANGED                                      
+     *OR REPEATED - IN BOTH CASES                                              
+     *IGNORE TO AVIOD MULTIPLE                                                 
+     *PRINTS, ETC. CHECKED ONLY WHEN                                           
+     *RAR CHANGES. RAR CHANGES EVERY                                           
+     *13*63 MICROSECS (163 CYCLES), SO HAVE                                    
+     *COMPLETE PROGRAM CYCLE LESS THAN 141                                     
+     *CYCLES IF RAR UNCHANGED LAST TIME.                                       
+     *OR 163 CYCLES IF RAR CHANGED LAST                                        
+     *TIME. RAR ONLY VALID WHEN REN HIGH.                                      
+     *                                                                         
+     *CHECK RAR CHANGED                                                        
+     0040 CD SCHED    LB      R8D10                                            
+     0041 10 19       IOL     #19    GEG RAR                                   
+     0043 00          EOR                                                      
+     0044 1E          SKZ                                                      
+     0045 88          T       *+3    RAR CHANGED                               
+     0046 50 80                                                                
+             PCXX     TL      PCCX   RAR UNCHANGED                             
+     0048 1C 13       1OL     #13    GET REN                                   
+     004A 67          ADI     8                                                
+     004B 80          T       SCHED  REN GONE LOW                              
+     004C 1C 19       IOL     #19    REREAD RAR IN                             
+                                     CASE REN LOW                              
+                                     WHEN 1ST READ                             
+     004E 1B          LXA     *      SAVE IN X                                 
+     004F 3F          EX      *      SAVE IN RAM                               
+     *CHECK SCH/RAW CHANGED                                                    
+     0050 CO          LB      R1                                               
+     0051 1C 03       IOL     #3     GET RAW                                   
+     0053 19          XABL    *      SET UP SCH TABLE                          
+                                     OFFSET                                    
+     0054 1C 0A       IOL     #A     GET SCH BITS 0-3                          
+     0056 0C          EOR                                                      
+     0057 1E          SHZ                                                      
+     0058 A0          T       SCXX   SCH CHANGED                               
+     0059 34          LD      3                                                
+     005A 1C 1A       IOL     #1A    GET SCH BITS 4-6                          
+     005C 0C          EOR                                                      
+     005D 1E          SHZ                                                      
+     005E A5          T       SCYX   SCH CHANGED                               
+     005F A9          T       RARX   SCH UNCHANGED                             
+     006Q 0C SCXX     EOR     *      SAVE SCH BITS 0-3                         
+     0061 3C          EX      3                                                
+     0062 1C 1A       IOL     #1A                                              
+     0064 0C          EOR                                                      
+     0065 0C SCYX     EOR     *      SAVE SCH BITS 4-6                         
+     0066 9C          EX      3                                                
+     0067 DF          TM      SCHX   PROCESS SCH                               
+     0068 80          T       SCHED                                            
+     *                                                                         
+     *                                                                         
+     *IF NO SCH TO BE PROCESSED, NEXT PRIOR-                                   
+     *ITY IS TO SEARCH FOR ROW TO PRINT. IF                                    
+     *THERE IS ONE, THE PRINTER INTERFACE                                      
+     *MUST BE INFORMED WITHIN 189 MICROSECS                                    
+     *(37 CYCLES) OF RAR CHANGING TO CORRECT                                   
+     *VALUE BY PWR PULSE. SO IF RAR IS ONE                                     
+     *BEFORE REQUIRED ROW, SET UP DATA FOR                                     
+     *PRINT & WAIT IN LOOP FOR ROW TO                                          
+     *CHANGE. MAY ALSO BE SEARCHING FOR                                        
+     *ROW NOT TO BE PRINTED. IN THIS CASE,                                     
+     *SEE IF ALL ROWS PRINTED & IF NOT,                                        
+     *START SEARCH FOR NEXT ROW.                                               
+     *                                                                         
+     *CHECK CORRECT RAR                                                        
+     0069 07 RARX     LB      R4D5                                             
+     006A 30          LD      7                                                
+     006B 1E          SHZ                                                      
+     006C 86          T       PCXX   NOT SEARCHING                             
+                                     FOR ROW                                   
+     006D 12          LAX     *      GET RAR                                   
+     006E 0E          COMP                                                     
+     006F 0B          AD                                                       
+     0070 1E          SHZ                                                      
+     0071 86          T       PCXX   WRONG ROW                                 
+     0072 31          LD      6                                                
+     0073 19          XABL                                                     
+     0074 37          LD                                                       
+     0075 09          ADSI                                                     
+     0076 B9          T       RWGX   ROW NOT TO BE                             
+                                     PRINTED                                   
+     0077 53 17       TL      ROWP   PRINT THIS ROW                            
+     0079 53 3D                                                                
+             RWGX     TL      ROWG   GET NEXT ROW                              
+     *                                                                         
+     *                                                                         
+     *IF RAR UNCHANGED, NEXT PRIORITY IS TO                                    
+     *CHECK PRINTER CLOCK PCC IS HIGH FOR 27                                   
+     *MSEC (5400 CYCLES) AND ANY PRINT PULSE                                   
+     *MUST BE GIVEN DURING THIS TIME. TO                                       
+     *CATCH THIS HIGH EVERY TIME, MAXIMUM                                      
+     *PROGRAM CYCLE FOR RAR CHANGING MUST                                      
+     *BE 158 CYCLES. IF PRINTING IS IN PRO-                                    
+     *GRESS, ONE OF THE FOLLOWING PULSES                                       
+     *WILL BE GIVEN WHEN PCC CHANGES TO                                        
+     *HIGH:                                                                    
+     *SPA - 16 LEADING SPACES ON 32-CHAR ROW                                   
+     *PRT - PRINT ROW                                                          
+     *BLANK - NO PULSE WHILE WAITING FOR                                       
+     *ROW TO BE PRINTED (32/64 CLOCKS) OR                                      
+     *FOR 1 CLOCK DELAY IN 64-CHAR ROW                                         
+     *WHILE PRINTER I/F READS ROW                                              
+     *LFD - LINE FEED AFTER ROW & BEFORE                                       
+     *CERTAIN ROWS                                                             
+     *CAR - CARRIAGE RETURN (AS LFD)                                           
+     *                                                                         
+     *CHECK PCC CHANGED                                                        
+                      ORG     80                                               
+     0080 CA PCCX     LB      R4D8                                             
+     0081 1C 13       IOL     #13    GET NEW PCC                               
+     0083 0D          AND     *      GET BIT 2                                 
+     0084 3F          EX                                                       
+     0085 38          EX      7      (RESTORE CONSTANT)                        
+     0086 3F          EX      *      SAVE NEW PCC                              
+     0087 0C          EOR     *      BIT 2 = 1 IF                              
+                                     CHANGED                                   
+     0088 63          ADI     C      CARRY IF                                  
+                                     BIT 2 = 1                                 
+     0089 BC          I       IBXX   PCC, NOT                                  
+                                     CHANGED                                   
+     008A 37          LD                                                       
+     008B 60          ADI     F                                                
+     008C BD          T       SHDX   NEW PCC = 0                               
+     008D 1F          DECB                                                     
+     008E 27          LD                                                       
+     008F 60          ADI     F                                                
+     0080 BD          T       SHDX   PRINTING NOT IN                           
+                                     PROGRESS                                  
+     *SET UP NEXT PRINTER PULSE                                                
+     0091 1F          DECB                                                     
+     0092 27          LD                                                       
+     0093 60          ADI     F                                                
+     0094 9F          T       PR30   4-BIT COUNT = 0                           
+     0095 3F          EX      *      STORE COUNT-1                             
+     0096 17 PR10     INCB                                                     
+     0097 B0          LD      7      GET NEXT O/P                              
+     0098 0D          AND     *      MASK                                      
+     0099 10 0E                                                                
+             PR20     IOL     #E     PULSE PRINTER                             
+     009B 7F          LDI     0                                                
+     009C 1C 0E       IOL     #E                                               
+     009E BD          T       SHDX   CONTINUE                                  
+     009F B8 PR30     EX      7      STORE 4-BIT                               
+                                     COUNT - 1                                 
+     00A0 37          LD                                                       
+     00A1 60          ADI     F                                                
+     00A2 05          T       PR40   6-BIT COUNT = 0                           
+     00A3 28          EX      7      STORE 6-BIT                               
+                                     COUNT - 1                                 
+     00A4 96          T       PR10   & O/P NORMALLY                            
+     *GET NEW PRINTER PULSE                                                    
+     00A5 C9 PR40     LB      R3D7                                             
+     00A6 30          LD      7                                                
+     00A7 61          ADI     E                                                
+     00AS AC          T       PR50   NEXT O/P = 1                              
+                                     (ROW TO BE                                
+                                     PRINTED NEXT)                             
+     00A9 C8          LB      R3D6                                             
+     00AA 7F          LDI     0      CLEAR COUNT FOR                           
+                                     NOW-ROW PRINT                             
+     00AB B1          T       PR60                                             
+     00AC 37 PR50     LD      *      GET MASK (=0 FOR                          
+                                     64-CHAR ROW)                              
+     00AD 2F          EXD     *      (=1 FOR 32-CHAR                           
+                                     ROW)                                      
+     00AE 1E          SKZ                                                      
+     00AF B1          T       PR60   32-CHAR ROW                               
+                                     (ACC=CT=1)                                
+     00B0 7C          LDI     3      SET CT FOR 64-                            
+                                     CHAR ROW                                  
+     00B1 BF PR60     EX      *      STORE NEW COUNT                           
+     00B2 C0          LB      R3D7   SHIFT LEFT                                
+                                     NEXT O/P                                  
+     00B3 37          LD      *      (GET NEW O/P)                             
+     00B4 0B          AD                                                       
+     00B5 BF          EX                                                       
+     00B6 B7          LD                                                       
+     00B7 1E          SHZ     *      (SKIP IF PRINT                            
+                                     CYCLE COMPLETE)                           
+     00B8 99          T       PR20   PRINT NEW CHAR                            
+     00B9 07          LB      R4D5                                             
+     00BA 3F          EX      *      SET SEARCHING                             
+                                     FOR ROW                                   
+     00BB BD          T       SHDX   CONTINUE                                  
+     *                                                                         
+     *                                                                         
+     *IF RAR & PCC UNCHANGED, KBD FUNC-                                        
+     *TIONS ARE ALLOWED. MAXIMUM LENGTH                                        
+     *IN ANY PROGRAM IS LIMITED NUMBER OF                                      
+     *CYCLES, SO A SUSPEND SUBROUTINE IS                                       
+     *USED TO ENTER THE CURRENT PROGRAM,                                       
+     *AND SUSPEND IT WHEN ITS TIME IS UP.                                      
+     *THIS ALLOWS A PART ROUTINE BETWEEN                                       
+     *TWO TM STORE'S *TO BE 63 CYCLES,                                         
+     *OR A COMPLETE *ROUTINE TO BE 25                                          
+     *CYCLES LONG.                                                             
+     *                                                                         
+     *DO KEYBOARD FUNCTIONS                                                    
+     00BC D1 KBXX     TM      STORE  ENTER CURRENT                             
+                                     PROGRAM                                   
+     00BD 50 40                                                                
+             SHDX     TL      SCHED  CONTINUE                                  
+             *                                                                 
+             *                                                                 
+                      ORG     300                                              
+     *INITIAL 1 BD PROGRAM                                                     
+     0300 CC KBYX     LB      R3D9                                             
+     0301 70          LDI     F                                                
+     0302 09          ADSK                                                     
+     0303 8E          T       1 BX20 KBD CT. = 0                               
+     0304 3C          EX      3      SAVE CT. -1                               
+     0305 10 09       IOL     #9     GET KBD                                   
+     0307 0C          EOR                                                      
+     0308 1E          SKZ                                                      
+     0309 8B          T       1 BX10 KBD CHANGED                               
+     030A 95          T       1 BX40 KBD UNCHANGED                             
+     030B 00 1 BX10   EOR                                                      
+     030C 3C          EX      3      STORE NEW KBD                             
+     030D 9B          T       1 BX30                                           
+     *ENTER 1 BD RECORDER                                                      
+     030E B4 1 BX20   LD      3                                                
+     030F DB          TM      1 BDX  ENTER KBD                                 
+                                     ROUTINE                                   
+     0310 7D 1 BX25   LDI     2                                                
+     0311 DB          TM      PLSB   PULSE KBR                                 
+     0312 00          LB      R3D9                                             
+     0313 7B 1 BX30   LDI     4      RESET COUNT                               
+     0314 BF          EX                                                       
+     0315 D1 1 BX40   TM      STORE  SUSPEND - RETURN                          
+                                     TO SECHEDULER                             
+     0316 80          T       KBYX                                             
+     *                                                                         
+     *                                                                         
+     *RAR PROCESSING - SET UP DATA FOR                                         
+     *PRINT & WAIT FOR RAR TO CHANGE.                                          
+     *                                                                         
+     0317 7F ROWP     LDI     0                                                
+     0318 3B          EX      4      CLEAR PRINT BIT                           
+     0319 37          LD      *      GET SCH FOR ROW                           
+     031A 09          ADSK    *      0 SET & SKIP IF 64-                       
+                                     CHAR ROW                                  
+     031B 71          LDI     E      32-CHAR ROW                               
+     031C 70          LDI     F      64-CHAR ROW                               
+     031D 1C 1D       IOL     #1D    SET RWL                                   
+     031F 0E          COMP                                                     
+     0320 00 B8       LBL D7R4                                                 
+     0322 38          EX      7      SAVE MASK                                 
+     0323 7E          LDI     1                                                
+     0324 28          EXD     7      SET NEXT O/P TO                           
+                                     SPACE                                     
+     0325 15          SKC                                                      
+     0326 AB          T       RP10   32-CHAR ROW                               
+     0327 38          EX      7      SET CT. FOR 64-                           
+                                     CHAR. ROW                                 
+     0328 7E          LDI     1      (DELAY CT. = 1)                           
+     0329 28          EXD     7                                                
+     032A AD          T       RP20                                             
+     032B 7E RP10     LDI     1      SET CT. FOR 32-CHAR.                      
+                                     ROW                                       
+     032C 2F          EXD     *      (SPACE CT. = 16)                          
+     032D 7E RP20     LDI     1                                                
+     032E 3D          EX      2      CLEAR SEARCHING                           
+                                     FOR ROW                                   
+     032F 3A          EX      5      CLEAR ROW                                 
+                                     COUNT                                     
+     0330 1C 19                                                                
+             RP30     IOL     #19    WAIT FOR RAR TO                           
+                                     CHANGE                                    
+     0332 0C          EOR                                                      
+     0333 1E          SKZ                                                      
+     0334 B0          T       RP30   WRONG RAR                                 
+     0335 1C 13       IOL     #13                                              
+     0337 67          ADI     8                                                
+     0338 B0          T       RP30   REN LO                                    
+     0339 7E          LDI     1                                                
+     033A D3          TM      PLSB   PULSE PWR                                 
+     033B 50 40                                                                
+             RF40     TL      SCHED  CONTINUE                                  
+     *                                                                         
+     *                                                                         
+     *RAR PROCESSING - GET NEXT ROW                                            
+     *                                                                         
+     033D D7 ROWO     TM      GETROW                                           
+     003E BB          T       RP40   CONTINUE                                  
+             *                                                                 
+             *                                                                 
+             *                                                                 
+                      ORG     CO                                               
+             *                                                                 
+     *PAGE 3                                                                   
+     *DATA ADDRESSES                                                           
+     *SUBROUTINE ADDRESSES                                                     
+     *EQUATES                                                                  
+     *                                                                         
+     *EQUATES                                                                  
+     DOR0         EQU     00       GROUP # 3RD                                 
+                                   DIGIT                                       
+     DOR3         EQU     30       KBD # MOST SIG.                             
+                                   DIGIT                                       
+     D2R4         EQU     42       WORKSPACE (FOR                              
+                                   BINARY*2)                                   
+     D5R4         EQU     45       SEARCHING FOR                               
+                                   ROW (WHEN ZERO)                             
+     D5R6         EQU     65       ROW COUNT                                   
+     D7R3         EQU     37       NEXT O/P                                    
+     D7R4         EQU     47       MASK                                        
+     D15R2        EQU     2F       TOP OF SCH TABLE                            
+     D15R5        EQU     5F       TOP OF ROW STAT-                            
+                                   US REGISTER                                 
+     D15R15       EQU     FF       TOP OF USED RAM                             
+     *DATA ADDRESSES                                                           
+     00C0 EF R1       TR      #10    SCH TABLE                                 
+     00C1 FD R0D2     PTR     #02    GROUP #                                   
+     00C2 9D R6D2     PTR     #62    SAVED KBD                                 
+                                     ROUTINE ADDRESS                           
+     00C3 8D R7D2     PTR     #72    PAGE NUMBER                               
+     00C4 CD R3D2     PTR     #32    CURRENT KBD                               
+                                     NUMBER                                    
+     00C5 8C R7D3     PTR     #73    INITIALISING                              
+     00C6 CA R3D5     PTR     #35    CURRENT ROW                               
+     00C7 BA R4D5     PTR     #45    SEARCHING FOR                             
+                                     ROW (WHEN ZERO)                           
+     00C8 C9 R3D6     PTR     #36    PRINT COUNT                               
+     00C9 C8 R3D7     PTR     #37    NEXT O/P                                  
+     00CA B7 R4D8     PTR     #48    MASK FOR PCC                              
+                                     VALUE                                     
+     00CB F6 R0D9     PTR     #09    KEYBOARD                                  
+                                     CHARACTER                                 
+     00CC C6 R3D9     PTR     #39    KEYBOARD COUNT                            
+     00CD C6 R3D10    PTR     #3A    LAST RAR                                  
+     00CE FF          PTR                                                      
+     00CF FF          PTR                                                      
+     *SUBROUTINE ADDRESSES                                                     
+     00D0 FD INDEX    PTR     ZINDE  SWITCH ROUTINE                            
+     00D1 E2 STORE    PTR     ZSTOR  SUSPEND OR RE-                            
+                                     ENTER KBD                                 
+                                     ROUTINE                                   
+     00D2 F6 SHIFT    PTR     ZSHIF  DOUBLE BINARY                             
+                                     NUMBER                                    
+     00D3 E8 PLSB     PTR     ZPLSB  SET AC AS PULSE                           
+                                     ON I/O 0 GRP B                            
+     00D4 6C CLEAR    PTR     ZCLEA  CLEAR 3 DIGITS                            
+     00D5 65 SCHRS    PTR     ZSCHR  RESET SPECIAL                             
+                                     CHARACTERS                                
+     00D6 EF PEND     PTR     ZPEND  STOP PRINTING &                           
+                                     MODE A                                    
+     00D7 BF                                                                   
+            GETROW    PTR     ZGETR  GET NEXT ROW                              
+     00D8 D6 1 BDX    PTR     ZKBDX  SELECT KBD                                
+                                     ROUTINE                                   
+     00D9 8F NUM      PTR     ZNUM   KBD ROUTINES                              
+                                     (IF <26 CYCLES,                           
+                                     BEGIN XS,                                 
+     00DA 5D GRP      PTR     ZGRP   FINISH RTN, IF                            
+                                     >25 CYCLES, DO                            
+     00DB 07 PRINT    PTR     ZPRIN  NOT BEGIN XS,                             
+                                     FINISH TL KBX25,                          
+                                     BREAK UP                                  
+     00DC 38 UP       PTR     ZUP    INTO 63 CYCLE                             
+                                     BLOCKS)                                   
+     00DD 1C BACK     PTR     ZBACK                                            
+     00DE 5D CALL     PTR     ZGRP                                             
+     00DF FF SCHX     PTR     ZSCHX  JUMP TO SCH                               
+                                     DECORDER                                  
+     00E0 74 ERASE    PTR     ZERAS  SCH ROUTINES                              
+                                     (BEGIN ALL                                
+                                     WITH XS)                                  
+     00E1 9C PROWO    PTR     ZPROW  (FINISH RTN)                              
+     00E2 99 PROWX    PTR     ZPROX  (MUST BE <114                             
+                                     CYCLES)                                   
+     00E3 70 ERAS2    PTR     ZERA2  ERASE SCREEN                              
+                                     (BY KBD)                                  
+     00E4 7F PGPRT    PTR     ZPP20  PAGE PRINT                                
+                                     (BY KBD)                                  
+     00E5 94 RWPRT    PTR     ZPX15  ROW PRINT                                 
+                                     (BY KBD)                                  
+             *                                                                 
+             *                                                                 
+             *                                                                 
+                      ORG     100                                              
+             *                                                                 
+     *PAGES 4-7                                                                
+     *SUBROUTINES CALLED BY TM                                                 
+     *                                                                         
+     *                                                                         
+     *GO TO SKR FOR SCH PROCESSING                                             
+     0100 52 2F                                                                
+             ZSCHX    TL      SCHY                                             
+             *                                                                 
+             *                                                                 
+             *                                                                 
+     *INDEX - SWITCH ROUTINE                                                   
+     *SETS RETURN ADDR BITS 0-3 TO COMP. OF                                    
+     *M & ADDS COMP. OF M EOR 3 TO RETURN                                      
+     *ADDR. BITS 4-7 LEAVES B AS B EOR 3                                       
+     *SWITCH TABLE MUST START AT 16-WD.                                        
+     *BLOCK & LIE WITHIN 256-WD. BLOCK.                                        
+     *CALLING INSTRUCTION MUST BE AT                                           
+     *16-WD BOUNDRY - 1.IF M EOR 3 = 0 IS NOT                                  
+     *TO AFFECT BITS 4-7 OF RETURN ADDRESS,                                    
+     *TABLE MUST NOT START AT 64-WD. BLOCK &                                   
+     *CALLING INSTRUCTION MUST                                                 
+     *IMMEDIATELY PRECEDE IT. IF                                               
+     *M EOR 3 = -1 IS NOT TO AFFECT BITS 4-7                                   
+     *OF RETURN ADDRESS, CALLING                                               
+     *CALLING INSTRUCTION MUST BE 17                                           
+     *WORDS BEFORE TABLE & NOT AT END                                          
+     *OF 64-WORD BLOCK.                                                        
+     0102 6F ZINDE    CYS                                                      
+     0103 34          LD      3                                                
+     0104 6F          CYS                                                      
+     0105 0B          AD                                                       
+     0106 6F          CYS                                                      
+     0107 6F          CYS                                                      
+     0108 05          RTN                                                      
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *MULTIPLY BINARY # BY 2                                                   
+     *BY ADDING TO ITSELF                                                      
+     *                                                                         
+     0109 C3 ZSHIF    LB      R7D2                                             
+     010A 24          RC                                                       
+     010B 37 ZS10     LD                                                       
+     010C 0A          ADC                                                      
+     010D 2F          EXD                                                      
+     010E 8B          T       XS10                                             
+     010F 05          RTN                                                      
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *STOP PRINTING                                                            
+     *CLEAR MODE A                                                             
+     *CLEAR ALL ROW, CRLF BITS                                                 
+     *                                                                         
+     0110 26 ZPEND    RF1     *      CLEAR MODE A                              
+     0111 00 A0       LBL     D15R5                                            
+     0113 7F PE10     LDI     0      CLEAR ROW,                                
+                                     CRLF BITS                                 
+     0114 2F          EXD                                                      
+     0115 93          T       PE10                                             
+     0116 05          RTN                                                      
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *PULSE OUTPUT ROUTINE                                                     
+     *SET O/P ON GROUP B OF I/O 0                                              
+     *TO ACCUMULATOR & CLEAR                                                   
+     *IMMEDIATELY.                                                             
+     *PULSE LENGTH = 15 MICROSEC.                                              
+     0117 1C 0D                                                                
+             ZPLSB    IOL     #D                                               
+     0119 7F          LDI     0                                                
+     011A 10 0D       IOL     #D                                               
+     0110 05          RTN                                                      
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *SUSPEND OR RE-ENTER KBD ROUTINE                                          
+     *PROGRAM. MUST NOT BE IN ANY KBD                                          
+     *ROUTINE TOO LONG SO CALLING -*THIS WILL STORE CURRENT ADDRESS &          
+     *RETURN TO THE LAST STORED ADDRESS.                                       
+     *STORED ADDRESS INITIALLY SET TO KBYX                                     
+     *SO CALLED AT KBXX TO ENTER, & AFTER                                      
+     *BLOCKS OF KBD ROUTINE TO SUSPEND.                                        
+     011D C2 ZSTOR    LB      R6D2                                             
+     011E 6F ST10     CYS                                                      
+     011F 2F          EXD                                                      
+     0120 9E          T       ST10                                             
+     0121 6F          CYS                                                      
+     0122 05          RTN                                                      
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *PROCESS KBD                                                              
+     *POSSIBLE KBD VALUES.                                                     
+     *0-9 NUMERALS                                                             
+     *10 GROUP                                                                 
+     *11 PRINT                                                                 
+     *12 UP                                                                    
+     *13 BACK                                                                  
+     *14 CALL                                                                  
+     *15 IDLE STATE                                                            
+                      ORG     129                                              
+     0129 33 ZKBDX    LD      4      GET KBD CHAR.                             
+     012A 3B          EX      4      SAVE & GET                                
+                                     LAST KBD                                  
+     012B 0C          EOR                                                      
+     012C 1E          SKZ     *      NOT CHANGED?                              
+     012D AF          T       *+2    PROCESS NEW KBD                           
+     012E 05          RTN                                                      
+     *THIS TABLE MUST BEGIN AT END OF 16-WD                                    
+     *BLOCK & LIE WITHIN A 64-WD BLOCK.                                        
+     012F D0      TM      INDEX    (RETURN ADD-                                
+                                   RESS = P + SWITCH                           
+                                   INDEX)                                      
+     0130 05      RTN     *        NO CHARACTER                                
+     0131 DE      TM      CALL                                                 
+     0132 DD      TM      BACK                                                 
+     0133 DC      TM      UP                                                   
+     0134 DB      TM      PRINT                                                
+     0135 DA      TM      GRP                                                  
+     0136 D9      TM      NUM                                                  
+     0137 D9      TM      NUM                                                  
+     0138 D9      TM      NUM                                                  
+     0139 D9      TM      NUM                                                  
+     013A D9      TM      NUM                                                  
+     013B D9      TM      NUM                                                  
+     013C D9      TM      NUM                                                  
+     013D D9      TM      NUM                                                  
+     013E D9      TM      NUM                                                  
+     013F D9      TM      NUM                                                  
+     ***END OF TABLE                                                           
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *GET NEXT ROW & PRINT LEADING CRLF IF                                     
+     *NECESSARY. STOP PRINT MODE A IF ROW                                      
+     *COUNT = 16 (CLEARED WHENEVER ROW                                         
+     *OR CRLF PRINTING IS SET UP, OR WHEN                                      
+     *A ROW PRINT OR CRLF BIT IS SET IN                                        
+     *ROW STATUS; INCREMENTED EACH TIME                                        
+     *NEXT ROW GOT). CALLED WHEN ROW                                           
+     *PRINTED TO GET NEXT, OR WHEN PRINT-                                      
+     *ING TO BE STARTED (WHEN PUT                                              
+     *CURRENT ROW = 1ST ROW - 1).                                              
+     *                                                                         
+     *GET NEXT ROW                                                             
+     0140 00 BA                                                                
+             ZGETR    LBL     D4R4                                             
+     0142 7F          LDI     0                                                
+     0143 38          EX      7      SET SEARCHING                             
+                                     FOR ROW                                   
+     0144 7E          LDI 1                                                    
+     0145 0B          AD                                                       
+     0146 3F          EX      *      INCR. CURRENT                             
+                                     ROW                                       
+     0147 31          LD      6                                                
+     0148 19          XABL    *      GET ROW STATUS                            
+     0149 7B          LDI     4                                                
+     014A 0D          AND                                                      
+     014B 1E          SKZ                                                      
+     014C 98          T       GT20   CRLF BIT SET                              
+     014D 00 9A       LBL     D5R6                                             
+     014F 37          LD                                                       
+     0150 6E          ADI     1      INCR. ROW COUNT                           
+     0151 96          T       GT10   NOT YET SCANNED                           
+                                     ALL 16 ROWS                               
+     *TERMINATE KBD PRINT MODE                                                 
+     0152 26          RF1     *      CLEAR PRINT                               
+                                     MODE A (ALL                               
+                                     ROWS PRINTED)                             
+     0153 3D          EX      2                                                
+     0154 7E GT05     LDI     1                                                
+     0155 3D          EX      2      CLEAR SEARCH-                             
+                                     ING FOR ROW                               
+     0156 3F GT10     EX      *      CLEAR (OR STORE)                          
+                                     ROW COUNT                                 
+     0157 05          RTN                                                      
+     *PRINT LEADING CRLF                                                       
+     0158 0C GT20     EOR                                                      
+     0158 3F          EX      *      CLEAR CRLF BIT                            
+     015A 00 C8       LBL     D7R3                                             
+     015C 7D          LDI     2                                                
+     015D 2F          EXD     *      SET TO PRINT                              
+                                     LFD NEXT                                  
+     015E 7F          LDI     0                                                
+     015F 38          EX      7      PRINT COUNT = 0                           
+     0160 7F          LDI     0                                                
+     0161 2F          EXD                                                      
+     0162 94          T       GT05                                             
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     ****SPECIAL CHARACTER ROUTINES                                            
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *SPECIAL CHARACTER ROW PRINTS                                             
+     *PROWX - ONLY IF IN MODE B, NO LEADING                                    
+     *CRLF                                                                     
+     *PROWO - ALWAYS                                                           
+     *                                                                         
+     0163 06 ZPROW    XS      *      DISCARD RETURN                            
+                                     ADDRESS                                   
+     0164 30          LD      7                                                
+     0165 AB          T       ZPX15                                            
+     0166 06 ZPROX    XS                                                       
+     0167 14          SKF2                                                     
+     0168 05          RTN     *      NOT MODE B                                
+     0169 30          LD      7                                                
+     016A 77          LDI     8      SET ONLY ROW                              
+                                     PRINT BIT                                 
+     016B 73 ZPX15    LDI     C      ENTRY FROM KBD                            
+                                     ROUTINE                                   
+     016C 2F          EXD     *      SET CRLF & ROW                            
+                                     PRINT BITS                                
+     016D AE          T       *+1    (IGNORE SKIP)                             
+     016E 11          LABL    *      SAVE ROW-1                                
+     016F 1B          LXA                                                      
+     0170 00 9A       LBL D5R6                                                 
+     *ENTRY POINT FROM PPGEX                                                   
+     0172 7F PX20     LDI     0                                                
+     0173 3D          EX      2      CLEAR ROW                                 
+                                     COUNT                                     
+     0174 37          LD                                                       
+     0175 60          ADI     F                                                
+     0176 05          RTN     *      SEARCHING FOR                             
+                                     ROW                                       
+     0177 C9          LB      R3D7                                             
+     0178 37          LD                                                       
+     0179 1E          SKZ                                                      
+     017A 05          RTN     *      PRINTING IN                               
+                                     PROGRESS                                  
+     017B C6          LB      R3D5                                             
+     017C 12          LAX                                                      
+     017D 3F          EX      *      SET CURRENT                               
+                                     ROW                                       
+     017E D7          TM      GETROW PRINT IT                                  
+     017F 05          RTN                                                      
+             *                                                                 
+             *                                                                 
+                      ORG     180                                              
+     *                                                                         
+     *                                                                         
+     *SPECIAL CHARACTER PAGE PRINT                                             
+     *NO LONGER USED FOR SCH                                                   
+     *ONLY USED FOR COMPLETION OF KBD                                          
+     *PAGE PRINT                                                               
+     *SCH CODE LEFT AS COMMENTS IN CASE OF                                     
+     *FUTURE USE                                                               
+     *                                                                         
+     *ZPPGE XS * DISCARD RETURN ADDRESS                                        
+     *SKF2                                                                     
+     *RTN * NOT MODE B                                                         
+     *LBL D15R5                                                                
+     *PP10 LDI 8 SET ROW BIT ON ALL ROWS                                       
+     *EXD                                                                      
+     *T PP10                                                                   
+     0180 17 ZPP20    INCB    *      ENTRY FROM KBD                            
+                                     ROUTINE                                   
+     0181 82          T       *+1                                              
+     0182 73          LDI     C      SET CRLF BIT ON                           
+                                     ROW 1                                     
+     0183 3F          EX                                                       
+     0184 C6          LB      R3D5                                             
+     0185 7F          LDI     0                                                
+     0186 3A          EX      5      CURRENT ROW = 0                           
+     0187 70          LDI     F                                                
+     0188 1B          LXA     *      SAVE CURRENT                              
+                                     ROW IF GETROW                             
+                                     CALLED                                    
+     0189 51 72       TL      PX20                                             
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *SPECIAL CHARACTER ERASE                                                  
+     018B 06 ZERAS    XS                                                       
+     018C 7B XERA2    LDI     4      ENTRY FROM KBD                            
+                                     ROUTINE                                   
+     018D D3          TM      PLSB                                             
+     018E 05          RTN                                                      
+     *KBD S/R - ERASE SCREEN                                                   
+     018F 7D ZERA2    LDI     2                                                
+     0190 1C 17       IOL     #17    SET KAC                                   
+     0192 8C          T       XERA2  ERASE SCREEN                              
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     ****EXTRA UTILITIES                                                       
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *CLEAR 3 SUCCESSIVE RAM DIGITS                                            
+     0193 7F ZCLEA    LDI     0                                                
+     0194 2F          EXD                                                      
+     0195 7F          LDI     0                                                
+     0196 2F          EXD                                                      
+     0197 7F          LDI     0                                                
+     0198 3F          EX                                                       
+     0199 05          RTN                                                      
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *RESET SPECIAL CHARACTERS                                                 
+     019A 00 D0                                                                
+             ZSCHR    LBL     D15R2                                            
+     019C 7F SR10     LDI     0                                                
+     019D 3C          EX      3                                                
+     019E 7F          LDI     0                                                
+     019F 2C          EXD     3                                                
+     01A0 9C          T       SR10                                             
+     01A1 05          RTN                                                      
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     ****KEYBOARD ROUTINES                                                     
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *PROCESS GROUP KEY                                                        
+     *NO GROUP IGNORED                                                         
+     *INVALID GROUP SET TO ZERO, WITH                                          
+     *PAGE 10                                                                  
+     *GOOD GROUP # SENT TO TERMINAL WITH                                       
+     *PGE # ZERO                                                               
+     *                                                                         
+     *                                                                         
+     *PROCESS CALL KEY                                                         
+     *NO NUMBER = 0                                                            
+     *GROUP NUMBER NOT AFFECTED                                                
+     *NEW PAGE NUNBER SENT TO TERMINAL                                         
+     *                                                                         
+     01A2 E3 ZGRP     TM      ERAS2  CLEAR SCREEN                              
+     01A3 00 CF       LBL     DOR3                                             
+     01A5 37          LD                                                       
+     01A6 6E          ADI     1                                                
+     01A7 AE          T       K10    NUMBER IN-                                
+                                     SERTED BEFORE                             
+                                     GROUP/CALL                                
+     01A8 3F          EX      *      NO NUMBER = 0                             
+     01A9 CB          LB      R0D9                                             
+     01AA 37          LD                                                       
+     01AB 6A          ADI     5                                                
+     01AC 53 D2       TL      RESET  FROM GRP -                                
+                                     IGNORE NO #                               
+             *                                                                 
+     01AE D1 K10      TM      STORE  WAIT                                      
+             *                                                                 
+     01AF 53 40       TL      XGPCL  SELECT NEW                                
+                                     GROUP/PAGE                                
+             *                                                                 
+             *                                                                 
+                      ORG     1C0                                              
+     *                                                                         
+     *                                                                         
+     *PROCESS NUMERAL KEY                                                      
+     *ADD INTO CURRENT 3-DIGIT NUMBER                                          
+     *EXCESS DIGITS SHIFTED OFF END                                            
+     *                                                                         
+     01C0 06 ZNUM     XS                                                       
+     01C1 34          LD      3      GET KBD CHAR-                             
+                                     ACTER                                     
+     01C2 37          LD                                                       
+     01C3 C4          LB      R3D2                                             
+     01C4 2F NM10     EXD     *      INSERT IN KBD                             
+                                     NUMBER                                    
+     01C5 84          T       NM10                                             
+     01C6 05          RTN                                                      
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *PROCESS UP KEY                                                           
+     *IGNORED IF PAGE # AT HIGH LIMIT                                          
+     *ELSE INCREMENTS PAGE NUMBER                                              
+     *                                                                         
+     01C7 E3 ZUP      TM      ERAS2  CLEAR SCREEN                              
+             *                                                                 
+     01C8 D1          TM      STORE  WAIT                                      
+             *                                                                 
+     01C9 C3          LB      R7D2                                             
+     01CA 37          LD                                                       
+     01CB 66          ADI     9                                                
+     01CC 98          T       UP30   BITS 0-3 NOT 7-F                          
+     01CD 1F          DECB                                                     
+     01CE 37          LD                                                       
+     01CF 6D          ADI     2                                                
+     01D0 98          T       UP30   BITS 4-7 NOT E/F                          
+     01D1 1F          DECB                                                     
+     01D2 7C          LDI     3                                                
+     01D3 0D          AND                                                      
+     01D4 62          ADI     D                                                
+     01D5 98          T       UP30   BITS 8-9 NOT 3                            
+     01D6 53 D2                                                                
+             UP15     TL      RESET  PAGE NUMBER AT                            
+                                     HIGH LIMIT                                
+             *                                                                 
+     01D8 D1 UP30     TM      STORE WAIT                                       
+     *UP ACCEPTED                                                              
+     01D9 C3          LB      R7D2   ADD 1 TO PAGE #                           
+     01DA 24          RC                                                       
+     01DB 7E          LDI     1                                                
+     01DC 9E          T       UP50                                             
+     01DD 7F UP40     LDI     0                                                
+     01DE 0A UP50     ADC                                                      
+     01DF 2F          EXD                                                      
+     01E0 9D          T       UP40                                             
+     01E1 53 96       TL      SEND   SEND TO                                   
+                                     TERMINAL                                  
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *PROCESS BACK KEY                                                         
+     *IGNORED IF PAGE # AT ZERO                                                
+     *ELSE DECREMENTS PAGE NUMBER                                              
+     *                                                                         
+     01E3 E3 ZBACK    TM      ERAS2  CLEAR SCREEN                              
+     01E4 C3          LB      R7D2                                             
+     01E5 37 BK 10    LD                                                       
+     01E6 1E          SKZ                                                      
+     01E7 AF          T       BK20                                             
+     01E8 1F          DECB                                                     
+     01E9 40          SKBI    0                                                
+     01EA A5          T       BK10                                             
+     01EB 73          LDI     C                                                
+     01EC 0F          OR                                                       
+     O1ED 6C          ADI     3                                                
+     01EE 96          T       UP15   PAGE NUMBER = 0                           
+             *                                                                 
+     01EF D1 BK20     TM      STORE  WAIT                                      
+     *BACK ACCEPTED                                                            
+     01F0 C3          LB      R7D2   SUBTRACT 1 FROM                           
+                                     PAGE #                                    
+     01F1 24          RC                                                       
+     01F2 70 BK30     LDI     F                                                
+     01F3 0A          ADC                                                      
+     01F4 2F          EXD                                                      
+     01F5 B2          T       BK30                                             
+     01F6 53 9A       TL      SEND   SEND TO                                   
+                                     TERMINAL                                  
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *PROCESS PRINT KEY                                                        
+     *CODE IN ANOTHER PAGE                                                     
+     *                                                                         
+     01F8 52 C0                                                                
+             ZPRIN    TL      XPRIN                                            
+             *                                                                 
+             *                                                                 
+             *                                                                 
+                      ORG     22F                                              
+     *                                                                         
+     *PAGES 8-15                                                               
+     *(EXCEPT PAGE 12 300-33F USED ALREADY)                                    
+     *SUBROUTINES CALLED BY TML                                                
+     *OR OTHER PROGRAMS                                                        
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *PROCESS SCH                                                              
+     *THIS TABLE MUST BEGIN AT THE END OF                                      
+     *A 16-WD BLOCK (NOT FA 64-WORK BLOCK)                                     
+     *& LIE WITHIN A 256-WD BLOCK, & THE                                       
+     *SWITCH TABLE MUST BE 16 WORDS ON                                         
+     *FROM CALLING INSTRUCTION                                                 
+     022F D0 SCHY     TM      INDEX  (RETURN ADD-                              
+                                     RESS =  P + SWITCH                        
+                                     INDEX)                                    
+     *AN SCH 7F WILL ADD 1 TO RETURN ADDR                                      
+     *BITS 4-7 & THEREFORE RETURN HERE                                         
+     *(16 WDS ON FROM CALLING INSTRUCTION)                                     
+     ORG          240                                                          
+     0240 05      RTN                                                          
+     0241 05      RTN                                                          
+     0242 05      RTN                                                          
+     0243 05      RTN                                                          
+     0244 05      RTN                                                          
+     0245 05      RTN                                                          
+     0246 05      RTN                                                          
+     0247 05      RTN                                                          
+     0248 05      RTN                                                          
+     0249 05      RTN                                                          
+     024A 05      RTN                                                          
+     024B 05      RTN                                                          
+     024C 05      RTN                                                          
+     024D 05      RTN                                                          
+     024E 05      RTN                                                          
+     024F 05      RTN                                                          
+     0250 05      RTN                                                          
+     0251 05      RTN                                                          
+     0252 05      RTN                                                          
+     0253 05      RTN                                                          
+     0254 05      RTN                                                          
+     0255 05      RTN                                                          
+     0256 05      RTN                                                          
+     0257 05      RTN                                                          
+     0258 05      RTN                                                          
+     0259 05      RTN                                                          
+     025A 05      RTN                                                          
+     025B 05      RTN                                                          
+     025C 05      RTN                                                          
+     025D 05      RTN                                                          
+     025E 05      RTN                                                          
+     025F 05      RTN                                                          
+     0260 05      RTN                                                          
+     0261 05      RTN                                                          
+     0262 05      RTN                                                          
+     0263 05      RTN                                                          
+     0264 05      RTN                                                          
+     0265 05      RTN                                                          
+     0266 05      RTN                                                          
+     0267 05      RTN                                                          
+     0268 05      RTN                                                          
+     0269 05      RTN                                                          
+     026A 05      RTN                                                          
+     026B 05      RTN                                                          
+     026C 05      RTN                                                          
+     026D 05      RTN                                                          
+     026E 05      RTN                                                          
+     026F 05      RTN                                                          
+     0270 05      RTN                                                          
+     0271 05      RTN                                                          
+     0272 05      RTN                                                          
+     0273 05      RTN                                                          
+     0274 05      RTN                                                          
+     0275 05      RTN                                                          
+     0276 05      RTN                                                          
+     0277 05      RTN                                                          
+     0278 05      RTN                                                          
+     0279 05      RTN                                                          
+     027A 05      RTN                                                          
+     027B 05      RTN                                                          
+     027C 05      RTN                                                          
+     027D 05      RTN                                                          
+     027E 05      RTN                                                          
+     027F 05      RTN                                                          
+     0280 05      RTN                                                          
+     0281 05      RTN                                                          
+     0282 05      RTN                                                          
+     0283 05      RTN                                                          
+     0284 05      RTN                                                          
+     0285 05      RTN                                                          
+     0286 05      RTN                                                          
+     0287 05      RTN                                                          
+     0288 05      RTN                                                          
+     0289 05      RTN                                                          
+     028A 05      RTN                                                          
+     028B 05      RTN                                                          
+     028C 05      RTN                                                          
+     028D 05      RTN                                                          
+     028E 05      RTN                                                          
+     028F 05      RTN                                                          
+     0290 05      RTN                                                          
+     0291 05      RTN                                                          
+     0292 05      RTN                                                          
+     0293 05      RTN                                                          
+     0294 05      RTN                                                          
+     0295 05      RTN                                                          
+     0296 E1      TM      PROWO    SCH=41                                      
+     0297 05      RTN                                                          
+     0298 05      RTN                                                          
+     0299 05      RTN                                                          
+     029A 05      RTN                                                          
+     029B 05      RTN                                                          
+     029C 05      RTN                                                          
+     029D 05      RTN                                                          
+     029E E1      TM      PROWO    SCH=33                                      
+     029F E0      TM      ERASE    SCH=32                                      
+     02A0 E2      TM      PROWX    SCH=31                                      
+     02A1 05      RTN                                                          
+     02A2 E2      TM      PROWX    SCH=29                                      
+     02A3 05      RTN                                                          
+     02A4 E2      TM      PROWX    SCH=27                                      
+     02A5 05      RTN                                                          
+     02A6 E2      TM      PROWX    SCH=25                                      
+     02A7 05      RTN                                                          
+     02A8 E2      TM      PROWX    SCH=23                                      
+     02A9 05      RTN                                                          
+     02AA E2      TM      PROWX    SCH=21                                      
+     02AB 05      RTN                                                          
+     02AC E2      TM      PROWX    SCH=19                                      
+     02AD 05      RTN                                                          
+     02AE E2      TM      PROWX    SCH=17                                      
+     02AF 05      RTN                                                          
+     02B0 E2      TM      PROWX    SCH=15                                      
+     02B1 05      RTN                                                          
+     02B2 E2      TM      PROWX    SCH=13                                      
+     02B3 05      RTN                                                          
+     02B4 E2      TM      PROWX    SCH=11                                      
+     02B5 05      RTN                                                          
+     02B6 E2      TM      PROWX    SCH=9                                       
+     02B7 05      RTN                                                          
+     02B8 E2      TM      PROWX    SCH=7                                       
+     02B9 05      RTN                                                          
+     02BA E2      TM      PROWX    SCH=5                                       
+     02BB 05      RTN                                                          
+     02BC E2      TM      PRWOX    SCH=3                                       
+     02BD 05      RTN                                                          
+     02BE E2      TM      PROWX    SCH=1                                       
+     02BF 05      RTN     *        SCH-0                                       
+     ***END OF TABLE                                                           
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     ****MORE KEYBOARD ROUTINES IN                                             
+     ****PAGES 8-15                                                            
+     *                                                                         
+                ORG   2C0                                                      
+     *                                                                         
+     *                                                                         
+     *PROCESS PRINT KEY                                                        
+     *NO NUMBER = PRINT PAGE OR STOP PRINT                                     
+     *NUMBER 0 = START MODE B                                                  
+     *NUMBER 1-16 = PRINT ROW                                                  
+     *                                                                         
+     02C0 00 CF                                                                
+             XPRIN    LBL     DOR3                                             
+     02C2 37          LD                                                       
+     02C3 6E          ADI     1                                                
+     02C4 9A          T       P60    NUMBER INSERTED                           
+             *                                                                 
+     02C5 D1          TM      STORE  WAIT                                      
+     *NO NUMBER INSERTED                                                       
+     02C6 16          SKF1                                                     
+     02C7 89          T       P10                                              
+     02C8 8B          T       P20    MODE A                                    
+     02C9 14 P10      SKF2                                                     
+     02CA 8E          T       P30    NOT MODE B                                
+     *STOP PRINTING                                                            
+     02CB 25 P20      RF2     *      CLEAR MODE B                              
+     02CC D6          TM      PEND   CLEAR MODE A,                             
+                                     ROW, CRLF BITS                            
+     02CD 98          T       P50    EXIT                                      
+     *PRINT PAGE                                                               
+     02CE 22 P30      SF1     *      SET MODE A                                
+     02CF 00 A0       LBL     D15R5                                            
+     02D1 77 P40      LDI     8      SET ALL ROW BITS                          
+     02D2 2F          EXD                                                      
+     02D3 91          T       P40                                              
+             *                                                                 
+     02D4 D1          TM      STORE  WAIT                                      
+             *                                                                 
+     02D5 00 A0       LBL     D15R5  RESET B                                   
+     02D7 E4          TM      PGPRT  USE SCH ROUTINE                           
+                                     TO SET REST OF                            
+                                     DATA                                      
+     02D8 53 D2                                                                
+             P50      TL      RESET  RESET KBD #                               
+                                     AND EXIT                                  
+     *NUMBER INSERTED                                                          
+     02DA 04 P60      LB      R3D2                                             
+     02DB 37          LD                                                       
+     02DC 66          ADI     9                                                
+     02DD 9F          T       P70                                              
+     02DE A6          T       P80                                              
+     02DF    P70      DECB                                                     
+     02E0 7E          LDI     1                                                
+     02E1 0C          EOR                                                      
+     02E2 1E          SRZ                                                      
+     02E3 B1          T       P90                                              
+     02E4 17          INCB                                                     
+     02E5 76          LDI     9                                                
+     02E6 70 P80      LDI     F                                                
+     02E7 0B          AD                                                       
+     *PRINT ROW                                                                
+     02E8 22          SF1     *      SET MODE A                                
+     02E9 25          RF2     *      CLEAR MODE B                              
+     02EA 3F          EX      *      SAVE ROW *                                
+             *                                                                 
+     02EB D1          TM      STORE  WAIT                                      
+             *                                                                 
+     02EC 04          LB      R3D2                                             
+     02ED 39          EX      6      GET ROW *                                 
+     02EE 19          XABL    *      GET ROW                                   
+                                     STATUS WORD                               
+     02EF E5          TM      RWPRT  USE SCH ROUTINE                           
+                                     TO SET REST                               
+                                     OF DATA                                   
+     02F0 98          T       P50    EXIT                                      
+     *SET MODE B                                                               
+     02F1 17 P90      INCB                                                     
+     02F2 37          LD                                                       
+     02FB 1E          SKZ                                                      
+     02F4 A6          T       P80    NOT ZERO NUM-                             
+                                     BER - PRINT                               
+                                     ROW                                       
+     02F5 26          RF1     *      CLEAR MODE A                              
+     02F6 21          SF2     *      SET MODE B                                
+     02F7 98          T       P50    EXIT                                      
+             *                                                                 
+                      ORG     340                                              
+     *                                                                         
+     *                                                                         
+     *                                                                         
+     *CONTINUE WITH GROUP/CALL KEY PROCESSING                                  
+     *THE STORY SO FAR-                                                        
+     *SCREEN ERASED, NO NUMBER DEALT WITH                                      
+     *CONVERT DECIMAL TO BINARY NUMBER                                         
+     0340 C3 XGPCL    R7D2                                                     
+     0341 D4          TM      CLEAR  INITIALISE                                
+                                     BINARY TO ZERO                            
+     0342 3F          EX                                                       
+     0343 38          EX      7      GET GROUP                                 
+                                     BITS 8/9                                  
+     0344 3F          EX                                                       
+     0345 37          LD      *      SHIFT TWICE                               
+                                     RIGHT & INSERT                            
+                                     IN GROUP                                  
+     0346 0B          AD                                                       
+     0347 3F          EX                                                       
+     0348 37          LD                                                       
+     0349 0A          ADC                                                      
+     034A 3F          EX                                                       
+     034B 37          LD                                                       
+     034C 0A          ADC                                                      
+     034D 2B          EXD     4                                                
+     034E 8F          T       *+1                                              
+     0347 7F          LDI     0                                                
+     0350 3F          EX      *      INITIALISE POINTER                        
+                                     FOR KBD *                                 
+                                     DIGITS                                    
+     *ADD IN NEXT DIGIT TO NUMBER SO FAR                                       
+     0351 7E DB20     LDI     1                                                
+     0352 0B          AD      *      INCREMENT POINTER                         
+     0353 38          EX      7                                                
+     0354 10          XABL                                                     
+     0355 17          LD      *      GET NEXT DIGIT                            
+     0356 03          LB      R7D2                                             
+     0357 24          RC                                                       
+     0358 9A          T       DB40                                             
+     0359 7F DB30     LDI     0      ADD ANY CARRY                             
+     035A 0A DB40     ADC                                                      
+     035B 2F          EXD                                                      
+     035C 99          T       DB30                                             
+     *CHECK COMPLETION                                                         
+     035D 34          LD      3                                                
+     035E 37          LD                                                       
+     035F 62          ADI     D                                                
+     0360 A3          T       DB60   NOT ALL DIGITS                            
+                                     DONE                                      
+     0361 53 80       TL      DB90   FINISHED                                  
+             *                                                                 
+     0363 D1 DB60     TM      STORE  WAIT                                      
+     *MULTIPLY NUMBER SO FAR BY 10                                             
+     *(MAKE ROOM FOR NEXT DIGIT)                                               
+     0364 D2          TM      SHIFT  *2                                        
+     0365 C3          LB      R7D2                                             
+     0366 34 DB70     LD      3      SAVE *2                                   
+     0367 2C          EXD     3                                                
+     0368 A6          T       DB70                                             
+     0369 D2          TM      SHIFT  *4                                        
+             *                                                                 
+     036A D1          TM      STORE  WAIT                                      
+             *                                                                 
+     0368B D2         TM      SHIFT  *8                                        
+     036C 00 BD       LBL     D2R4   ADD *2                                    
+     036E 24          RC                                                       
+     036F 34 DB80     LD      3                                                
+     0370 0A          ADC                                                      
+     0371 2C          EXD     3                                                
+     0372 AF          T       DB80                                             
+     0373 91          T       DB20   DO NEXT DIGIT                             
+                      ORG     380                                              
+             *                                                                 
+     0380 D1 DB90     TM      STORE  WAIT                                      
+     *COMPLETION                                                               
+     0381 CB          LB      R0D9                                             
+     0382 37          LD                                                       
+     0383 6A          ADI     5                                                
+     0384 86          T       *+2    FROM GROUP                                
+     0285 8C          T       DB120  FROM CALL                                 
+     0386 C3          LB      R7D2                                             
+     0387 30 DB100    LD      7                                                
+     0388 28          EXD     7                                                
+     0389 87          T       DB100                                            
+     038A C3          LB      R7D2                                             
+     038B D4 DB110    TM      CLEAR  CLEAR PAGE #                              
+     038C 00 FF                                                                
+             DB120    LBL     DORO   RESET GROUP                               
+                                     BITS 8/9                                  
+     038E 37          LD                                                       
+     038F 0B          AD                                                       
+     0390 0B          AD                                                       
+     0391 0B          AD                                                       
+     0392 3F          EX                                                       
+     0393 30          LD      7                                                
+     0394 0F          OR                                                       
+     0395 3F          EX                                                       
+     *SEND NEW GROUP/PAGE TO TERMINAL                                          
+     0396 D1 SEND     TM      STORE  WAIT                                      
+             *                                                                 
+     0397 D6          TM      PEND   STOP PRINTING                             
+             *                                                                 
+     0398 D1 SD10     TM      STORE  WAIT                                      
+     *SEND PAGE #                                                              
+     0399 C3          LB      R7D2                                             
+     039A 24          RC      *      MARK PAGE #                               
+                                     SENDING                                   
+     039B 34 SD20     LD      3      GET 4 BITS FOR                            
+                                     GAD/PAD                                   
+     039C 1C 1E       IOL     #1E    SEND                                      
+     039E 42          SFBI    2                                                
+     039F A4          T       SD24   NOT 1ST 4 BITS                            
+     03A0 15          SKC                                                      
+     03A1 7E          LDI     1      1ST 4 BITS PAGE #                         
+     03A2 77          LDI     *      1ST 4 BITS                                
+                                     GROUP #                                   
+     03A3 AB          T       SD32                                             
+     03A4 15 SD24     SLC                                                      
+     03A5 AS          T       SD30   2ND/3RD 4 BITS                            
+                                     PAGE #                                    
+     03A6 53 CO       TL      SD40   LAST 4-BITS                               
+                                     GROUP #                                   
+     03A8 41 SD30     S4BI    1                                                
+     03A9 7B          LDI     4      3RD 4 BITS                                
+                                     PAGE #                                    
+     03AA 7D          LDI     2      2ND 4 BITS                                
+                                     PAGE #                                    
+     03AB 1C 07                                                                
+             SD32     IOL     #7     PULSE LEN                                 
+     03AD 7F          LDI     0                                                
+     03AE 1C 07       IOL     #7                                               
+     03B0 2C          EXD     3                                                
+     03B1 9B          T       SD20                                             
+             *                                                                 
+     03B2 D1          TM      STORE  WAIT                                      
+     *SEND GROUP #                                                             
+     03B3 C1          LB      ROD2                                             
+     03B4 20          SC      *      MARK GROUP #                              
+                                     SENDING                                   
+     03B3 9B          T       SD20                                             
+                      ORG     3CO                                              
+     03CO 77 SD40     LDI     8                                                
+     03CI D3          TM      PLSB                                             
+     03C2 1C 13       IOL     #13    GET PER                                   
+     03C4 3F          EX                                                       
+     03C5 7D          LDI     2                                                
+     03C6 0D          AND                                                      
+     03C7 60          ADI     F                                                
+     03C8 9C          T       SD45   INVALID GROUP                             
+     03C9 C5          LB      R7D3   PER OK                                    
+     03CA 2F          EXD                                                      
+     03CB 1E          SKZ     *      INITIALISING                              
+     03CC 91          T       SD44                                             
+     03CD 7D          LDI     2      .                                         
+     03CE 3F          EX      *      CALL PAGE 2                               
+     03CF 53 98                                                                
+             SD43     TL      SD10   SEND                                      
+     03D1 D5 SD44     TM      SCHRS  RESET SCH'S                               
+             *        .                                                        
+     03D2 D1 RESET    TM      STORE  WAIT                                      
+     *RESET KBD # AND EXIT                                                     
+     03D3 7F          LDI     0                                                
+     03D4 1C 17       IOL     #17    CLEAR KAC                                 
+     03D6 C4          LB      R3D2                                             
+     03D7 D4 RS10     TM      CLEAR                                            
+     03D8 70          LDI     F                                                
+     03D9 3F          EX                                                       
+     03DA 53 10       TL      KBX25  RETURN TO                                 
+                                     SCHEDULER                                 
+     *INVALID GROUP - SET TO ZERO                                              
+     03DC C5 SD45     LB      R7D3   PER BAD                                   
+     03DD 09          ADSK                                                     
+     03DE 8F          T       SD43   INITING - RESEND                          
+                                     PGE 1                                     
+     03DF 1F          DECB                                                     
+     0SEO 7C          LDI     3      BAD GRP - SEND                            
+                                     GRP 0 PGE 3                               
+     0BE1 7F SD60     LDI     0                                                
+     0BE2 38          EX      7                                                
+     0BE3 7F          LDI     0                                                
+     0BE4 28          EXD     7                                                
+     0BE5 A1          T       SD60                                             
+     0BE6 8F          T       SD43                                             
+             *                                                                 
+             *                                                                 
+             *                                                                 
+                      END    
