@@ -79,7 +79,7 @@ while { $pc < [llength $romdata] } {
 	}
 	
 	0x09 {
-	    puts -nonewline "$addrstr   $op       "
+	    puts -nonewline $opf "$addrstr   $op       "
 	    puts $opf "adsk"
 	}
 	

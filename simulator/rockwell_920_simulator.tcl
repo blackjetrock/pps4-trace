@@ -26,6 +26,7 @@ proc reset_pps {} {
     set ::PPS_F1 0
     set ::PPS_F2 0
     set ::sag_zero 0
+    set ::PPS_DOA 0
     
     # Clear RAM
     for {set i 0} {$i <= 0xFFF} {incr i 1} {
@@ -36,6 +37,7 @@ proc reset_pps {} {
 proc pps_status {} {
 
     puts [format "P:%03X A:%01X X:%01X B:%03X SA:%03X SB:%03X CFF:%d F1:%d F2:%d" $::PPS_P $::PPS_A $::PPS_X $::PPS_B $::PPS_SA $::PPS_SB $::PPS_C_FF $::PPS_F1 $::PPS_F2]
+    puts [format "DOA:%01X" $::PPS_DOA]
 }
 
 ################################################################################
@@ -56,6 +58,10 @@ proc p_eq_sa_sa_swap_sb {} {
 proc sb_eq_sa_sa_eq_p {delta} {
     set ::PPS_SB $::PPS_SA
     set ::PPS_SA [expr $::PPS_P + $delta]
+}
+
+proc set_bl {bm} {
+    set ::PPS_B [expr ($::PPS_B & 0xFF0) | (($bm & 0xF) << 0)]
 }
 
 proc set_bm {bm} {
@@ -559,15 +565,26 @@ while { !$::DONE } {
 	}
 	
 	17 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "incb"
+	    set bl [get_bl]
+	    set bl [expr ($bl + 1) % 16]
+	    set_bl $bl
+	    if { $bl == 0 } {
+		set skip_next_rom_word 1
+	    }
+	    
 	    set lb_just_executed 0
 	}
 	
 	1F {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "decb"
+	    set bl [get_bl]
+	    set bl [expr ($bl - 1) % 16]
+	    set_bl $bl
+	    if { $bl == 15 } {
+		set skip_next_rom_word 1
+	    }
+	    
 	    set lb_just_executed 0
+	    
 	}
 	
 	80 -
@@ -834,6 +851,7 @@ while { !$::DONE } {
 	1D {
 	    puts -nonewline $opf "$addrstr   $op       "
 	    puts $opf "doa"
+	    set ::PPS_DOA $::PPS_A
 	    set lb_just_executed 0
 	}
 	
