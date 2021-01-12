@@ -1,3 +1,4 @@
+000     0x81       t 0x1
 000     0x81       t 0x1        ;
 001     0x82       t 0x2
 002     0x74       ldi 0xB      ;Set up for IOL
@@ -24,6 +25,11 @@
 015     0x00 0x00  lbl 0x00  
 
 017     0x00 0xD3  lbl 0x2C     ; Inverted data  
+
+; Alternative code
+010     0x47       skbi 7
+011     0x16       skf1
+
 019     0x37       ld 0x0
 01A     0x0B       ad
 01B     0x0E       comp
