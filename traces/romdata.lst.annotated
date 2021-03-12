@@ -216,11 +216,11 @@
 0D9     0xFF      ; return instruction
 0DB     0xE9      ; Memory swap?
 
-0DC     0x79      ; Exchange B0 and 50?
+0DC     0x79      ; Exchange B0 and 50?  179?
 0DE     0x95      ; Some memory routine
-0DF     0x32      ; Jump to 3C0
-0E0     0x34      ; Jump to 2C0
-0E1     0x30      ; Jump to 640
+0DF     0x32      ; Jumps finally to 3C0
+0E0     0x34      ; Jumps finally to 2C0
+0E1     0x30      ; Jumps finally to 640
 0E2     0x02      ; Fill memory at B2
 0E3     0x04      ; Fill block of memory
 0E5     0xBB      ; Memory copy in the opposite direction as E6?
@@ -1829,14 +1829,22 @@ SET4BITS:
 801     0xBC       t 0x3C
 802     0x26       rf1
 803     0x1C 0x3A  iol 0x3A      ; dev3 read grp a printer
-805     0x00 0xE1  lbl 0xE1  
+805     0x00
+
+; Called from 3A0 table
+806     0xE1       tm 0xE1       ; jump to 640
 807     0x3F       ex 0x0
 808     0xF9       tm 0x39
+
+; Called from 3A0 table
 809     0x8B       t 0xB
 80A     0x83       t 0x3
-80B     0x00 0xDC  lbl 0xDC  
+80B     0x00
+80C     0xDC       tm  0xDC      ; jump to 
 80D     0x7D       ldi 0x2
 80E     0xD7       tm 0x17
+
+; called from 3A0 table
 80F     0xB8       t 0x38
 
 810     0x00 0xB1  lbl 0xB1  
@@ -1870,6 +1878,8 @@ SET4BITS:
 832     0x02 0xB9  tml 0x2B9
 834     0x55 0x4B  tl 0x54B
 836     0x57 0xA6  tl 0x7A6
+
+
 838     0x7C       ldi 0x3
 839     0xD7       tm 0x17
 83A     0x95       t 0x15
@@ -1887,6 +1897,8 @@ SET4BITS:
 84B     0x64       adi 0xB
 84C     0x81       t 0x1
 84D     0x1B       lxa
+
+;Routine called from 3A0 table
 84E     0x01 0xF4  tml 0x1F4
 850     0xC8       lb 0x7
 851     0xF7       tm 0x37
@@ -2002,6 +2014,8 @@ SET4BITS:
 8DA     0x70       ldi 0xF
 8DB     0x3F       ex 0x0
 8DC     0x8D       t 0xD
+
+;--------------------------------------------------------------------------------
 
 8DD     0x70       ldi 0xF
 8DE     0xC5       lb 0xA       ; F0 in B, then return
@@ -2603,7 +2617,7 @@ D4E     0xB8       t 0x38
 D4F     0xCC       lb 0x3
 D50     0xFB       tm 0x3B
 D51     0xB3       t 0x33
-D52     0x27       dia
+D52     0x27       dia               ; Read switch states
 D53     0x3F       ex 0x0
 D54     0xF9       tm 0x39
 D62     0xC3       lb 0xC
@@ -2735,10 +2749,11 @@ E64     0x61       adi 0xE
 
 ; Called in idle loop
 E65     0x00 0xE3  lbl 0x1C   ; Load 1C into B
-E67     0x37       ld 0x0
+E67     0x37       ld 0x0     ; Load A with (1C)
 
 E68     0x1E       skz
 E69     0xB6       t 0x36      ; A non zero
+
 E6A     0x7E       ldi 0x1
 E6B     0x1C 0x1D  iol 0x1D    ; Set grp b segment g
 E6D     0xC5       lb 0xA
@@ -2751,7 +2766,7 @@ E73     0x58 0xE9  tl 0x8E9
 
 E76     0x7E       ldi 0x1
 E77     0x1C 0x1D  iol 0x1D      ; set grp b segment g
-E79     0x03 0xAA  tml 0x3AA
+E79     0x03 0xAA  tml 0x3AA     ; Call 82F
 E7B     0xE6       tm 0x26
 E7C     0x01 0xC0  tml 0x1C0     ; Copy register to lower register
 E7E     0x5B 0x4E  tl 0xB4E
