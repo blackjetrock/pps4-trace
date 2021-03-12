@@ -1,6 +1,6 @@
 #!/usr/bin/wish
 #
-# graphs every touched ROm address
+# graphs every touched ROM address
 
 
 set w ""
@@ -36,7 +36,6 @@ proc draw_grid {} {
     set y  [expr $::OY+(0 / $::MOD)*$::SC]
     set x1 [expr $::OX+(0xFFF % $::MOD)*$::SC]
     set y1 [expr $::OY+(0xFFF / $::MOD)*$::SC]
-
 
     $::C create rect $x $y $x1 $y1
 

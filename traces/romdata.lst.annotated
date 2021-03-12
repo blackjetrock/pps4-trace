@@ -5,6 +5,7 @@
 003     0x1C 0x1E  iol 0x1E     ; Device 1, command E : Set group A (U14, kd/disp) 0xB
                                 ; OUT1-4 : 0xB
 				; OUT4 = LE of MC14515 display digit select
+				; OUT1,2: bank 3
 				
 005     0x7E       ldi 0x1      ; Set up for IOL
 006     0x1C 0x1D  iol 0x1D     ; Device 1, command D: Set group B
@@ -45,14 +46,18 @@
 024     0x73       ldi 0xC
 025     0x3F       ex 0x0
 026     0x01 0x0F  tml 0x10F
-028     0x05       rtn
+028     0x05       rtnedit 
 
 029     0x03 0xA2  tml 0x3A2
 02B     0xED       tm 0x2D
-02C     0x01 0x14  tml 0x114
+02C     0x01 0x14  tml 0x114   ; Set bank 3
 02E     0x02 0x71  tml 0x271
 
 ; Jumped to from reset
+030     0xC2       lb 0xD
+031     0xF7       tm 0x37     ; Jumps to 1D2 Skip if zero bit 0
+
+030     0xC2
 030     0x00 0xF7  lbl 0x08  
 032     0xB6       t 0x36
 033     0xC4       lb 0xB
@@ -273,14 +278,24 @@
 10E     0x8B       t 0xB
 10F     0x05       rtn
 
+;This routine sets the bank switch lines for the ROMs to
+;one of the four possible settings. The setting '10' is duplicated
+;for some reason
+; Card reader output held at 1 and digit blank held at 0
+
                              ; Different ROM bank select
-110     0x75       ldi 0xA   ; 1010    OUT2 is 
+			     ;         OUT1 is AS3 / ab13
+110     0x75       ldi 0xA   ; 1010    OUT2 is AS4 / ab14
+
+
+;; Gap
+
 114     0x74       ldi 0xB   ; 1011    OUT3 is digit blank
 115     0x75       ldi 0xA   ; 1010    OUT4 is card reader thing
 116     0x76       ldi 0x9   ; 1001 
 117     0x77       ldi 0x8   ; 1000
 118     0x1C 0x1E  iol 0x1E  ; dev1 cmd 0xe set group a out 1-4
-11A     0x9B       t 0x1B
+11A     0x9B       t 0x1B    ; Delay?
 11B     0x05       rtn
 
 ; Load B with 0B0, invert A and return
@@ -433,7 +448,7 @@
 1AC     0x00 0xFD  lbl 0xFD    ;Load b with 0xFD
 1AE     0x00 0xCD  lbl 0xCD    ; Ignored unless first LBL
 
-; Sum blok of memory
+; Sum block of memory
 1B0     0x24       rc          ; Reset carry
 1B1     0x0A       adc         ; A = A + (B)
 1B2     0x3F       ex 0x0      
@@ -533,7 +548,9 @@ SET4BITS:
 200     0x55 0x00  tl 0x500
 
 200     0x00 0xC2  lbl 0xC2  
-202     0x00 0x98  lbl 0x98  
+202     0x00 0x98  lbl 0x98
+
+205: From keyscan below
 204     0x00 0x00  lbl 0x00  
 206     0xDD       tm 0x1D
 207     0x00 0x00  lbl 0x00  
@@ -555,13 +572,13 @@ SET4BITS:
 
 21B     0x27       dia         ; Read switch states
 21C     0x67       adi 0x8     ; Check for key pressed?
-21D     0x85       t 0x5       ; 
+21D     0x85       t 0x5       ; Skipped if C (top bit set)
 
-21E     0x00 0x02  lbl 0x02  
-220     0x33       ld 0x4
-221     0x40       skbi 0
+21E     0x00 0x02  lbl 0x02    ; Load B with FB
+220     0x33       ld 0x4      ; Load A with (FB)
+221     0x40       skbi 0      ; Skip if B = 0
 222     0x07       rtnsk
-223     0x67       adi 0x8
+223     0x67       adi 0x8     ; Add 8, skip if C
 224     0x80       t 0x0       ; Transfer to 200
 
 225     0xE7       tm 0x27     ; E7 has Address = 3C : 13C
@@ -593,8 +610,11 @@ SET4BITS:
 ;Jumped to after reset
 
 244     0x5C 0x6F  tl 0xC6F
-24B     0x55 0xC0  tl 0x5C0
-24D     0x55 0xCC  tl 0x5CC
+24B     0x55 0xC0  tl 0x5C0      ; Drive display and keyboard
+
+
+24D     0x55 0xCC  tl 0x5CC      ; In idle loop
+
 24F     0x5D 0xF0  tl 0xDF0
 255     0x56 0x90  tl 0x690
 
@@ -746,7 +766,7 @@ SET4BITS:
 316     0x5E 0x8C  tl 0xE8C
 318     0x00 0x00  lbl 0x00  
 31A     0x55 0x1A  tl 0x51A
-31C     0x1C       iol 0xF1  
+31C     0x1C 0xF1  iol 0xF1  
 
 
 31E     0x57 0x1B  tl 0x71B
@@ -758,7 +778,7 @@ SET4BITS:
 329     0x80       t 0x0
 32A     0x54 0x2E  tl 0x42E
 32C     0x00 0x00  lbl 0x00  
-32E     0x1C       iol 0x08  
+32E     0x1C 0x08  iol 0x08  
 330     0x00 0x00  lbl 0x00  
 332     0x00 0x00  lbl 0x00  
 334     0x00 0x00  lbl 0x00  
@@ -787,11 +807,11 @@ SET4BITS:
 35A     0x00 0x00  lbl 0x00  
 35C     0x57 0x74  tl 0x774
 35E     0x50 0x77  tl 0x077
-360     0x1C       iol 0x09  
+360     0x1C 0x09  iol 0x09  
 362     0x54 0x40  tl 0x440
-364     0x1C       iol 0x29  
+364     0x1C 0x29  iol 0x29  
 366     0x54 0x4C  tl 0x44C
-368     0x1C       iol 0x09  
+368     0x1C 0x09  iol 0x09  
 36A     0x54 0x53  tl 0x453
 
 
@@ -1188,18 +1208,19 @@ SET4BITS:
 
 549     0x8E       t 0xE
 54A     0x70       ldi 0xF
-54B     0x1C       iol 0x2E  ; device 2, set group A (printer)
+54B     0x1C 0x2E  iol 0x2E  ; device 2, set group A (printer)
 54D     0x81       t 0x1
 54E     0x71       ldi 0xE
-54F     0x1C       iol 0x2E
+54F     0x1C 0x2E  iol 0x2E
 
 551     0xE7       tm 0x27
 
 ;********************************************************************************
 ; * two versions
+; Part oif random sample so could be idle loop
 
 552     0xC4       lb 0xB
-552     0x05       rtn
+552     0x05       rtn         ; goes back to 030 in random trace
 
 ; Store ln(10) in 5F..50
 
@@ -1272,7 +1293,7 @@ SET4BITS:
 597     0x17       incb
 598     0x3F       ex 0x0
 599     0x00 0xD8  lbl 0xD8  
-59B     0x1C       iol 0x3A  ; Printer read group A
+59B     0x1C 0x3A  iol 0x3A  ; Printer read group A
 59D     0x0E       comp
 59E     0x3F       ex 0x0
 59F     0x16       skf1
@@ -1318,25 +1339,31 @@ SET4BITS:
 5C6     0x70       ldi 0xF   ; Adding one to F generates a carry so skip next inst
 5C7     0x6E       adi 0x1   ;
 5C8     0x87       t 0x7     ; Always skipped
+
 5C9     0x00 0xD8  lbl 0xD8  ; Key scan code register
 5CB     0x8E       t 0xE     ; Jump to 5ce
+
+; jumped to in idle loop
 5CC     0x22       sf1
 5CD     0x89       t 0x9     ; jumps to 5c9
 
-; Reads keyboard scan lines
-5CE     0x1C       iol 0x1A  ; Device 1 (kbd) Cmd Read group A
+;--------------------------------------------------------------------------------
+; Reads keyboard scan lines (is in idle loop trace)
+5CE     0x1C 0x1A  iol 0x1A  ; Device 1 (kbd) Cmd Read group A
                              ; IN1..IN4
 5D0     0x0E       comp      ; Input data is inverted so invert it back
 5D1     0x3F       ex 0x0    ; Store key scan data
 5D2     0x00 0xC2  lbl 0xC2  ; Point to C2
-5D4     0xFA       tm 0x3A   ; Call 1d4 (skip if bit 3 zero)
+5D4     0xFA       tm 0x3A   ; Call 1d4 (skip if bit 3 zero) Jump to 1D4
+                             ; idle loop does jump
+
 5D5     0xB9       t 0x39    ; Transfer to 539
 5D6     0x00 0xD8  lbl 0xD8  ; 
 5D8     0x37       ld 0x0    ; Get D8 into A
 5D9     0x1E       skz
 5DA     0xBD       t 0x3D    ; T 53d
 5DB     0x16       skf1
-5DC     0xBB       t 0x3B    ; t 53b
+5DC     0xBB       t 0x3B    ; t 53b 
 5DD     0x12       lax
 5DE     0x6E       adi 0x1
 5DF     0x05       rtn
@@ -1398,9 +1425,10 @@ SET4BITS:
 
 618     0x55 0xC2  tl 0x5C2
 
+;In idle loop
 61A     0x37       ld 0x0    
 61B     0x0E       comp
-61C     0x1C       iol 0x17    ; dev 1 set grp c out 9-12
+61C     0x1C 0x17  iol 0x17    ; dev 1 set grp c out 9-12
                                ; OUT9-OUT12 are LEDs
 61E     0xF7       tm 0x37
 61F     0xA4       t 0x24
@@ -1441,7 +1469,7 @@ SET4BITS:
 646     0x83       t 0x3
 647     0x6F       cys
 648     0x06       xs
-649     0x01 0x14  tml 0x114
+649     0x01 0x14  tml 0x114    ; Set bank 3
 64B     0xC4       lb 0xB
 64C     0xFB       tm 0x3B
 64D     0xF7       tm 0x37
@@ -1699,7 +1727,7 @@ SET4BITS:
 ; OUT4 high or low
 791     0x7A       ldi 0x5       ; 0101
 792     0x72       ldi 0xD       ; 1101
-793     0x1C       iol 0x2E      ; device 2 set group a out 1-4
+793     0x1C 0x2E  iol 0x2E      ; device 2 set group a out 1-4
                                  ; OUT1: PSU thing
 				 ; OUT 2-4: printer
 795     0x00 0xDC  lbl 0xDC  
@@ -1713,7 +1741,7 @@ SET4BITS:
 79B     0x9C       t 0x1C
 
 
-79C     0x1C       iol 0x3A    ; dev 3 Printer Read group A
+79C     0x1C 0x3A  iol 0x3A    ; dev 3 Printer Read group A
 79E     0x00 0xE1  lbl 0xE1  
 7A0     0x00 0xF8  lbl 0xF8  
 7A2     0x90       t 0x10
@@ -1728,7 +1756,7 @@ SET4BITS:
 7AB     0x70       ldi 0xF
 7AC     0x2F       exd 0x0
 7AD     0xAB       t 0x2B
-7AE     0x1C       iol 0x3A     ; dev 3 printer read grp a
+7AE     0x1C 0x3A  iol 0x3A     ; dev 3 printer read grp a
 7B0     0x00 0xE1  lbl 0xE1  
 7B2     0x3F       ex 0x0
 7B3     0xFA       tm 0x3A
@@ -1800,7 +1828,7 @@ SET4BITS:
 800     0x4F       skbi 15
 801     0xBC       t 0x3C
 802     0x26       rf1
-803     0x1C       iol 0x3A      ; dev3 read grp a printer
+803     0x1C 0x3A  iol 0x3A      ; dev3 read grp a printer
 805     0x00 0xE1  lbl 0xE1  
 807     0x3F       ex 0x0
 808     0xF9       tm 0x39
@@ -1818,22 +1846,22 @@ SET4BITS:
 
 ; Drives printer
 815     0x70       ldi 0xF
-816     0x1C       iol 0x2E   ; dev2 set grp a printer
+816     0x1C 0x2E  iol 0x2E   ; dev2 set grp a printer
 818     0xCD       lb 0x2
 819     0x37       ld 0x0
-81A     0x1C       iol 0x2D   ; dev2 set grp b
+81A     0x1C 0x2D  iol 0x2D   ; dev2 set grp b
 81C     0xCC       lb 0x3
 81D     0x37       ld 0x0
-81E     0x1C       iol 0x27   ; dev 2 set grp c
+81E     0x1C 0x27  iol 0x27   ; dev 2 set grp c
 820     0xCB       lb 0x4
 821     0x37       ld 0x0
-822     0x1C       iol 0x00   ; ????
+822     0x1C 0x00  iol 0x00   ; ????
 824     0x1F       decb
 825     0x37       ld 0x0
-826     0x1C       iol 0x3D   ; set grp b  Printer
+826     0x1C 0x3D  iol 0x3D   ; set grp b  Printer
 828     0x1F       decb
 829     0x37       ld 0x0
-82A     0x1C       iol 0x37   ; set grp c  Printer
+82A     0x1C 0x37  iol 0x37   ; set grp c  Printer
 82C     0x16       skf1
 82D     0xB0       t 0x30
 82E     0x57 0xC0  tl 0x7C0
@@ -1986,26 +2014,27 @@ SET4BITS:
 
 8E7     0x1B       lxa          ; save A in X
 8E8     0x17       incb         ;
+
+; Idle loop jumps here
 8E9     0x33       ld 0x4       ; get digit code
 8EA     0x0E       comp         ; Outputs inverted?
 8EB     0x1D       doa          ; Drive segment code
 
 ; LE on BCD decoder. Latches segment data into decoder
-8EC     0x74       ldi 0xB      ; 1011
-8ED     0x1C       iol 0x1E     ; set grp a
-8EF     0x70       ldi 0xF      ; 1111
-8F0     0x1C       iol 0x1E     ; set grp a
+8EC     0x74       ldi 0xB      ; 1011  ROM select bank3
+8ED     0x1C 0x1E  iol 0x1E     ; set grp a
+8EF     0x70       ldi 0xF      ; 1111  ROM select bank 3
+8F0     0x1C 0x1E  iol 0x1E     ; set grp a
 8F2     0x12       lax          ; restore A from X
 8F3     0x0E       comp         ; Set up digit drive?
 8F4     0x1D       doa          ; Drive digit demux
 
 8F5     0x37       ld 0x0       ; get F1 back
-8F6     0x1C       iol 0x1D     ; set grp b  segment g stuff
+8F6     0x1C 0x1D  iol 0x1D     ; set grp b  segment g stuff
 8F8     0x02 0x4D  tml 0x24D
 
 ;********************************************************************************
-8FA     0x5E 0x00  tl 0xE00
-8FA     0x5E 0x65  tl 0xE65
+8FA     0x5E 0x65  tl 0xE65    ; Idle loop
 
 8FC     0x03 0xA6  tml 0x3A6
 8FE     0x5A 0x7D  tl 0xA7D
@@ -2018,10 +2047,13 @@ SET4BITS:
 
 904     0xDC       tm 0x1C     ; jumps to 179
 905     0x03 0xAA  tml 0x3AA   ; Load B with 8D0
-907     0xE5       tm 0x25     ; Jumps to 1BB
+907     0xE5       tm 0x25     ; Jumps to 1BB Copy memory
 908     0xC7       lb 0x8      
 909     0xFD       tm 0x3D
 
+;--------------------------------------------------------------------------------
+; On simulator the code run round a loop that contains this location
+;
 
 90A     0xC9       lb 0x6
 90B     0xFB       tm 0x3B   ; jump to 1D0 (Skip if any bit set)
@@ -2057,6 +2089,7 @@ SET4BITS:
 92E     0xC7       lb 0x8
 92F     0x70       ldi 0xF
 930     0x5B 0x38  tl 0xB38
+
 932     0x02 0xBA  tml 0x2BA
 934     0x79       ldi 0x6
 935     0x00 0xFE  lbl 0xFE  
@@ -2064,7 +2097,11 @@ SET4BITS:
 938     0x7B       ldi 0x4
 
 939     0x01 0xAC  tml 0x1AC      ; 1AC
+
+; On simulator, this jumps back to the loop the code stops in
 93B     0x8A       t 0xA     ; Jump to 90a
+
+;--------------------------------------------------------------------------------
 
 93C     0x02 0xBA  tml 0x2BA  ; Jump to 2BA
 
@@ -2194,7 +2231,7 @@ ABC     0x5A 0x3B  tl 0xA3B
 ABE     0x00 0x00  lbl 0x00  
 AC0     0xCB       lb 0x4
 AC1     0x02 0x53  tml 0x253
-AC3     0x01 0x14  tml 0x114
+AC3     0x01 0x14  tml 0x114      ;Set bank 3
 AC5     0xCB       lb 0x4
 AC6     0xE5       tm 0x25
 AC7     0xFC       tm 0x3C
@@ -2292,7 +2329,7 @@ B48     0x01 0x28  tml 0x128
 
 B4A     0x71       ldi 0xE
 B4B     0x70       ldi 0xF
-B4C     0x1C       iol 0x2D       ; set grp b printer
+B4C     0x1C 0x2D  iol 0x2D       ; set grp b printer
 B4E     0x26       rf1
 B50     0xFA       tm 0x3A
 B51     0xAC       t 0x2C
@@ -2695,12 +2732,15 @@ E60     0x1E       skz
 E61     0xAC       t 0x2C
 E62     0x1C 0x39  iol 0x39  
 E64     0x61       adi 0xE
-E65     0x00 0xE3  lbl 0xE3  
+
+; Called in idle loop
+E65     0x00 0xE3  lbl 0x1C   ; Load 1C into B
 E67     0x37       ld 0x0
-E68     0xFF       tm 0x3F
-E69     0xB6       t 0x36
+
+E68     0x1E       skz
+E69     0xB6       t 0x36      ; A non zero
 E6A     0x7E       ldi 0x1
-E6B     0x1C       iol 0x1D    ; Set grp b segment g
+E6B     0x1C 0x1D  iol 0x1D    ; Set grp b segment g
 E6D     0xC5       lb 0xA
 E6E     0x12       lax
 E6F     0x60       adi 0xF
@@ -2708,8 +2748,9 @@ E70     0x1B       lxa
 E71     0x1B       lxa
 E72     0x19       xabl
 E73     0x58 0xE9  tl 0x8E9
+
 E76     0x7E       ldi 0x1
-E77     0x1C       iol 0x1D      ; set grp b segment g
+E77     0x1C 0x1D  iol 0x1D      ; set grp b segment g
 E79     0x03 0xAA  tml 0x3AA
 E7B     0xE6       tm 0x26
 E7C     0x01 0xC0  tml 0x1C0     ; Copy register to lower register

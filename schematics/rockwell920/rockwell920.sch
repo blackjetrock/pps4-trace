@@ -104,23 +104,23 @@ $EndComp
 $Comp
 L 4xxx:4001 U25
 U 3 1 5FE384D9
-P 5300 2600
-F 0 "U25" H 5300 2925 50  0000 C CNN
-F 1 "4001" H 5300 2834 50  0000 C CNN
-F 2 "" H 5300 2600 50  0001 C CNN
-F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4000bms-01bms-02bms-25bms.pdf" H 5300 2600 50  0001 C CNN
-	3    5300 2600
+P 9300 1100
+F 0 "U25" H 9300 1425 50  0000 C CNN
+F 1 "4001" H 9300 1334 50  0000 C CNN
+F 2 "" H 9300 1100 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4000bms-01bms-02bms-25bms.pdf" H 9300 1100 50  0001 C CNN
+	3    9300 1100
 	1    0    0    -1  
 $EndComp
 $Comp
 L 4xxx:4001 U25
 U 4 1 5FE399AB
-P 5450 3100
-F 0 "U25" H 5450 3425 50  0000 C CNN
-F 1 "4001" H 5450 3334 50  0000 C CNN
-F 2 "" H 5450 3100 50  0001 C CNN
-F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4000bms-01bms-02bms-25bms.pdf" H 5450 3100 50  0001 C CNN
-	4    5450 3100
+P 9450 1600
+F 0 "U25" H 9450 1925 50  0000 C CNN
+F 1 "4001" H 9450 1834 50  0000 C CNN
+F 2 "" H 9450 1600 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4000bms-01bms-02bms-25bms.pdf" H 9450 1600 50  0001 C CNN
+	4    9450 1600
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -225,12 +225,12 @@ $EndComp
 $Comp
 L 4xxx:4023 U23
 U 4 1 5FE545DC
-P 4400 6000
-F 0 "U23" H 4630 6046 50  0000 L CNN
-F 1 "4023" H 4630 5955 50  0000 L CNN
-F 2 "" H 4400 6000 50  0001 C CNN
-F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 4400 6000 50  0001 C CNN
-	4    4400 6000
+P 4550 1100
+F 0 "U23" H 4780 1146 50  0000 L CNN
+F 1 "4023" H 4780 1055 50  0000 L CNN
+F 2 "" H 4550 1100 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 4550 1100 50  0001 C CNN
+	4    4550 1100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -253,12 +253,12 @@ $EndComp
 $Comp
 L rockwell920:MC14024 U19
 U 1 1 5FE36214
-P 9100 3650
-F 0 "U19" H 9725 3631 50  0000 C CNN
-F 1 "MC14024" H 9725 3540 50  0000 C CNN
-F 2 "" H 9100 3650 50  0001 C CNN
-F 3 "" H 9100 3650 50  0001 C CNN
-	1    9100 3650
+P 9200 2350
+F 0 "U19" H 9825 2331 50  0000 C CNN
+F 1 "MC14024" H 9825 2240 50  0000 C CNN
+F 2 "" H 9200 2350 50  0001 C CNN
+F 3 "" H 9200 2350 50  0001 C CNN
+	1    9200 2350
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -294,4 +294,94 @@ F 3 "http://www.onsemi.com/pub/Collateral/MC14013B-D.PDF" H 3150 1050 50  0001 C
 	3    3150 1050
 	1    0    0    -1  
 $EndComp
+Text GLabel 2000 2250 2    50   Input ~ 0
+U13_IN1
+Text GLabel 2450 3150 2    50   Input ~ 0
+U13_IN2
+Text GLabel 3350 2200 2    50   Input ~ 0
+U13_IN3
+Text GLabel 4350 2350 2    50   Input ~ 0
+U13_IN4
+Text GLabel 2850 5900 2    50   Input ~ 0
+U13_IN5
+Text GLabel 3500 6350 0    50   Input ~ 0
+U3_IN6
+Text GLabel 9750 1600 2    50   Input ~ 0
+U3_IN7
+Text GLabel 8300 1100 2    50   Input ~ 0
+U3_IN8
+Text GLabel 3500 6650 0    50   Input ~ 0
+U3_IN9
+Text GLabel 3500 6750 0    50   Input ~ 0
+U3_IN10
+Text GLabel 3500 6850 0    50   Input ~ 0
+U3_IN11
+Text GLabel 3500 6950 0    50   Input ~ 0
+U3_IN12
+Connection ~ 7900 1100
+$Comp
+L 4xxx:4023 U22
+U 1 1 601B10FE
+P 8750 2050
+F 0 "U22" H 8750 2375 50  0000 C CNN
+F 1 "4023" H 8750 2284 50  0000 C CNN
+F 2 "" H 8750 2050 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 8750 2050 50  0001 C CNN
+	1    8750 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L 4xxx:4023 U22
+U 2 1 601B30CF
+P 8850 4850
+F 0 "U22" H 8850 5175 50  0000 C CNN
+F 1 "4023" H 8850 5084 50  0000 C CNN
+F 2 "" H 8850 4850 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 8850 4850 50  0001 C CNN
+	2    8850 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L 4xxx:4023 U22
+U 3 1 601B4890
+P 8800 5400
+F 0 "U22" H 8800 5725 50  0000 C CNN
+F 1 "4023" H 8800 5634 50  0000 C CNN
+F 2 "" H 8800 5400 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 8800 5400 50  0001 C CNN
+	3    8800 5400
+	1    0    0    -1  
+$EndComp
+$Comp
+L 4xxx:4023 U22
+U 4 1 601B5EE3
+P 5250 1100
+F 0 "U22" H 5480 1146 50  0000 L CNN
+F 1 "4023" H 5480 1055 50  0000 L CNN
+F 2 "" H 5250 1100 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 5250 1100 50  0001 C CNN
+	4    5250 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7900 1100 8100 1100
+Wire Wire Line
+	8250 1150 8100 1150
+Wire Wire Line
+	8100 1150 8100 1100
+Connection ~ 8100 1100
+Wire Wire Line
+	8100 1100 8300 1100
+Wire Wire Line
+	8250 1150 8250 1450
+Wire Wire Line
+	8250 1450 8450 1450
+Wire Wire Line
+	8450 1450 8450 1850
+Wire Wire Line
+	8450 1850 8300 1850
+Wire Wire Line
+	8300 1850 8300 2050
+Wire Wire Line
+	8300 2050 8450 2050
 $EndSCHEMATC
