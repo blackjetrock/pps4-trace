@@ -1,0 +1,1720 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 2 2
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Wire Wire Line
+	1500 1350 1500 1450
+Connection ~ 1500 1350
+Wire Wire Line
+	1500 1650 1500 1800
+Wire Wire Line
+	1500 1300 1500 1350
+Wire Wire Line
+	1500 1000 1500 1100
+$Comp
+L Microtan_65_CPU-cache:GND #PWR013
+U 1 1 5F9B8819
+P 1500 1800
+F 0 "#PWR013" H 1500 1800 30  0001 C CNN
+F 1 "GND" H 1500 1730 30  0001 C CNN
+F 2 "" H 1500 1800 60  0000 C CNN
+F 3 "" H 1500 1800 60  0000 C CNN
+	1    1500 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9B881F
+P 1500 1550
+AR Path="/5F9B881F" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9B881F" Ref="R13"  Part="1" 
+F 0 "R13" H 1559 1596 50  0000 L CNN
+F 1 "2k2" H 1559 1505 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1500 1550 50  0001 C CNN
+F 3 "~" H 1500 1550 50  0001 C CNN
+	1    1500 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9B8825
+P 1500 1200
+AR Path="/5F9B8825" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9B8825" Ref="R12"  Part="1" 
+F 0 "R12" H 1559 1246 50  0000 L CNN
+F 1 "10k" H 1559 1155 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1500 1200 50  0001 C CNN
+F 3 "~" H 1500 1200 50  0001 C CNN
+	1    1500 1200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1500 2600 1500 2700
+Connection ~ 1500 2600
+Wire Wire Line
+	1500 2900 1500 3050
+Wire Wire Line
+	1500 2550 1500 2600
+Wire Wire Line
+	1500 2250 1500 2350
+$Comp
+L Microtan_65_CPU-cache:GND #PWR014
+U 1 1 5F9BE6D9
+P 1500 3050
+F 0 "#PWR014" H 1500 3050 30  0001 C CNN
+F 1 "GND" H 1500 2980 30  0001 C CNN
+F 2 "" H 1500 3050 60  0000 C CNN
+F 3 "" H 1500 3050 60  0000 C CNN
+	1    1500 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9BE6DF
+P 1500 2800
+AR Path="/5F9BE6DF" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9BE6DF" Ref="R15"  Part="1" 
+F 0 "R15" H 1559 2846 50  0000 L CNN
+F 1 "2k2" H 1559 2755 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1500 2800 50  0001 C CNN
+F 3 "~" H 1500 2800 50  0001 C CNN
+	1    1500 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9BE6E5
+P 1500 2450
+AR Path="/5F9BE6E5" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9BE6E5" Ref="R14"  Part="1" 
+F 0 "R14" H 1559 2496 50  0000 L CNN
+F 1 "10k" H 1559 2405 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1500 2450 50  0001 C CNN
+F 3 "~" H 1500 2450 50  0001 C CNN
+	1    1500 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 3850 1550 3950
+Connection ~ 1550 3850
+Wire Wire Line
+	1550 4150 1550 4300
+Wire Wire Line
+	1550 3800 1550 3850
+Wire Wire Line
+	1550 3500 1550 3600
+$Comp
+L Microtan_65_CPU-cache:GND #PWR015
+U 1 1 5F9C1515
+P 1550 4300
+F 0 "#PWR015" H 1550 4300 30  0001 C CNN
+F 1 "GND" H 1550 4230 30  0001 C CNN
+F 2 "" H 1550 4300 60  0000 C CNN
+F 3 "" H 1550 4300 60  0000 C CNN
+	1    1550 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9C151B
+P 1550 4050
+AR Path="/5F9C151B" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9C151B" Ref="R17"  Part="1" 
+F 0 "R17" H 1609 4096 50  0000 L CNN
+F 1 "2k2" H 1609 4005 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1550 4050 50  0001 C CNN
+F 3 "~" H 1550 4050 50  0001 C CNN
+	1    1550 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9C1521
+P 1550 3700
+AR Path="/5F9C1521" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9C1521" Ref="R16"  Part="1" 
+F 0 "R16" H 1609 3746 50  0000 L CNN
+F 1 "10k" H 1609 3655 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1550 3700 50  0001 C CNN
+F 3 "~" H 1550 3700 50  0001 C CNN
+	1    1550 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 5100 1550 5200
+Connection ~ 1550 5100
+Wire Wire Line
+	1550 5400 1550 5550
+Wire Wire Line
+	1550 5050 1550 5100
+Wire Wire Line
+	1550 4750 1550 4850
+$Comp
+L Microtan_65_CPU-cache:GND #PWR016
+U 1 1 5F9C49F5
+P 1550 5550
+F 0 "#PWR016" H 1550 5550 30  0001 C CNN
+F 1 "GND" H 1550 5480 30  0001 C CNN
+F 2 "" H 1550 5550 60  0000 C CNN
+F 3 "" H 1550 5550 60  0000 C CNN
+	1    1550 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9C49FB
+P 1550 5300
+AR Path="/5F9C49FB" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9C49FB" Ref="R19"  Part="1" 
+F 0 "R19" H 1609 5346 50  0000 L CNN
+F 1 "2k2" H 1609 5255 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1550 5300 50  0001 C CNN
+F 3 "~" H 1550 5300 50  0001 C CNN
+	1    1550 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9C4A01
+P 1550 4950
+AR Path="/5F9C4A01" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9C4A01" Ref="R18"  Part="1" 
+F 0 "R18" H 1609 4996 50  0000 L CNN
+F 1 "10k" H 1609 4905 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1550 4950 50  0001 C CNN
+F 3 "~" H 1550 4950 50  0001 C CNN
+	1    1550 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 6300 1550 6400
+Connection ~ 1550 6300
+Wire Wire Line
+	1550 6600 1550 6750
+Wire Wire Line
+	1550 6250 1550 6300
+Wire Wire Line
+	1550 5950 1550 6050
+$Comp
+L Microtan_65_CPU-cache:GND #PWR017
+U 1 1 5F9C838D
+P 1550 6750
+F 0 "#PWR017" H 1550 6750 30  0001 C CNN
+F 1 "GND" H 1550 6680 30  0001 C CNN
+F 2 "" H 1550 6750 60  0000 C CNN
+F 3 "" H 1550 6750 60  0000 C CNN
+	1    1550 6750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9C8393
+P 1550 6500
+AR Path="/5F9C8393" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9C8393" Ref="R21"  Part="1" 
+F 0 "R21" H 1609 6546 50  0000 L CNN
+F 1 "2k2" H 1609 6455 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1550 6500 50  0001 C CNN
+F 3 "~" H 1550 6500 50  0001 C CNN
+	1    1550 6500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9C8399
+P 1550 6150
+AR Path="/5F9C8399" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9C8399" Ref="R20"  Part="1" 
+F 0 "R20" H 1609 6196 50  0000 L CNN
+F 1 "10k" H 1609 6105 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 1550 6150 50  0001 C CNN
+F 3 "~" H 1550 6150 50  0001 C CNN
+	1    1550 6150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2950 1300 2950 1400
+Connection ~ 2950 1300
+Wire Wire Line
+	2950 1600 2950 1750
+Wire Wire Line
+	2950 1250 2950 1300
+Wire Wire Line
+	2950 950  2950 1050
+$Comp
+L Microtan_65_CPU-cache:GND #PWR018
+U 1 1 5F9CBF7F
+P 2950 1750
+F 0 "#PWR018" H 2950 1750 30  0001 C CNN
+F 1 "GND" H 2950 1680 30  0001 C CNN
+F 2 "" H 2950 1750 60  0000 C CNN
+F 3 "" H 2950 1750 60  0000 C CNN
+	1    2950 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9CBF85
+P 2950 1500
+AR Path="/5F9CBF85" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9CBF85" Ref="R23"  Part="1" 
+F 0 "R23" H 3009 1546 50  0000 L CNN
+F 1 "2k2" H 3009 1455 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 2950 1500 50  0001 C CNN
+F 3 "~" H 2950 1500 50  0001 C CNN
+	1    2950 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9CBF8B
+P 2950 1150
+AR Path="/5F9CBF8B" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9CBF8B" Ref="R22"  Part="1" 
+F 0 "R22" H 3009 1196 50  0000 L CNN
+F 1 "10k" H 3009 1105 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 2950 1150 50  0001 C CNN
+F 3 "~" H 2950 1150 50  0001 C CNN
+	1    2950 1150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2950 2550 2950 2650
+Connection ~ 2950 2550
+Wire Wire Line
+	2950 2850 2950 3000
+Wire Wire Line
+	2950 2500 2950 2550
+Wire Wire Line
+	2950 2200 2950 2300
+$Comp
+L Microtan_65_CPU-cache:GND #PWR019
+U 1 1 5F9D0DDA
+P 2950 3000
+F 0 "#PWR019" H 2950 3000 30  0001 C CNN
+F 1 "GND" H 2950 2930 30  0001 C CNN
+F 2 "" H 2950 3000 60  0000 C CNN
+F 3 "" H 2950 3000 60  0000 C CNN
+	1    2950 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9D0DE0
+P 2950 2750
+AR Path="/5F9D0DE0" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9D0DE0" Ref="R25"  Part="1" 
+F 0 "R25" H 3009 2796 50  0000 L CNN
+F 1 "2k2" H 3009 2705 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 2950 2750 50  0001 C CNN
+F 3 "~" H 2950 2750 50  0001 C CNN
+	1    2950 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9D0DE6
+P 2950 2400
+AR Path="/5F9D0DE6" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9D0DE6" Ref="R24"  Part="1" 
+F 0 "R24" H 3009 2446 50  0000 L CNN
+F 1 "10k" H 3009 2355 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 2950 2400 50  0001 C CNN
+F 3 "~" H 2950 2400 50  0001 C CNN
+	1    2950 2400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3000 3800 3000 3900
+Connection ~ 3000 3800
+Wire Wire Line
+	3000 4100 3000 4250
+Wire Wire Line
+	3000 3750 3000 3800
+Wire Wire Line
+	3000 3450 3000 3550
+$Comp
+L Microtan_65_CPU-cache:GND #PWR020
+U 1 1 5F9D62D8
+P 3000 4250
+F 0 "#PWR020" H 3000 4250 30  0001 C CNN
+F 1 "GND" H 3000 4180 30  0001 C CNN
+F 2 "" H 3000 4250 60  0000 C CNN
+F 3 "" H 3000 4250 60  0000 C CNN
+	1    3000 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9D62DE
+P 3000 4000
+AR Path="/5F9D62DE" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9D62DE" Ref="R27"  Part="1" 
+F 0 "R27" H 3059 4046 50  0000 L CNN
+F 1 "2k2" H 3059 3955 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 3000 4000 50  0001 C CNN
+F 3 "~" H 3000 4000 50  0001 C CNN
+	1    3000 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9D62E4
+P 3000 3650
+AR Path="/5F9D62E4" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9D62E4" Ref="R26"  Part="1" 
+F 0 "R26" H 3059 3696 50  0000 L CNN
+F 1 "10k" H 3059 3605 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 3000 3650 50  0001 C CNN
+F 3 "~" H 3000 3650 50  0001 C CNN
+	1    3000 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3050 5050 3050 5150
+Connection ~ 3050 5050
+Wire Wire Line
+	3050 5350 3050 5500
+Wire Wire Line
+	3050 5000 3050 5050
+Wire Wire Line
+	3050 4700 3050 4800
+$Comp
+L Microtan_65_CPU-cache:GND #PWR021
+U 1 1 5F9DCA7F
+P 3050 5500
+F 0 "#PWR021" H 3050 5500 30  0001 C CNN
+F 1 "GND" H 3050 5430 30  0001 C CNN
+F 2 "" H 3050 5500 60  0000 C CNN
+F 3 "" H 3050 5500 60  0000 C CNN
+	1    3050 5500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9DCA85
+P 3050 5250
+AR Path="/5F9DCA85" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9DCA85" Ref="R29"  Part="1" 
+F 0 "R29" H 3109 5296 50  0000 L CNN
+F 1 "2k2" H 3109 5205 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 3050 5250 50  0001 C CNN
+F 3 "~" H 3050 5250 50  0001 C CNN
+	1    3050 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9DCA8B
+P 3050 4900
+AR Path="/5F9DCA8B" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9DCA8B" Ref="R28"  Part="1" 
+F 0 "R28" H 3109 4946 50  0000 L CNN
+F 1 "10k" H 3109 4855 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 3050 4900 50  0001 C CNN
+F 3 "~" H 3050 4900 50  0001 C CNN
+	1    3050 4900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3050 6300 3050 6400
+Connection ~ 3050 6300
+Wire Wire Line
+	3050 6600 3050 6750
+Wire Wire Line
+	3050 6250 3050 6300
+Wire Wire Line
+	3050 5950 3050 6050
+$Comp
+L Microtan_65_CPU-cache:GND #PWR022
+U 1 1 5F9E1E31
+P 3050 6750
+F 0 "#PWR022" H 3050 6750 30  0001 C CNN
+F 1 "GND" H 3050 6680 30  0001 C CNN
+F 2 "" H 3050 6750 60  0000 C CNN
+F 3 "" H 3050 6750 60  0000 C CNN
+	1    3050 6750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9E1E37
+P 3050 6500
+AR Path="/5F9E1E37" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9E1E37" Ref="R31"  Part="1" 
+F 0 "R31" H 3109 6546 50  0000 L CNN
+F 1 "2k2" H 3109 6455 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 3050 6500 50  0001 C CNN
+F 3 "~" H 3050 6500 50  0001 C CNN
+	1    3050 6500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9E1E3D
+P 3050 6150
+AR Path="/5F9E1E3D" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9E1E3D" Ref="R30"  Part="1" 
+F 0 "R30" H 3109 6196 50  0000 L CNN
+F 1 "10k" H 3109 6105 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 3050 6150 50  0001 C CNN
+F 3 "~" H 3050 6150 50  0001 C CNN
+	1    3050 6150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4350 1300 4350 1400
+Connection ~ 4350 1300
+Wire Wire Line
+	4350 1600 4350 1750
+Wire Wire Line
+	4350 1250 4350 1300
+Wire Wire Line
+	4350 950  4350 1050
+$Comp
+L Microtan_65_CPU-cache:GND #PWR024
+U 1 1 5F9E916E
+P 4350 1750
+F 0 "#PWR024" H 4350 1750 30  0001 C CNN
+F 1 "GND" H 4350 1680 30  0001 C CNN
+F 2 "" H 4350 1750 60  0000 C CNN
+F 3 "" H 4350 1750 60  0000 C CNN
+	1    4350 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9E9174
+P 4350 1500
+AR Path="/5F9E9174" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9E9174" Ref="R35"  Part="1" 
+F 0 "R35" H 4409 1546 50  0000 L CNN
+F 1 "2k2" H 4409 1455 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4350 1500 50  0001 C CNN
+F 3 "~" H 4350 1500 50  0001 C CNN
+	1    4350 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9E917A
+P 4350 1150
+AR Path="/5F9E917A" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9E917A" Ref="R34"  Part="1" 
+F 0 "R34" H 4409 1196 50  0000 L CNN
+F 1 "10k" H 4409 1105 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4350 1150 50  0001 C CNN
+F 3 "~" H 4350 1150 50  0001 C CNN
+	1    4350 1150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4350 2500 4350 2600
+Connection ~ 4350 2500
+Wire Wire Line
+	4350 2800 4350 2950
+Wire Wire Line
+	4350 2450 4350 2500
+Wire Wire Line
+	4350 2150 4350 2250
+$Comp
+L Microtan_65_CPU-cache:GND #PWR025
+U 1 1 5F9F1FE1
+P 4350 2950
+F 0 "#PWR025" H 4350 2950 30  0001 C CNN
+F 1 "GND" H 4350 2880 30  0001 C CNN
+F 2 "" H 4350 2950 60  0000 C CNN
+F 3 "" H 4350 2950 60  0000 C CNN
+	1    4350 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9F1FE7
+P 4350 2700
+AR Path="/5F9F1FE7" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9F1FE7" Ref="R37"  Part="1" 
+F 0 "R37" H 4409 2746 50  0000 L CNN
+F 1 "2k2" H 4409 2655 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4350 2700 50  0001 C CNN
+F 3 "~" H 4350 2700 50  0001 C CNN
+	1    4350 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9F1FED
+P 4350 2350
+AR Path="/5F9F1FED" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9F1FED" Ref="R36"  Part="1" 
+F 0 "R36" H 4409 2396 50  0000 L CNN
+F 1 "10k" H 4409 2305 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4350 2350 50  0001 C CNN
+F 3 "~" H 4350 2350 50  0001 C CNN
+	1    4350 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4350 3800 4350 3900
+Connection ~ 4350 3800
+Wire Wire Line
+	4350 4100 4350 4250
+Wire Wire Line
+	4350 3750 4350 3800
+Wire Wire Line
+	4350 3450 4350 3550
+$Comp
+L Microtan_65_CPU-cache:GND #PWR026
+U 1 1 5F9FAF1E
+P 4350 4250
+F 0 "#PWR026" H 4350 4250 30  0001 C CNN
+F 1 "GND" H 4350 4180 30  0001 C CNN
+F 2 "" H 4350 4250 60  0000 C CNN
+F 3 "" H 4350 4250 60  0000 C CNN
+	1    4350 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9FAF24
+P 4350 4000
+AR Path="/5F9FAF24" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9FAF24" Ref="R39"  Part="1" 
+F 0 "R39" H 4409 4046 50  0000 L CNN
+F 1 "2k2" H 4409 3955 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4350 4000 50  0001 C CNN
+F 3 "~" H 4350 4000 50  0001 C CNN
+	1    4350 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5F9FAF2A
+P 4350 3650
+AR Path="/5F9FAF2A" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5F9FAF2A" Ref="R38"  Part="1" 
+F 0 "R38" H 4409 3696 50  0000 L CNN
+F 1 "10k" H 4409 3605 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4350 3650 50  0001 C CNN
+F 3 "~" H 4350 3650 50  0001 C CNN
+	1    4350 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4300 5050 4300 5150
+Connection ~ 4300 5050
+Wire Wire Line
+	4300 5350 4300 5500
+Wire Wire Line
+	4300 5000 4300 5050
+Wire Wire Line
+	4300 4700 4300 4800
+$Comp
+L Microtan_65_CPU-cache:GND #PWR023
+U 1 1 5FA04B01
+P 4300 5500
+F 0 "#PWR023" H 4300 5500 30  0001 C CNN
+F 1 "GND" H 4300 5430 30  0001 C CNN
+F 2 "" H 4300 5500 60  0000 C CNN
+F 3 "" H 4300 5500 60  0000 C CNN
+	1    4300 5500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA04B07
+P 4300 5250
+AR Path="/5FA04B07" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA04B07" Ref="R33"  Part="1" 
+F 0 "R33" H 4359 5296 50  0000 L CNN
+F 1 "2k2" H 4359 5205 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4300 5250 50  0001 C CNN
+F 3 "~" H 4300 5250 50  0001 C CNN
+	1    4300 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA04B0D
+P 4300 4900
+AR Path="/5FA04B0D" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA04B0D" Ref="R32"  Part="1" 
+F 0 "R32" H 4359 4946 50  0000 L CNN
+F 1 "10k" H 4359 4855 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4300 4900 50  0001 C CNN
+F 3 "~" H 4300 4900 50  0001 C CNN
+	1    4300 4900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4400 6250 4400 6350
+Connection ~ 4400 6250
+Wire Wire Line
+	4400 6550 4400 6700
+Wire Wire Line
+	4400 6200 4400 6250
+Wire Wire Line
+	4400 5900 4400 6000
+$Comp
+L Microtan_65_CPU-cache:GND #PWR027
+U 1 1 5FA0FCD9
+P 4400 6700
+F 0 "#PWR027" H 4400 6700 30  0001 C CNN
+F 1 "GND" H 4400 6630 30  0001 C CNN
+F 2 "" H 4400 6700 60  0000 C CNN
+F 3 "" H 4400 6700 60  0000 C CNN
+	1    4400 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA0FCDF
+P 4400 6450
+AR Path="/5FA0FCDF" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA0FCDF" Ref="R41"  Part="1" 
+F 0 "R41" H 4459 6496 50  0000 L CNN
+F 1 "2k2" H 4459 6405 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4400 6450 50  0001 C CNN
+F 3 "~" H 4400 6450 50  0001 C CNN
+	1    4400 6450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA0FCE5
+P 4400 6100
+AR Path="/5FA0FCE5" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA0FCE5" Ref="R40"  Part="1" 
+F 0 "R40" H 4459 6146 50  0000 L CNN
+F 1 "10k" H 4459 6055 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 4400 6100 50  0001 C CNN
+F 3 "~" H 4400 6100 50  0001 C CNN
+	1    4400 6100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5650 1300 5650 1400
+Connection ~ 5650 1300
+Wire Wire Line
+	5650 1600 5650 1750
+Wire Wire Line
+	5650 1250 5650 1300
+Wire Wire Line
+	5650 950  5650 1050
+$Comp
+L Microtan_65_CPU-cache:GND #PWR030
+U 1 1 5FA1CAF6
+P 5650 1750
+F 0 "#PWR030" H 5650 1750 30  0001 C CNN
+F 1 "GND" H 5650 1680 30  0001 C CNN
+F 2 "" H 5650 1750 60  0000 C CNN
+F 3 "" H 5650 1750 60  0000 C CNN
+	1    5650 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA1CAFC
+P 5650 1500
+AR Path="/5FA1CAFC" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA1CAFC" Ref="R47"  Part="1" 
+F 0 "R47" H 5709 1546 50  0000 L CNN
+F 1 "2k2" H 5709 1455 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5650 1500 50  0001 C CNN
+F 3 "~" H 5650 1500 50  0001 C CNN
+	1    5650 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA1CB02
+P 5650 1150
+AR Path="/5FA1CB02" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA1CB02" Ref="R46"  Part="1" 
+F 0 "R46" H 5709 1196 50  0000 L CNN
+F 1 "10k" H 5709 1105 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5650 1150 50  0001 C CNN
+F 3 "~" H 5650 1150 50  0001 C CNN
+	1    5650 1150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5650 2450 5650 2550
+Connection ~ 5650 2450
+Wire Wire Line
+	5650 2750 5650 2900
+Wire Wire Line
+	5650 2400 5650 2450
+Wire Wire Line
+	5650 2100 5650 2200
+$Comp
+L Microtan_65_CPU-cache:GND #PWR031
+U 1 1 5FA29E6E
+P 5650 2900
+F 0 "#PWR031" H 5650 2900 30  0001 C CNN
+F 1 "GND" H 5650 2830 30  0001 C CNN
+F 2 "" H 5650 2900 60  0000 C CNN
+F 3 "" H 5650 2900 60  0000 C CNN
+	1    5650 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA29E74
+P 5650 2650
+AR Path="/5FA29E74" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA29E74" Ref="R49"  Part="1" 
+F 0 "R49" H 5709 2696 50  0000 L CNN
+F 1 "2k2" H 5709 2605 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5650 2650 50  0001 C CNN
+F 3 "~" H 5650 2650 50  0001 C CNN
+	1    5650 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA29E7A
+P 5650 2300
+AR Path="/5FA29E7A" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA29E7A" Ref="R48"  Part="1" 
+F 0 "R48" H 5709 2346 50  0000 L CNN
+F 1 "10k" H 5709 2255 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5650 2300 50  0001 C CNN
+F 3 "~" H 5650 2300 50  0001 C CNN
+	1    5650 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5600 3750 5600 3850
+Connection ~ 5600 3750
+Wire Wire Line
+	5600 4050 5600 4200
+Wire Wire Line
+	5600 3700 5600 3750
+Wire Wire Line
+	5600 3400 5600 3500
+$Comp
+L Microtan_65_CPU-cache:GND #PWR028
+U 1 1 5FA38E95
+P 5600 4200
+F 0 "#PWR028" H 5600 4200 30  0001 C CNN
+F 1 "GND" H 5600 4130 30  0001 C CNN
+F 2 "" H 5600 4200 60  0000 C CNN
+F 3 "" H 5600 4200 60  0000 C CNN
+	1    5600 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA38E9B
+P 5600 3950
+AR Path="/5FA38E9B" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA38E9B" Ref="R43"  Part="1" 
+F 0 "R43" H 5659 3996 50  0000 L CNN
+F 1 "2k2" H 5659 3905 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5600 3950 50  0001 C CNN
+F 3 "~" H 5600 3950 50  0001 C CNN
+	1    5600 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA38EA1
+P 5600 3600
+AR Path="/5FA38EA1" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA38EA1" Ref="R42"  Part="1" 
+F 0 "R42" H 5659 3646 50  0000 L CNN
+F 1 "10k" H 5659 3555 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5600 3600 50  0001 C CNN
+F 3 "~" H 5600 3600 50  0001 C CNN
+	1    5600 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5600 5000 5600 5100
+Connection ~ 5600 5000
+Wire Wire Line
+	5600 5300 5600 5450
+Wire Wire Line
+	5600 4950 5600 5000
+Wire Wire Line
+	5600 4650 5600 4750
+$Comp
+L Microtan_65_CPU-cache:GND #PWR029
+U 1 1 5FA4ABA5
+P 5600 5450
+F 0 "#PWR029" H 5600 5450 30  0001 C CNN
+F 1 "GND" H 5600 5380 30  0001 C CNN
+F 2 "" H 5600 5450 60  0000 C CNN
+F 3 "" H 5600 5450 60  0000 C CNN
+	1    5600 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA4ABAB
+P 5600 5200
+AR Path="/5FA4ABAB" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA4ABAB" Ref="R45"  Part="1" 
+F 0 "R45" H 5659 5246 50  0000 L CNN
+F 1 "2k2" H 5659 5155 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5600 5200 50  0001 C CNN
+F 3 "~" H 5600 5200 50  0001 C CNN
+	1    5600 5200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA4ABB1
+P 5600 4850
+AR Path="/5FA4ABB1" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA4ABB1" Ref="R44"  Part="1" 
+F 0 "R44" H 5659 4896 50  0000 L CNN
+F 1 "10k" H 5659 4805 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5600 4850 50  0001 C CNN
+F 3 "~" H 5600 4850 50  0001 C CNN
+	1    5600 4850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5700 6200 5700 6300
+Connection ~ 5700 6200
+Wire Wire Line
+	5700 6500 5700 6650
+Wire Wire Line
+	5700 6150 5700 6200
+Wire Wire Line
+	5700 5850 5700 5950
+$Comp
+L Microtan_65_CPU-cache:GND #PWR032
+U 1 1 5FA5EA8C
+P 5700 6650
+F 0 "#PWR032" H 5700 6650 30  0001 C CNN
+F 1 "GND" H 5700 6580 30  0001 C CNN
+F 2 "" H 5700 6650 60  0000 C CNN
+F 3 "" H 5700 6650 60  0000 C CNN
+	1    5700 6650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA5EA92
+P 5700 6400
+AR Path="/5FA5EA92" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA5EA92" Ref="R51"  Part="1" 
+F 0 "R51" H 5759 6446 50  0000 L CNN
+F 1 "2k2" H 5759 6355 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5700 6400 50  0001 C CNN
+F 3 "~" H 5700 6400 50  0001 C CNN
+	1    5700 6400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA5EA98
+P 5700 6050
+AR Path="/5FA5EA98" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA5EA98" Ref="R50"  Part="1" 
+F 0 "R50" H 5759 6096 50  0000 L CNN
+F 1 "10k" H 5759 6005 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 5700 6050 50  0001 C CNN
+F 3 "~" H 5700 6050 50  0001 C CNN
+	1    5700 6050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 1250 6900 1350
+Connection ~ 6900 1250
+Wire Wire Line
+	6900 1550 6900 1700
+Wire Wire Line
+	6900 1200 6900 1250
+Wire Wire Line
+	6900 900  6900 1000
+$Comp
+L Microtan_65_CPU-cache:GND #PWR033
+U 1 1 5FA72490
+P 6900 1700
+F 0 "#PWR033" H 6900 1700 30  0001 C CNN
+F 1 "GND" H 6900 1630 30  0001 C CNN
+F 2 "" H 6900 1700 60  0000 C CNN
+F 3 "" H 6900 1700 60  0000 C CNN
+	1    6900 1700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA72496
+P 6900 1450
+AR Path="/5FA72496" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA72496" Ref="R53"  Part="1" 
+F 0 "R53" H 6959 1496 50  0000 L CNN
+F 1 "2k2" H 6959 1405 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 6900 1450 50  0001 C CNN
+F 3 "~" H 6900 1450 50  0001 C CNN
+	1    6900 1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA7249C
+P 6900 1100
+AR Path="/5FA7249C" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA7249C" Ref="R52"  Part="1" 
+F 0 "R52" H 6959 1146 50  0000 L CNN
+F 1 "10k" H 6959 1055 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 6900 1100 50  0001 C CNN
+F 3 "~" H 6900 1100 50  0001 C CNN
+	1    6900 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 2400 6900 2500
+Connection ~ 6900 2400
+Wire Wire Line
+	6900 2700 6900 2850
+Wire Wire Line
+	6900 2350 6900 2400
+Wire Wire Line
+	6900 2050 6900 2150
+$Comp
+L Microtan_65_CPU-cache:GND #PWR034
+U 1 1 5FA88458
+P 6900 2850
+F 0 "#PWR034" H 6900 2850 30  0001 C CNN
+F 1 "GND" H 6900 2780 30  0001 C CNN
+F 2 "" H 6900 2850 60  0000 C CNN
+F 3 "" H 6900 2850 60  0000 C CNN
+	1    6900 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA8845E
+P 6900 2600
+AR Path="/5FA8845E" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA8845E" Ref="R55"  Part="1" 
+F 0 "R55" H 6959 2646 50  0000 L CNN
+F 1 "2k2" H 6959 2555 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 6900 2600 50  0001 C CNN
+F 3 "~" H 6900 2600 50  0001 C CNN
+	1    6900 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA88464
+P 6900 2250
+AR Path="/5FA88464" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA88464" Ref="R54"  Part="1" 
+F 0 "R54" H 6959 2296 50  0000 L CNN
+F 1 "10k" H 6959 2205 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 6900 2250 50  0001 C CNN
+F 3 "~" H 6900 2250 50  0001 C CNN
+	1    6900 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 3700 6900 3800
+Connection ~ 6900 3700
+Wire Wire Line
+	6900 4000 6900 4150
+Wire Wire Line
+	6900 3650 6900 3700
+Wire Wire Line
+	6900 3350 6900 3450
+$Comp
+L Microtan_65_CPU-cache:GND #PWR035
+U 1 1 5FA9F9C4
+P 6900 4150
+F 0 "#PWR035" H 6900 4150 30  0001 C CNN
+F 1 "GND" H 6900 4080 30  0001 C CNN
+F 2 "" H 6900 4150 60  0000 C CNN
+F 3 "" H 6900 4150 60  0000 C CNN
+	1    6900 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA9F9CA
+P 6900 3900
+AR Path="/5FA9F9CA" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA9F9CA" Ref="R57"  Part="1" 
+F 0 "R57" H 6959 3946 50  0000 L CNN
+F 1 "2k2" H 6959 3855 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 6900 3900 50  0001 C CNN
+F 3 "~" H 6900 3900 50  0001 C CNN
+	1    6900 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FA9F9D0
+P 6900 3550
+AR Path="/5FA9F9D0" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FA9F9D0" Ref="R56"  Part="1" 
+F 0 "R56" H 6959 3596 50  0000 L CNN
+F 1 "10k" H 6959 3505 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 6900 3550 50  0001 C CNN
+F 3 "~" H 6900 3550 50  0001 C CNN
+	1    6900 3550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 4850 6900 4950
+Connection ~ 6900 4850
+Wire Wire Line
+	6900 5150 6900 5300
+Wire Wire Line
+	6900 4800 6900 4850
+Wire Wire Line
+	6900 4500 6900 4600
+$Comp
+L Microtan_65_CPU-cache:GND #PWR036
+U 1 1 5FAB8B4A
+P 6900 5300
+F 0 "#PWR036" H 6900 5300 30  0001 C CNN
+F 1 "GND" H 6900 5230 30  0001 C CNN
+F 2 "" H 6900 5300 60  0000 C CNN
+F 3 "" H 6900 5300 60  0000 C CNN
+	1    6900 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FAB8B50
+P 6900 5050
+AR Path="/5FAB8B50" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FAB8B50" Ref="R59"  Part="1" 
+F 0 "R59" H 6959 5096 50  0000 L CNN
+F 1 "2k2" H 6959 5005 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 6900 5050 50  0001 C CNN
+F 3 "~" H 6900 5050 50  0001 C CNN
+	1    6900 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FAB8B56
+P 6900 4700
+AR Path="/5FAB8B56" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FAB8B56" Ref="R58"  Part="1" 
+F 0 "R58" H 6959 4746 50  0000 L CNN
+F 1 "10k" H 6959 4655 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 6900 4700 50  0001 C CNN
+F 3 "~" H 6900 4700 50  0001 C CNN
+	1    6900 4700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8250 1250 8250 1350
+Connection ~ 8250 1250
+Wire Wire Line
+	8250 1550 8250 1700
+Wire Wire Line
+	8250 1200 8250 1250
+Wire Wire Line
+	8250 900  8250 1000
+$Comp
+L Microtan_65_CPU-cache:GND #PWR038
+U 1 1 5FAEF0FA
+P 8250 1700
+F 0 "#PWR038" H 8250 1700 30  0001 C CNN
+F 1 "GND" H 8250 1630 30  0001 C CNN
+F 2 "" H 8250 1700 60  0000 C CNN
+F 3 "" H 8250 1700 60  0000 C CNN
+	1    8250 1700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FAEF100
+P 8250 1450
+AR Path="/5FAEF100" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FAEF100" Ref="R63"  Part="1" 
+F 0 "R63" H 8309 1496 50  0000 L CNN
+F 1 "2k2" H 8309 1405 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8250 1450 50  0001 C CNN
+F 3 "~" H 8250 1450 50  0001 C CNN
+	1    8250 1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FAEF106
+P 8250 1100
+AR Path="/5FAEF106" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FAEF106" Ref="R62"  Part="1" 
+F 0 "R62" H 8309 1146 50  0000 L CNN
+F 1 "10k" H 8309 1055 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8250 1100 50  0001 C CNN
+F 3 "~" H 8250 1100 50  0001 C CNN
+	1    8250 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8200 2450 8200 2550
+Connection ~ 8200 2450
+Wire Wire Line
+	8200 2750 8200 2900
+Wire Wire Line
+	8200 2400 8200 2450
+Wire Wire Line
+	8200 2100 8200 2200
+$Comp
+L Microtan_65_CPU-cache:GND #PWR037
+U 1 1 5FB0D9DB
+P 8200 2900
+F 0 "#PWR037" H 8200 2900 30  0001 C CNN
+F 1 "GND" H 8200 2830 30  0001 C CNN
+F 2 "" H 8200 2900 60  0000 C CNN
+F 3 "" H 8200 2900 60  0000 C CNN
+	1    8200 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FB0D9E1
+P 8200 2650
+AR Path="/5FB0D9E1" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FB0D9E1" Ref="R61"  Part="1" 
+F 0 "R61" H 8259 2696 50  0000 L CNN
+F 1 "2k2" H 8259 2605 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8200 2650 50  0001 C CNN
+F 3 "~" H 8200 2650 50  0001 C CNN
+	1    8200 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FB0D9E7
+P 8200 2300
+AR Path="/5FB0D9E7" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FB0D9E7" Ref="R60"  Part="1" 
+F 0 "R60" H 8259 2346 50  0000 L CNN
+F 1 "10k" H 8259 2255 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8200 2300 50  0001 C CNN
+F 3 "~" H 8200 2300 50  0001 C CNN
+	1    8200 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8250 3700 8250 3800
+Connection ~ 8250 3700
+Wire Wire Line
+	8250 4000 8250 4150
+Wire Wire Line
+	8250 3650 8250 3700
+Wire Wire Line
+	8250 3350 8250 3450
+$Comp
+L Microtan_65_CPU-cache:GND #PWR039
+U 1 1 5FB2F3C4
+P 8250 4150
+F 0 "#PWR039" H 8250 4150 30  0001 C CNN
+F 1 "GND" H 8250 4080 30  0001 C CNN
+F 2 "" H 8250 4150 60  0000 C CNN
+F 3 "" H 8250 4150 60  0000 C CNN
+	1    8250 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FB2F3CA
+P 8250 3900
+AR Path="/5FB2F3CA" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FB2F3CA" Ref="R65"  Part="1" 
+F 0 "R65" H 8309 3946 50  0000 L CNN
+F 1 "2k2" H 8309 3855 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8250 3900 50  0001 C CNN
+F 3 "~" H 8250 3900 50  0001 C CNN
+	1    8250 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FB2F3D0
+P 8250 3550
+AR Path="/5FB2F3D0" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FB2F3D0" Ref="R64"  Part="1" 
+F 0 "R64" H 8309 3596 50  0000 L CNN
+F 1 "10k" H 8309 3505 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8250 3550 50  0001 C CNN
+F 3 "~" H 8250 3550 50  0001 C CNN
+	1    8250 3550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8300 5200 8300 5350
+Wire Wire Line
+	8300 4550 8300 4650
+$Comp
+L Microtan_65_CPU-cache:GND #PWR040
+U 1 1 5FB535AA
+P 8300 5350
+F 0 "#PWR040" H 8300 5350 30  0001 C CNN
+F 1 "GND" H 8300 5280 30  0001 C CNN
+F 2 "" H 8300 5350 60  0000 C CNN
+F 3 "" H 8300 5350 60  0000 C CNN
+	1    8300 5350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FB535B0
+P 8300 5100
+AR Path="/5FB535B0" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FB535B0" Ref="R67"  Part="1" 
+F 0 "R67" H 8359 5146 50  0000 L CNN
+F 1 "2k2" H 8359 5055 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8300 5100 50  0001 C CNN
+F 3 "~" H 8300 5100 50  0001 C CNN
+	1    8300 5100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FB535B6
+P 8300 4750
+AR Path="/5FB535B6" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FB535B6" Ref="R66"  Part="1" 
+F 0 "R66" H 8359 4796 50  0000 L CNN
+F 1 "10k" H 8359 4705 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8300 4750 50  0001 C CNN
+F 3 "~" H 8300 4750 50  0001 C CNN
+	1    8300 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8500 5950 8500 6050
+Connection ~ 8500 5950
+Wire Wire Line
+	8500 6250 8500 6400
+Wire Wire Line
+	8500 5900 8500 5950
+Wire Wire Line
+	8500 5600 8500 5700
+$Comp
+L Microtan_65_CPU-cache:GND #PWR041
+U 1 1 5FB79A52
+P 8500 6400
+F 0 "#PWR041" H 8500 6400 30  0001 C CNN
+F 1 "GND" H 8500 6330 30  0001 C CNN
+F 2 "" H 8500 6400 60  0000 C CNN
+F 3 "" H 8500 6400 60  0000 C CNN
+	1    8500 6400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FB79A58
+P 8500 6150
+AR Path="/5FB79A58" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FB79A58" Ref="R69"  Part="1" 
+F 0 "R69" H 8559 6196 50  0000 L CNN
+F 1 "2k2" H 8559 6105 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8500 6150 50  0001 C CNN
+F 3 "~" H 8500 6150 50  0001 C CNN
+	1    8500 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FB79A5E
+P 8500 5800
+AR Path="/5FB79A5E" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FB79A5E" Ref="R68"  Part="1" 
+F 0 "R68" H 8559 5846 50  0000 L CNN
+F 1 "10k" H 8559 5755 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 8500 5800 50  0001 C CNN
+F 3 "~" H 8500 5800 50  0001 C CNN
+	1    8500 5800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9750 1250 9750 1350
+Connection ~ 9750 1250
+Wire Wire Line
+	9750 1550 9750 1700
+Wire Wire Line
+	9750 1200 9750 1250
+Wire Wire Line
+	9750 900  9750 1000
+$Comp
+L Microtan_65_CPU-cache:GND #PWR044
+U 1 1 5FBA056B
+P 9750 1700
+F 0 "#PWR044" H 9750 1700 30  0001 C CNN
+F 1 "GND" H 9750 1630 30  0001 C CNN
+F 2 "" H 9750 1700 60  0000 C CNN
+F 3 "" H 9750 1700 60  0000 C CNN
+	1    9750 1700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FBA0571
+P 9750 1450
+AR Path="/5FBA0571" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FBA0571" Ref="R75"  Part="1" 
+F 0 "R75" H 9809 1496 50  0000 L CNN
+F 1 "2k2" H 9809 1405 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 9750 1450 50  0001 C CNN
+F 3 "~" H 9750 1450 50  0001 C CNN
+	1    9750 1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FBA0577
+P 9750 1100
+AR Path="/5FBA0577" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FBA0577" Ref="R74"  Part="1" 
+F 0 "R74" H 9809 1146 50  0000 L CNN
+F 1 "10k" H 9809 1055 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 9750 1100 50  0001 C CNN
+F 3 "~" H 9750 1100 50  0001 C CNN
+	1    9750 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9650 2500 9650 2600
+Connection ~ 9650 2500
+Wire Wire Line
+	9650 2800 9650 2950
+Wire Wire Line
+	9650 2450 9650 2500
+Wire Wire Line
+	9650 2150 9650 2250
+$Comp
+L Microtan_65_CPU-cache:GND #PWR042
+U 1 1 5FBCB6A2
+P 9650 2950
+F 0 "#PWR042" H 9650 2950 30  0001 C CNN
+F 1 "GND" H 9650 2880 30  0001 C CNN
+F 2 "" H 9650 2950 60  0000 C CNN
+F 3 "" H 9650 2950 60  0000 C CNN
+	1    9650 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FBCB6A8
+P 9650 2700
+AR Path="/5FBCB6A8" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FBCB6A8" Ref="R71"  Part="1" 
+F 0 "R71" H 9709 2746 50  0000 L CNN
+F 1 "2k2" H 9709 2655 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 9650 2700 50  0001 C CNN
+F 3 "~" H 9650 2700 50  0001 C CNN
+	1    9650 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FBCB6AE
+P 9650 2350
+AR Path="/5FBCB6AE" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FBCB6AE" Ref="R70"  Part="1" 
+F 0 "R70" H 9709 2396 50  0000 L CNN
+F 1 "10k" H 9709 2305 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 9650 2350 50  0001 C CNN
+F 3 "~" H 9650 2350 50  0001 C CNN
+	1    9650 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9700 5000 9700 5100
+Connection ~ 9700 5000
+Wire Wire Line
+	9700 5300 9700 5450
+Wire Wire Line
+	9700 4950 9700 5000
+Wire Wire Line
+	9700 4650 9700 4750
+$Comp
+L Microtan_65_CPU-cache:GND #PWR043
+U 1 1 5FC27E49
+P 9700 5450
+F 0 "#PWR043" H 9700 5450 30  0001 C CNN
+F 1 "GND" H 9700 5380 30  0001 C CNN
+F 2 "" H 9700 5450 60  0000 C CNN
+F 3 "" H 9700 5450 60  0000 C CNN
+	1    9700 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FC27E4F
+P 9700 5200
+AR Path="/5FC27E4F" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FC27E4F" Ref="R73"  Part="1" 
+F 0 "R73" H 9759 5246 50  0000 L CNN
+F 1 "2k2" H 9759 5155 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 9700 5200 50  0001 C CNN
+F 3 "~" H 9700 5200 50  0001 C CNN
+	1    9700 5200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small R?
+U 1 1 5FC27E55
+P 9700 4850
+AR Path="/5FC27E55" Ref="R?"  Part="1" 
+AR Path="/5F9ACD65/5FC27E55" Ref="R72"  Part="1" 
+F 0 "R72" H 9759 4896 50  0000 L CNN
+F 1 "10k" H 9759 4805 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 9700 4850 50  0001 C CNN
+F 3 "~" H 9700 4850 50  0001 C CNN
+	1    9700 4850
+	1    0    0    -1  
+$EndComp
+Text GLabel 1350 1000 0    50   Input ~ 0
+A1
+Text GLabel 1350 2250 0    50   Input ~ 0
+A2
+Text GLabel 1400 3500 0    50   Input ~ 0
+A3
+Text GLabel 1450 4750 0    50   Input ~ 0
+A4
+Text GLabel 1500 5950 0    50   Input ~ 0
+A5
+Text GLabel 2850 950  0    50   Input ~ 0
+A6
+Text GLabel 2850 2200 0    50   Input ~ 0
+A7
+Text GLabel 2900 3450 0    50   Input ~ 0
+A8
+Text GLabel 2950 4700 0    50   Input ~ 0
+A9
+Text GLabel 2950 5950 0    50   Input ~ 0
+A10
+Text GLabel 4250 950  0    50   Input ~ 0
+A11
+Text GLabel 4300 2150 0    50   Input ~ 0
+A12
+Text GLabel 4250 3450 0    50   Input ~ 0
+D1
+Text GLabel 4250 4700 0    50   Input ~ 0
+D2
+Text GLabel 4300 5900 0    50   Input ~ 0
+D3
+Text GLabel 5600 950  0    50   Input ~ 0
+D4
+Text GLabel 5550 2100 0    50   Input ~ 0
+D5
+Text GLabel 5500 3400 0    50   Input ~ 0
+D6
+Text GLabel 5500 4650 0    50   Input ~ 0
+D7
+Text GLabel 5600 5850 0    50   Input ~ 0
+D8
+Wire Wire Line
+	1350 1000 1500 1000
+Wire Wire Line
+	2850 950  2950 950 
+Wire Wire Line
+	1350 2250 1500 2250
+Wire Wire Line
+	1400 3500 1550 3500
+Wire Wire Line
+	1450 4750 1550 4750
+Wire Wire Line
+	1500 5950 1550 5950
+Wire Wire Line
+	2950 5950 3050 5950
+Wire Wire Line
+	2950 4700 3050 4700
+Wire Wire Line
+	2900 3450 3000 3450
+Wire Wire Line
+	2850 2200 2950 2200
+Wire Wire Line
+	4250 950  4350 950 
+Wire Wire Line
+	4300 2150 4350 2150
+Wire Wire Line
+	5600 950  5650 950 
+Wire Wire Line
+	5550 2100 5650 2100
+Wire Wire Line
+	4250 3450 4350 3450
+Wire Wire Line
+	4250 4700 4300 4700
+Wire Wire Line
+	5500 4650 5600 4650
+Wire Wire Line
+	5500 3400 5600 3400
+Wire Wire Line
+	4300 5900 4400 5900
+Wire Wire Line
+	5600 5850 5700 5850
+Text GLabel 2350 1350 2    50   Input ~ 0
+IA1
+Text GLabel 2350 2600 2    50   Input ~ 0
+IA2
+Text GLabel 2400 3850 2    50   Input ~ 0
+IA3
+Text GLabel 2400 5100 2    50   Input ~ 0
+IA4
+Text GLabel 2400 6300 2    50   Input ~ 0
+IA5
+Text GLabel 3800 1300 2    50   Input ~ 0
+IA6
+Text GLabel 3800 2550 2    50   Input ~ 0
+IA7
+Text GLabel 3850 3800 2    50   Input ~ 0
+IA8
+Text GLabel 3900 5050 2    50   Input ~ 0
+IA9
+Text GLabel 3900 6300 2    50   Input ~ 0
+IA10
+Text GLabel 5200 1300 2    50   Input ~ 0
+IA11
+Text GLabel 5200 2500 2    50   Input ~ 0
+IA12
+Text GLabel 5200 3800 2    50   Input ~ 0
+ID1
+Text GLabel 5150 5050 2    50   Input ~ 0
+ID2
+Text GLabel 5250 6250 2    50   Input ~ 0
+ID3
+Text GLabel 6500 1300 2    50   Input ~ 0
+ID4
+Text GLabel 6500 2450 2    50   Input ~ 0
+ID5
+Text GLabel 6450 3750 2    50   Input ~ 0
+ID6
+Text GLabel 6450 5000 2    50   Input ~ 0
+ID7
+Text GLabel 6550 6200 2    50   Input ~ 0
+ID8
+Text GLabel 9750 900  0    50   Input ~ 0
+CLKA
+Text GLabel 10600 1250 2    50   Input ~ 0
+ICLKA
+Text GLabel 9650 2150 0    50   Input ~ 0
+CLKB
+Text GLabel 10500 2500 2    50   Input ~ 0
+ICLKB
+Text GLabel 8250 900  0    50   Input ~ 0
+WIO
+Text GLabel 9100 1250 2    50   Input ~ 0
+IWIO
+Text GLabel 6900 900  0    50   Input ~ 0
+DO1
+Text GLabel 6900 2050 0    50   Input ~ 0
+DO2
+Text GLabel 6900 3350 0    50   Input ~ 0
+DO3
+Text GLabel 6900 4500 0    50   Input ~ 0
+DO4
+Text GLabel 7750 1250 2    50   Input ~ 0
+IDO1
+Text GLabel 7750 2400 2    50   Input ~ 0
+IDO2
+Text GLabel 7750 3700 2    50   Input ~ 0
+IDO3
+Text GLabel 7750 4850 2    50   Input ~ 0
+IDO4
+Text GLabel 8200 2100 0    50   Input ~ 0
+X1
+Text GLabel 8250 3350 0    50   Input ~ 0
+X2
+Text GLabel 8300 4550 0    50   Input ~ 0
+X3
+Text GLabel 8500 5600 0    50   Input ~ 0
+X4
+Text GLabel 9700 4650 0    50   Input ~ 0
+X5
+Text GLabel 9050 2450 2    50   Input ~ 0
+IX1
+Text GLabel 9100 3700 2    50   Input ~ 0
+IX2
+Text GLabel 8700 4900 2    50   Input ~ 0
+IX3
+Text GLabel 9350 5950 2    50   Input ~ 0
+IX4
+Text GLabel 10550 5000 2    50   Input ~ 0
+IX5
+Wire Wire Line
+	2950 1300 3800 1300
+Wire Wire Line
+	1500 1350 2350 1350
+Wire Wire Line
+	1500 2600 2350 2600
+Wire Wire Line
+	2950 2550 3800 2550
+Wire Wire Line
+	1550 3850 2400 3850
+Wire Wire Line
+	3000 3800 3850 3800
+Wire Wire Line
+	1550 5100 2400 5100
+Wire Wire Line
+	3050 5050 3900 5050
+Wire Wire Line
+	1550 6300 2400 6300
+Wire Wire Line
+	3050 6300 3900 6300
+Wire Wire Line
+	4400 6250 5250 6250
+Wire Wire Line
+	5700 6200 6550 6200
+Wire Wire Line
+	4300 5050 5150 5050
+Wire Wire Line
+	5600 5000 6450 5000
+Wire Wire Line
+	6900 4850 7750 4850
+Wire Wire Line
+	8300 4850 8300 4900
+Wire Wire Line
+	8700 4900 8300 4900
+Connection ~ 8300 4900
+Wire Wire Line
+	8300 4900 8300 5000
+Wire Wire Line
+	9700 5000 10550 5000
+Wire Wire Line
+	8500 5950 9350 5950
+Wire Wire Line
+	4350 1300 5200 1300
+Wire Wire Line
+	5650 1300 6500 1300
+Wire Wire Line
+	6900 1250 7750 1250
+Wire Wire Line
+	9750 1250 10600 1250
+Wire Wire Line
+	8250 1250 9100 1250
+Wire Wire Line
+	9650 2500 10500 2500
+Wire Wire Line
+	8200 2450 9050 2450
+Wire Wire Line
+	6900 2400 7750 2400
+Wire Wire Line
+	5650 2450 6500 2450
+Wire Wire Line
+	5600 3750 6450 3750
+Wire Wire Line
+	6900 3700 7750 3700
+Wire Wire Line
+	4350 3800 5200 3800
+Wire Wire Line
+	4350 2500 5200 2500
+Wire Wire Line
+	8250 3700 9100 3700
+$EndSCHEMATC
