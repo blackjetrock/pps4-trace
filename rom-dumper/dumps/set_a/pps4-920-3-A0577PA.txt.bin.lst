@@ -1,0 +1,2050 @@
+
+0000, t 01
+0001, t 02
+0002, ldi 4
+0003, iol 1e
+0004, iol 1e
+0005, iol 1d
+0006, lb fd
+0007, tml 44
+0008, lb fd
+0009, lbl e0
+000A, tm 3d f4
+000B, lbl ec
+000C, tm 33 57
+000D, lxa
+000E, lbl d3
+000F, ld 7
+0010, ad
+0011, comp
+0012, exd 7
+0013, ldi 1
+0014, and
+0015, ex 7
+0016, ex 7
+0017, adc
+0018, comp
+0019, exd 7
+001A, ldi 3
+001B, ex 7
+001C, tml 3a
+001D, rtn
+001E, tml a2
+001F, tm 2d 01
+0020, skf2
+0021, tml 71
+0022, lb f7
+0023, t 36
+0024, lb 56
+0025, xax
+0026, lbl c2
+0027, lbl c2
+0028, and
+0029, adi 7
+002A, iol 1e
+002B, tml 3a
+002C, rtn
+002D, tm 27 1c
+002E, ex 2
+002F, lb 3f
+0030, tm 38 88
+0031, t 01
+0032, tm 29 16
+0033, t 12
+0034, lbl fe
+0035, skf2
+0036, t 20
+0037, lbl f3
+0038, t 20
+0039, ldi 1
+003A, iol 2e
+003B, tm 1d c5
+003C, tm 1d c5
+003D, ad
+003E, comp
+003F, xabl
+0040, ldi 5
+0041, tml fc
+0042, lbl ff
+0043, ld 7
+0044, skz
+0045, t 2b
+0046, ldi 0
+0047, ex 7
+0048, incb
+0049, ldi 5
+004A, tm 17 a0
+004B, decb
+004C, ex 7
+004D, lb fa
+004E, t 30
+004F, tl 7 8f
+0050, tm 18 76
+0051, tm 12 00
+0052, tm 1f f6
+0053, t 2e
+0054, t 2e
+0055, tm 12 7e
+0056, tm 13 e1
+0057, tl e f8
+0058, tl b 60
+0059, lbl c5
+005A, tm 38 ba
+005B, lbl e0
+005C, ld 7
+005D, lxa
+005E, tml 1c
+005F, t 13
+0060, t 13
+0061, tm 30 c6
+0062, ex 7
+0063, tml ad
+0064, lax
+0065, t 08
+0066, lax
+0067, tml e3
+0068, t 18
+0069, t 22
+006A, lb 37
+006B, skz
+006C, t 22
+006D, lb e9
+006E, tm 22 02
+006F, t 37
+0070, t 13
+0071, lb 23
+0072, ex 7
+0073, tm 38 a8
+0074, t 3a
+0075, t 3a
+0076, lb d6
+0077, t 3a
+0078, lb fd
+0079, lbl f2
+007A, tm 33 00
+007B, t 32
+007C, tm 2e 15
+007D, t 3a
+007E, t 3a
+007F, tm 30 02
+0080, t 2d
+0081, lb e9
+0082, rtn
+0083, t 3e
+0084, tl b 60
+0085, lb c6
+0086, lb c3
+0087, lb f0
+0088, lb fd
+0089, t 30
+008A, t 3f
+008B, tm 2d cd
+008C, lb cb
+008D, lb c9
+008E, tm 19 db
+008F, tm 1d df
+0090, ld 6
+0091, t 30
+0092, skz
+0093, tm 25 38
+0094, exd 6
+0095, adi d
+0096, tm 29 79
+0097, lb 95
+0098, ld 2
+0099, ld 4
+009A, ld 0
+009B, tml 04
+009C, t 00
+009D, t 3b
+009E, ad
+009F, ex 4
+00A0, t 0a
+00A1, skbi e
+00A2, tl 2 51
+00A3, tl 0 4f
+00A4, t 23
+00A5, skbi 5
+00A6, skbi 7
+00A7, skbi 9
+00A8, skc
+00A9, lb cb
+00AA, lb c9
+00AB, tm 12 d3
+00AC, tm 11 d4
+00AD, tm 10 6b
+00AE, tm 36 f0
+00AF, tm 32 00
+00B0, lb 00
+00B1, t 32
+00B2, exd 7
+00B3, t 04
+00B4, rtn
+00B5, lbl 90
+00B6, lbl a0
+00B7, ld 7
+00B8, sag
+00B9, exd 7
+00BA, t 0b
+00BB, rtn
+00BC, tl f fe
+00BD, tl f be
+00BE, ldi 4
+00BF, ldi 5
+00C0, ldi 6
+00C1, ldi 7
+00C2, iol 1e
+00C3, t 1b
+00C4, rtn
+00C5, lbl b0
+00C6, comp
+00C7, adsk
+00C8, rtn
+00C9, rtnsk
+00CA, lbl 92
+00CB, lbl b2
+00CC, lbl f2
+00CD, ld 7
+00CE, skz
+00CF, rtn
+00D0, decb
+00D1, t 28
+00D2, rtnsk
+00D3, tl 2 14
+00D4, tl 6 40
+00D5, tl 3 c0
+00D6, tl 2 c0
+00D7, tl e a8
+00D8, tl a 74
+00D9, lbl d3
+00DA, lbl d0
+00DB, tl 2 67
+00DC, tl 2 67
+00DD, lbl eb
+00DE, lbl 9f
+00DF, lbl ff
+00E0, lbl bf
+00E1, ex 7
+00E2, incb
+00E3, skbi e
+00E4, t 09
+00E5, rtn
+00E6, rtn
+00E7, rtn
+00E8, ldi 4
+00E9, ldi 2
+00EA, ldi 1
+00EB, and
+00EC, ex 7
+00ED, rtn
+00EE, rtn
+00EF, lbl ed
+00F0, lbl dd
+00F1, rc
+00F2, adi 9
+00F3, adcsk
+00F4, dc
+00F5, exd 7
+00F6, exd 7
+00F7, adi 9
+00F8, adcsk
+00F9, dc
+00FA, exd 7
+00FB, exd 7
+00FC, adi 9
+00FD, adcsk
+00FE, dc
+00FF, ex 7
+0100, rtn
+0101, lbl ce
+0102, lbl fe
+0103, ld 7
+0104, lxa
+0105, decb
+0106, ld 7
+0107, incb
+0108, incb
+0109, lbua
+010A, xabl
+010B, lbmx
+010C, rtn
+010D, lbl b0
+010E, ld 3
+010F, ex 3
+0110, exd 7
+0111, t 3b
+0112, rtn
+0113, ld 7
+0114, sag
+0115, ex 7
+0116, exd 7
+0117, t 00
+0118, rtn
+0119, lbl b9
+011A, lbl ab
+011B, ldi 0
+011C, xabl
+011D, lxa
+011E, xbmx
+011F, ld 7
+0120, xbmx
+0121, exd 7
+0122, t 0d
+0123, rtn
+0124, lbl 9b
+0125, lbl ba
+0126, lbl 9f
+0127, ldi 0
+0128, xabl
+0129, lxa
+012A, ld 7
+012B, xbmx
+012C, ex 7
+012D, xbmx
+012E, exd 7
+012F, t 1c
+0130, rtn
+0131, rc
+0132, sag
+0133, ld 7
+0134, adi 9
+0135, adcsk
+0136, dc
+0137, exd 7
+0138, t 24
+0139, rtn
+013A, lbl fd
+013B, lbl cd
+013C, rc
+013D, adc
+013E, ex 7
+013F, ex 7
+0140, decb
+0141, t 31
+0142, rtn
+0143, lbl 90
+0144, lbl a0
+0145, sag
+0146, ld 7
+0147, exd 7
+0148, t 3b
+0149, rtn
+014A, lbl f0
+014B, lbl b0
+014C, ld 3
+014D, exd 3
+014E, t 04
+014F, rtn
+0150, ldi 0
+0151, ldi 7
+0152, ldi 7
+0153, ldi 7
+0154, ldi 7
+0155, or
+0156, ex 7
+0157, rtn
+0158, ldi 0
+0159, ldi 0
+015A, ldi 0
+015B, ldi 0
+015C, ldi 7
+015D, and
+015E, skz
+015F, rtn
+0160, rtnsk
+0161, lbl d9
+0162, lbl da
+0163, lbl db
+0164, lbl dc
+0165, ex 7
+0166, rtn
+0167, lbl b0
+0168, eor
+0169, skz
+016A, rtn
+016B, rtnsk
+016C, xax
+016D, adi e
+016E, t 2c
+016F, xax
+0170, rtn
+0171, lbl ed
+0172, lbl b0
+0173, lbl 90
+0174, lbl f0
+0175, lbl f0
+0176, exd 7
+0177, t 36
+0178, rtn
+0179, lbl ff
+017A, ex 7
+017B, incb
+017C, t 3c
+017D, rtn
+017E, sf1
+017F, lb 70
+0180, exd 7
+0181, t 02
+0182, t 15
+0183, tm 1d 01
+0184, tm 3a 75
+0185, lbl ff
+0186, ex 7
+0187, rf2
+0188, sf1
+0189, t 15
+018A, rf1
+018B, t 18
+018C, lb f3
+018D, rf1
+018E, lb f7
+018F, t 25
+0190, lb f7
+0191, t 22
+0192, dia
+0193, adi 7
+0194, t 25
+0195, t 20
+0196, rf1
+0197, tl 0 40
+0198, dia
+0199, adi 7
+019A, t 20
+019B, tm 27 57
+019C, lb 02
+019D, t 37
+019E, tm 22 c9
+019F, tm 3b b2
+01A0, ldi 3
+01A1, tml 1c
+01A2, t 28
+01A3, tm 1d ff
+01A4, lb 58
+01A5, skbi 0
+01A6, sc
+01A7, lbl 90
+01A8, lax
+01A9, adi e
+01AA, xabl
+01AB, xabl
+01AC, tl 8 80
+01AD, tl 0 80
+01AE, tl c 59
+01AF, tl c 6f
+01B0, tm 21 02
+01B1, lbmx
+01B2, tl 0 2c
+01B3, tl 5 c0
+01B4, tl 5 cc
+01B5, tl d f0
+01B6, tl 5 53
+01B7, tl 9 02
+01B8, tl 6 90
+01B9, tl 6 92
+01BA, tl 9 00
+01BB, tl 6 80
+01BC, tl 7 80
+01BD, tl 4 3a
+01BE, lbl fd
+01BF, lbl f0
+01C0, ldi 7
+01C1, lbua
+01C2, xs
+01C3, cys
+01C4, exd 7
+01C5, cys
+01C6, exd 7
+01C7, cys
+01C8, ex 7
+01C9, cys
+01CA, xs
+01CB, rtn
+01CC, tl 5 40
+01CD, tl d ef
+01CE, tl 0 a8
+01CF, tl d fb
+01D0, tl d fb
+01D1, tm 13 76
+01D2, tm 12 e1
+01D3, tl c 54
+01D4, tm 32 5e
+01D5, t 36
+01D6, tm 32 5d
+01D7, exd 2
+01D8, tm 32 5f
+01D9, lbl f2
+01DA, tl f 02
+01DB, tm 32 5c
+01DC, t 00
+01DD, tm 32 5d
+01DE, skbi 0
+01DF, tml 16
+01E0, tl c 00
+01E1, tml 14
+01E2, rtn
+01E3, tm 32 5c
+01E4, skbi 0
+01E5, tm 32 5e
+01E6, lb f2
+01E7, tl f c0
+01E8, tl 5 75
+01E9, tl f 7e
+01EA, tl f 3e
+01EB, t 22
+01EC, lbl 90
+01ED, lbl b2
+01EE, lbl b0
+01EF, t 3a
+01F0, lbl b0
+01F1, t 3b
+01F2, lbl 90
+01F3, lbl b2
+01F4, lbl b0
+01F5, lbl b0
+01F6, ldi 0
+01F7, ldi 1
+01F8, ad
+01F9, ex 7
+01FA, ex 7
+01FB, rtn
+01FC, tm 27 02
+01FD, skbi b
+01FE, tml f1
+01FF, ad
+0200, ex 7
+0201, skc
+0202, t 0a
+0203, t 0c
+0204, lb f3
+0205, tm 3f 02
+0206, t 2b
+0207, skc
+0208, t 19
+0209, lbl 92
+020A, tm 2e 15
+020B, t 0d
+020C, tml b3
+020D, t 0d
+020E, lbl 90
+020F, ex 7
+0210, tml 43
+0211, tm 30 cc
+0212, tml b9
+0213, tl 7 40
+0214, tl 7 40
+0215, skf1
+0216, lxa
+0217, lax
+0218, adi 1
+0219, t 2e
+021A, tml 4b
+021B, rf1
+021C, t 0d
+021D, tm 1b 22
+021E, t 0d
+021F, lb 7d
+0220, ex 7
+0221, incb
+0222, tm 2a 01
+0223, adsk
+0224, decb
+0225, ld 6
+0226, eor
+0227, ex 3
+0228, incb
+0229, ld 3
+022A, rf1
+022B, rtn
+022C, lbl dd
+022D, sc
+022E, sag
+022F, ld 7
+0230, comp
+0231, adcsk
+0232, dc
+0233, exd 7
+0234, t 03
+0235, rtn
+0236, lb eb
+0237, t 10
+0238, lb f4
+0239, tm 1d 54
+023A, adi 9
+023B, skc
+023C, rtnsk
+023D, rtn
+023E, tl e 8c
+023F, tl b 8c
+0240, tl 5 1a
+0241, tl 4 f1
+0242, tl 7 1b
+0243, tl b b5
+0244, tl f 40
+0245, tl 7 79
+0246, tl 6 b3
+0247, tl c 80
+0248, tl 4 2e
+0249, tl 5 32
+024A, tl 5 28
+024B, tl e 56
+024C, tl d 37
+024D, tl c 96
+024E, tl 6 cb
+024F, tl c 8a
+0250, tl c f8
+0251, tl f 57
+0252, tl 8 9d
+0253, tl d 00
+0254, tl c a2
+0255, tl e 80
+0256, tl c b3
+0257, tl d e0
+0258, tl 6 3b
+0259, tl e dc
+025A, tl f 39
+025B, tl e f3
+025C, tl 7 2b
+025D, tl 6 c0
+025E, tl 7 2e
+025F, tl 6 c2
+0260, tl b 80
+0261, tl 7 74
+0262, tl 0 77
+0263, iol 29
+0264, tl 4 40
+0265, iol 29
+0266, tl 4 4c
+0267, iol 29
+0268, tl 4 53
+0269, sc
+026A, ld 7
+026B, adc
+026C, exd 7
+026D, rtn
+026E, rtnsk
+026F, rc
+0270, ldi 0
+0271, adcsk
+0272, dc
+0273, exd 7
+0274, ldi 0
+0275, adcsk
+0276, dc
+0277, exd 7
+0278, ldi 0
+0279, adcsk
+027A, dc
+027B, ex 7
+027C, rtn
+027D, tl 7 00
+027E, tl 7 01
+027F, tl 7 02
+0280, tl 7 03
+0281, tl 7 04
+0282, tl 7 05
+0283, tl 7 06
+0284, tl 7 07
+0285, tl 7 08
+0286, tl 7 09
+0287, tl 2 79
+0288, tl d 32
+0289, tl 4 59
+028A, tl 5 3b
+028B, tl d 40
+028C, tl d 45
+028D, lbl b1
+028E, lbl f9
+028F, lbl f0
+0290, lbl bd
+0291, lbl c0
+0292, lbl d0
+0293, lbl e0
+0294, lbl f6
+0295, lbl f3
+0296, lbl a0
+0297, lbl 90
+0298, lbl 80
+0299, ldi 7
+029A, lbua
+029B, rtn
+029C, rtn
+029D, ex 7
+029E, incb
+029F, t 3b
+02A0, rtn
+02A1, tm 27 02
+02A2, skbi b
+02A3, tml f1
+02A4, sc
+02A5, comp
+02A6, adc
+02A7, ex 7
+02A8, skc
+02A9, t 0c
+02AA, t 0e
+02AB, lb f3
+02AC, tm 3f 01
+02AD, rf1
+02AE, t 30
+02AF, lb fe
+02B0, t 39
+02B1, tml 22
+02B2, t 1f
+02B3, lb fb
+02B4, t 1f
+02B5, lb f7
+02B6, t 27
+02B7, t 3b
+02B8, lb f7
+02B9, t 27
+02BA, ldi 3
+02BB, tml 1c
+02BC, t 27
+02BD, t 3b
+02BE, lb fb
+02BF, t 33
+02C0, tml b7
+02C1, skc
+02C2, t 30
+02C3, lb ea
+02C4, lb 54
+02C5, lbl cd
+02C6, tm 37 b7
+02C7, t 3b
+02C8, tml b0
+02C9, lb f6
+02CA, tm 27 57
+02CB, t 00
+02CC, tl e fe
+02CD, t 01
+02CE, t 02
+02CF, ldi 4
+02D0, iol 1e
+02D1, iol 1e
+02D2, iol 1d
+02D3, lb fd
+02D4, tml 44
+02D5, lb fd
+02D6, lbl e0
+02D7, tm 3d f4
+02D8, lbl ec
+02D9, tm 33 57
+02DA, lxa
+02DB, lbl d3
+02DC, ld 7
+02DD, ad
+02DE, comp
+02DF, exd 7
+02E0, ldi 1
+02E1, and
+02E2, ex 7
+02E3, ex 7
+02E4, adc
+02E5, comp
+02E6, exd 7
+02E7, ldi 3
+02E8, ex 7
+02E9, tml 3a
+02EA, rtn
+02EB, tml a2
+02EC, tm 2d 01
+02ED, skf2
+02EE, tml 71
+02EF, lb f7
+02F0, t 36
+02F1, lb 56
+02F2, xax
+02F3, lbl c2
+02F4, lbl c2
+02F5, and
+02F6, adi 7
+02F7, iol 1e
+02F8, tml 3a
+02F9, rtn
+02FA, tm 27 1c
+02FB, ex 2
+02FC, lb 3f
+02FD, tm 38 88
+02FE, t 01
+02FF, tm 29 16
+0300, t 12
+0301, lbl fe
+0302, skf2
+0303, t 20
+0304, lbl f3
+0305, t 20
+0306, ldi 1
+0307, iol 2e
+0308, tm 1d c5
+0309, tm 1d c5
+030A, ad
+030B, comp
+030C, xabl
+030D, ldi 5
+030E, tml fc
+030F, lbl ff
+0310, ld 7
+0311, skz
+0312, t 2b
+0313, ldi 0
+0314, ex 7
+0315, incb
+0316, ldi 5
+0317, tm 17 a0
+0318, decb
+0319, ex 7
+031A, lb fa
+031B, t 30
+031C, tl 7 8f
+031D, tm 18 76
+031E, tm 12 00
+031F, tm 1f f6
+0320, t 2e
+0321, t 2e
+0322, tm 12 7e
+0323, tm 13 e1
+0324, tl e f8
+0325, tl b 60
+0326, lbl c5
+0327, tm 38 ba
+0328, lbl e0
+0329, ld 7
+032A, lxa
+032B, tml 1c
+032C, t 13
+032D, t 13
+032E, tm 30 c6
+032F, ex 7
+0330, tml ad
+0331, lax
+0332, t 08
+0333, lax
+0334, tml e3
+0335, t 18
+0336, t 22
+0337, lb 37
+0338, skz
+0339, t 22
+033A, lb e9
+033B, tm 22 02
+033C, t 37
+033D, t 13
+033E, lb 23
+033F, ex 7
+0340, tm 38 a8
+0341, t 3a
+0342, t 3a
+0343, lb d6
+0344, t 3a
+0345, lb fd
+0346, lbl f2
+0347, tm 33 00
+0348, t 32
+0349, tm 2e 15
+034A, t 3a
+034B, t 3a
+034C, tm 30 02
+034D, t 2d
+034E, lb e9
+034F, rtn
+0350, t 3e
+0351, tl b 60
+0352, lb c6
+0353, lb c3
+0354, lb f0
+0355, lb fd
+0356, t 30
+0357, t 3f
+0358, tm 2d cd
+0359, lb cb
+035A, lb c9
+035B, tm 19 db
+035C, tm 1d df
+035D, ld 6
+035E, t 30
+035F, skz
+0360, tm 25 38
+0361, exd 6
+0362, adi d
+0363, tm 29 79
+0364, lb 95
+0365, ld 2
+0366, ld 4
+0367, ld 0
+0368, tml 04
+0369, t 00
+036A, t 3b
+036B, ad
+036C, ex 4
+036D, t 0a
+036E, skbi e
+036F, tl 2 51
+0370, tl 0 4f
+0371, t 23
+0372, skbi 5
+0373, skbi 7
+0374, skbi 9
+0375, skc
+0376, lb cb
+0377, lb c9
+0378, tm 12 d3
+0379, tm 11 d4
+037A, tm 10 6b
+037B, tm 36 f0
+037C, tm 32 00
+037D, lb 00
+037E, t 32
+037F, exd 7
+0380, t 04
+0381, rtn
+0382, lbl 90
+0383, lbl a0
+0384, ld 7
+0385, sag
+0386, exd 7
+0387, t 0b
+0388, rtn
+0389, tl f fe
+038A, tl f be
+038B, ldi 4
+038C, ldi 5
+038D, ldi 6
+038E, ldi 7
+038F, iol 1e
+0390, t 1b
+0391, rtn
+0392, lbl b0
+0393, comp
+0394, adsk
+0395, rtn
+0396, rtnsk
+0397, lbl 92
+0398, lbl b2
+0399, lbl f2
+039A, ld 7
+039B, skz
+039C, rtn
+039D, decb
+039E, t 28
+039F, rtnsk
+03A0, tl 2 14
+03A1, tl 6 40
+03A2, tl 3 c0
+03A3, tl 2 c0
+03A4, tl e a8
+03A5, tl a 74
+03A6, lbl d3
+03A7, lbl d0
+03A8, tl 2 67
+03A9, tl 2 67
+03AA, lbl eb
+03AB, lbl 9f
+03AC, lbl ff
+03AD, lbl bf
+03AE, ex 7
+03AF, incb
+03B0, skbi e
+03B1, t 09
+03B2, rtn
+03B3, rtn
+03B4, rtn
+03B5, ldi 4
+03B6, ldi 2
+03B7, ldi 1
+03B8, and
+03B9, ex 7
+03BA, rtn
+03BB, rtn
+03BC, lbl ed
+03BD, lbl dd
+03BE, rc
+03BF, adi 9
+03C0, adcsk
+03C1, dc
+03C2, exd 7
+03C3, exd 7
+03C4, adi 9
+03C5, adcsk
+03C6, dc
+03C7, exd 7
+03C8, exd 7
+03C9, adi 9
+03CA, adcsk
+03CB, dc
+03CC, ex 7
+03CD, rtn
+03CE, lbl ce
+03CF, lbl fe
+03D0, ld 7
+03D1, lxa
+03D2, decb
+03D3, ld 7
+03D4, incb
+03D5, incb
+03D6, lbua
+03D7, xabl
+03D8, lbmx
+03D9, rtn
+03DA, lbl b0
+03DB, ld 3
+03DC, ex 3
+03DD, exd 7
+03DE, t 3b
+03DF, rtn
+03E0, ld 7
+03E1, sag
+03E2, ex 7
+03E3, exd 7
+03E4, t 00
+03E5, rtn
+03E6, lbl b9
+03E7, lbl ab
+03E8, ldi 0
+03E9, xabl
+03EA, lxa
+03EB, xbmx
+03EC, ld 7
+03ED, xbmx
+03EE, exd 7
+03EF, t 0d
+03F0, rtn
+03F1, lbl 9b
+03F2, lbl ba
+03F3, lbl 9f
+03F4, ldi 0
+03F5, xabl
+03F6, lxa
+03F7, ld 7
+03F8, xbmx
+03F9, ex 7
+03FA, xbmx
+03FB, exd 7
+03FC, t 1c
+03FD, rtn
+03FE, rc
+03FF, sag
+0400, ld 7
+0401, adi 9
+0402, adcsk
+0403, dc
+0404, exd 7
+0405, t 24
+0406, rtn
+0407, lbl fd
+0408, lbl cd
+0409, rc
+040A, adc
+040B, ex 7
+040C, ex 7
+040D, decb
+040E, t 31
+040F, rtn
+0410, lbl 90
+0411, lbl a0
+0412, sag
+0413, ld 7
+0414, exd 7
+0415, t 3b
+0416, rtn
+0417, lbl f0
+0418, lbl b0
+0419, ld 3
+041A, exd 3
+041B, t 04
+041C, rtn
+041D, ldi 0
+041E, ldi 7
+041F, ldi 7
+0420, ldi 7
+0421, ldi 7
+0422, or
+0423, ex 7
+0424, rtn
+0425, ldi 0
+0426, ldi 0
+0427, ldi 0
+0428, ldi 0
+0429, ldi 7
+042A, and
+042B, skz
+042C, rtn
+042D, rtnsk
+042E, lbl d9
+042F, lbl da
+0430, lbl db
+0431, lbl dc
+0432, ex 7
+0433, rtn
+0434, lbl b0
+0435, eor
+0436, skz
+0437, rtn
+0438, rtnsk
+0439, xax
+043A, adi e
+043B, t 2c
+043C, xax
+043D, rtn
+043E, lbl ed
+043F, lbl b0
+0440, lbl 90
+0441, lbl f0
+0442, lbl f0
+0443, exd 7
+0444, t 36
+0445, rtn
+0446, lbl ff
+0447, ex 7
+0448, incb
+0449, t 3c
+044A, rtn
+044B, sf1
+044C, lb 70
+044D, exd 7
+044E, t 02
+044F, t 15
+0450, tm 1d 01
+0451, tm 3a 75
+0452, lbl ff
+0453, ex 7
+0454, rf2
+0455, sf1
+0456, t 15
+0457, rf1
+0458, t 18
+0459, lb f3
+045A, rf1
+045B, lb f7
+045C, t 25
+045D, lb f7
+045E, t 22
+045F, dia
+0460, adi 7
+0461, t 25
+0462, t 20
+0463, rf1
+0464, tl 0 40
+0465, dia
+0466, adi 7
+0467, t 20
+0468, tm 27 57
+0469, lb 02
+046A, t 37
+046B, tm 22 c9
+046C, tm 3b b2
+046D, ldi 3
+046E, tml 1c
+046F, t 28
+0470, tm 1d ff
+0471, lb 58
+0472, skbi 0
+0473, sc
+0474, lbl 90
+0475, lax
+0476, adi e
+0477, xabl
+0478, xabl
+0479, tl 8 80
+047A, tl 0 80
+047B, tl c 59
+047C, tl c 6f
+047D, tm 21 02
+047E, lbmx
+047F, tl 0 2c
+0480, tl 5 c0
+0481, tl 5 cc
+0482, tl d f0
+0483, tl 5 53
+0484, tl 9 02
+0485, tl 6 90
+0486, tl 6 92
+0487, tl 9 00
+0488, tl 6 80
+0489, tl 7 80
+048A, tl 4 3a
+048B, lbl fd
+048C, lbl f0
+048D, ldi 7
+048E, lbua
+048F, xs
+0490, cys
+0491, exd 7
+0492, cys
+0493, exd 7
+0494, cys
+0495, ex 7
+0496, cys
+0497, xs
+0498, rtn
+0499, tl 5 40
+049A, tl d ef
+049B, tl 0 a8
+049C, tl d fb
+049D, tl d fb
+049E, tm 13 76
+049F, tm 12 e1
+04A0, tl c 54
+04A1, tm 32 5e
+04A2, t 36
+04A3, tm 32 5d
+04A4, exd 2
+04A5, tm 32 5f
+04A6, lbl f2
+04A7, tl f 02
+04A8, tm 32 5c
+04A9, t 00
+04AA, tm 32 5d
+04AB, skbi 0
+04AC, tml 16
+04AD, tl c 00
+04AE, tml 14
+04AF, rtn
+04B0, tm 32 5c
+04B1, skbi 0
+04B2, tm 32 5e
+04B3, lb f2
+04B4, tl f c0
+04B5, tl 5 75
+04B6, tl f 7e
+04B7, tl f 3e
+04B8, t 22
+04B9, lbl 90
+04BA, lbl b2
+04BB, lbl b0
+04BC, t 3a
+04BD, lbl b0
+04BE, t 3b
+04BF, lbl 90
+04C0, lbl b2
+04C1, lbl b0
+04C2, lbl b0
+04C3, ldi 0
+04C4, ldi 1
+04C5, ad
+04C6, ex 7
+04C7, ex 7
+04C8, rtn
+04C9, tm 27 02
+04CA, skbi b
+04CB, tml f1
+04CC, ad
+04CD, ex 7
+04CE, skc
+04CF, t 0a
+04D0, t 0c
+04D1, lb f3
+04D2, tm 3f 02
+04D3, t 2b
+04D4, skc
+04D5, t 19
+04D6, lbl 92
+04D7, tm 2e 15
+04D8, t 0d
+04D9, tml b3
+04DA, t 0d
+04DB, lbl 90
+04DC, ex 7
+04DD, tml 43
+04DE, tm 30 cc
+04DF, tml b9
+04E0, tl 7 40
+04E1, tl 7 40
+04E2, skf1
+04E3, lxa
+04E4, lax
+04E5, adi 1
+04E6, t 2e
+04E7, tml 4b
+04E8, rf1
+04E9, t 0d
+04EA, tm 1b 22
+04EB, t 0d
+04EC, lb 7d
+04ED, ex 7
+04EE, incb
+04EF, tm 2a 01
+04F0, adsk
+04F1, decb
+04F2, ld 6
+04F3, eor
+04F4, ex 3
+04F5, incb
+04F6, ld 3
+04F7, rf1
+04F8, rtn
+04F9, lbl dd
+04FA, sc
+04FB, sag
+04FC, ld 7
+04FD, comp
+04FE, adcsk
+04FF, dc
+0500, exd 7
+0501, t 03
+0502, rtn
+0503, lb eb
+0504, t 10
+0505, lb f4
+0506, tm 1d 54
+0507, adi 9
+0508, skc
+0509, rtnsk
+050A, rtn
+050B, tl e 8c
+050C, tl b 8c
+050D, tl 5 1a
+050E, tl 4 f1
+050F, tl 7 1b
+0510, tl b b5
+0511, tl f 40
+0512, tl 7 79
+0513, tl 6 b3
+0514, tl c 80
+0515, tl 4 2e
+0516, tl 5 32
+0517, tl 5 28
+0518, tl e 56
+0519, tl d 37
+051A, tl c 96
+051B, tl 6 cb
+051C, tl c 8a
+051D, tl c f8
+051E, tl f 57
+051F, tl 8 9d
+0520, tl d 00
+0521, tl c a2
+0522, tl e 80
+0523, tl c b3
+0524, tl d e0
+0525, tl 6 3b
+0526, tl e dc
+0527, tl f 39
+0528, tl e f3
+0529, tl 7 2b
+052A, tl 6 c0
+052B, tl 7 2e
+052C, tl 6 c2
+052D, tl b 80
+052E, tl 7 74
+052F, tl 0 77
+0530, iol 29
+0531, tl 4 40
+0532, iol 29
+0533, tl 4 4c
+0534, iol 29
+0535, tl 4 53
+0536, sc
+0537, ld 7
+0538, adc
+0539, exd 7
+053A, rtn
+053B, rtnsk
+053C, rc
+053D, ldi 0
+053E, adcsk
+053F, dc
+0540, exd 7
+0541, ldi 0
+0542, adcsk
+0543, dc
+0544, exd 7
+0545, ldi 0
+0546, adcsk
+0547, dc
+0548, ex 7
+0549, rtn
+054A, tl 7 00
+054B, tl 7 01
+054C, tl 7 02
+054D, tl 7 03
+054E, tl 7 04
+054F, tl 7 05
+0550, tl 7 06
+0551, tl 7 07
+0552, tl 7 08
+0553, tl 7 09
+0554, tl 2 79
+0555, tl d 32
+0556, tl 4 59
+0557, tl 5 3b
+0558, tl d 40
+0559, tl d 45
+055A, lbl b1
+055B, lbl f9
+055C, lbl f0
+055D, lbl bd
+055E, lbl c0
+055F, lbl d0
+0560, lbl e0
+0561, lbl f6
+0562, lbl f3
+0563, lbl a0
+0564, lbl 90
+0565, lbl 80
+0566, ldi 7
+0567, lbua
+0568, rtn
+0569, rtn
+056A, ex 7
+056B, incb
+056C, t 3b
+056D, rtn
+056E, tm 27 02
+056F, skbi b
+0570, tml f1
+0571, sc
+0572, comp
+0573, adc
+0574, ex 7
+0575, skc
+0576, t 0c
+0577, t 0e
+0578, lb f3
+0579, tm 3f 01
+057A, rf1
+057B, t 30
+057C, lb fe
+057D, t 39
+057E, tml 22
+057F, t 1f
+0580, lb fb
+0581, t 1f
+0582, lb f7
+0583, t 27
+0584, t 3b
+0585, lb f7
+0586, t 27
+0587, ldi 3
+0588, tml 1c
+0589, t 27
+058A, t 3b
+058B, lb fb
+058C, t 33
+058D, tml b7
+058E, skc
+058F, t 30
+0590, lb ea
+0591, lb 54
+0592, lbl cd
+0593, tm 37 b7
+0594, t 3b
+0595, tml b0
+0596, lb f6
+0597, tm 27 57
+0598, t 00
+0599, tl e fe
+059A, lbl 00
+059B, lbl 00
+059C, lbl 00
+059D, lbl 00
+059E, lbl 00
+059F, lbl 00
+05A0, lbl 00
+05A1, lbl 00
+05A2, lbl 00
+05A3, lbl 00
+05A4, lbl 00
+05A5, lbl 00
+05A6, lbl 00
+05A7, lbl 00
+05A8, lbl 00
+05A9, lbl 00
+05AA, lbl 00
+05AB, lbl 00
+05AC, lbl 00
+05AD, lbl 00
+05AE, lbl 00
+05AF, lbl 00
+05B0, lbl 00
+05B1, lbl 00
+05B2, lbl 00
+05B3, lbl 00
+05B4, lbl 00
+05B5, lbl 00
+05B6, lbl 00
+05B7, lbl 00
+05B8, lbl 00
+05B9, lbl 00
+05BA, lbl 00
+05BB, lbl 00
+05BC, lbl 00
+05BD, lbl 00
+05BE, lbl 00
+05BF, lbl 00
+05C0, lbl 00
+05C1, lbl 00
+05C2, lbl 00
+05C3, lbl 00
+05C4, lbl 00
+05C5, lbl 00
+05C6, lbl 00
+05C7, lbl 00
+05C8, lbl 00
+05C9, lbl 00
+05CA, lbl 00
+05CB, lbl 00
+05CC, lbl 00
+05CD, lbl 00
+05CE, lbl 00
+05CF, lbl 00
+05D0, lbl 00
+05D1, lbl 00
+05D2, lbl 00
+05D3, lbl 00
+05D4, lbl 00
+05D5, lbl 00
+05D6, lbl 00
+05D7, lbl 00
+05D8, lbl 00
+05D9, lbl 00
+05DA, lbl 00
+05DB, lbl 00
+05DC, lbl 00
+05DD, lbl 00
+05DE, lbl 00
+05DF, lbl 00
+05E0, lbl 00
+05E1, lbl 00
+05E2, lbl 00
+05E3, lbl 00
+05E4, lbl 00
+05E5, lbl 00
+05E6, lbl 00
+05E7, lbl 00
+05E8, lbl 00
+05E9, lbl 00
+05EA, lbl 00
+05EB, lbl 00
+05EC, lbl 00
+05ED, lbl 00
+05EE, lbl 00
+05EF, lbl 00
+05F0, lbl 00
+05F1, lbl 00
+05F2, lbl 00
+05F3, lbl 00
+05F4, lbl 00
+05F5, lbl 00
+05F6, lbl 00
+05F7, lbl 00
+05F8, lbl 00
+05F9, lbl 00
+05FA, lbl 00
+05FB, lbl 00
+05FC, lbl 00
+05FD, lbl 00
+05FE, lbl 00
+05FF, lbl 00
+0600, lbl 00
+0601, lbl 00
+0602, lbl 00
+0603, lbl 00
+0604, lbl 00
+0605, lbl 00
+0606, lbl 00
+0607, lbl 00
+0608, lbl 00
+0609, lbl 00
+060A, lbl 00
+060B, lbl 00
+060C, lbl 00
+060D, lbl 00
+060E, lbl 00
+060F, lbl 00
+0610, lbl 00
+0611, lbl 00
+0612, lbl 00
+0613, lbl 00
+0614, lbl 00
+0615, lbl 00
+0616, lbl 00
+0617, lbl 00
+0618, lbl 00
+0619, lbl 00
+061A, lbl 00
+061B, lbl 00
+061C, lbl 00
+061D, lbl 00
+061E, lbl 00
+061F, lbl 00
+0620, lbl 00
+0621, lbl 00
+0622, lbl 00
+0623, lbl 00
+0624, lbl 00
+0625, lbl 00
+0626, lbl 00
+0627, lbl 00
+0628, lbl 00
+0629, lbl 00
+062A, lbl 00
+062B, lbl 00
+062C, lbl 00
+062D, lbl 00
+062E, lbl 00
+062F, lbl 00
+0630, lbl 00
+0631, lbl 00
+0632, lbl 00
+0633, lbl 00
+0634, lbl 00
+0635, lbl 00
+0636, lbl 00
+0637, lbl 00
+0638, lbl 00
+0639, lbl 00
+063A, lbl 00
+063B, lbl 00
+063C, lbl 00
+063D, lbl 00
+063E, lbl 00
+063F, lbl 00
+0640, lbl 00
+0641, lbl 00
+0642, lbl 00
+0643, lbl 00
+0644, lbl 00
+0645, lbl 00
+0646, lbl 00
+0647, lbl 00
+0648, lbl 00
+0649, lbl 00
+064A, lbl 00
+064B, lbl 00
+064C, lbl 00
+064D, lbl 00
+064E, lbl 00
+064F, lbl 00
+0650, lbl 00
+0651, lbl 00
+0652, lbl 00
+0653, lbl 00
+0654, lbl 00
+0655, lbl 00
+0656, lbl 00
+0657, lbl 00
+0658, lbl 00
+0659, lbl 00
+065A, lbl 00
+065B, lbl 00
+065C, lbl 00
+065D, lbl 00
+065E, lbl 00
+065F, lbl 00
+0660, lbl 00
+0661, lbl 00
+0662, lbl 00
+0663, lbl 00
+0664, lbl 00
+0665, lbl 00
+0666, lbl 00
+0667, lbl 00
+0668, lbl 00
+0669, lbl 00
+066A, lbl 00
+066B, lbl 00
+066C, lbl 00
+066D, lbl 00
+066E, lbl 00
+066F, lbl 00
+0670, lbl 00
+0671, lbl 00
+0672, lbl 00
+0673, lbl 00
+0674, lbl 00
+0675, lbl 00
+0676, lbl 00
+0677, lbl 00
+0678, lbl 00
+0679, lbl 00
+067A, lbl 00
+067B, lbl 00
+067C, lbl 00
+067D, lbl 00
+067E, lbl 00
+067F, lbl 00
+0680, lbl 00
+0681, lbl 00
+0682, lbl 00
+0683, lbl 00
+0684, lbl 00
+0685, lbl 00
+0686, lbl 00
+0687, lbl 00
+0688, lbl 00
+0689, lbl 00
+068A, lbl 00
+068B, lbl 00
+068C, lbl 00
+068D, lbl 00
+068E, lbl 00
+068F, lbl 00
+0690, lbl 00
+0691, lbl 00
+0692, lbl 00
+0693, lbl 00
+0694, lbl 00
+0695, lbl 00
+0696, lbl 00
+0697, lbl 00
+0698, lbl 00
+0699, lbl 00
+069A, lbl 00
+069B, lbl 00
+069C, lbl 00
+069D, lbl 00
+069E, lbl 00
+069F, lbl 00
+06A0, lbl 00
+06A1, lbl 00
+06A2, lbl 00
+06A3, lbl 00
+06A4, lbl 00
+06A5, lbl 00
+06A6, lbl 00
+06A7, lbl 00
+06A8, lbl 00
+06A9, lbl 00
+06AA, lbl 00
+06AB, lbl 00
+06AC, lbl 00
+06AD, lbl 00
+06AE, lbl 00
+06AF, lbl 00
+06B0, lbl 00
+06B1, lbl 00
+06B2, lbl 00
+06B3, lbl 00
+06B4, lbl 00
+06B5, lbl 00
+06B6, lbl 00
+06B7, lbl 00
+06B8, lbl 00
+06B9, lbl 00
+06BA, lbl 00
+06BB, lbl 00
+06BC, lbl 00
+06BD, lbl 00
+06BE, lbl 00
+06BF, lbl 00
+06C0, lbl 00
+06C1, lbl 00
+06C2, lbl 00
+06C3, lbl 00
+06C4, lbl 00
+06C5, lbl 00
+06C6, lbl 00
+06C7, lbl 00
+06C8, lbl 00
+06C9, lbl 00
+06CA, lbl 00
+06CB, lbl 00
+06CC, lbl 00
+06CD, lbl 00
+06CE, lbl 00
+06CF, lbl 00
+06D0, lbl 00
+06D1, lbl 00
+06D2, lbl 00
+06D3, lbl 00
+06D4, lbl 00
+06D5, lbl 00
+06D6, lbl 00
+06D7, lbl 00
+06D8, lbl 00
+06D9, lbl 00
+06DA, lbl 00
+06DB, lbl 00
+06DC, lbl 00
+06DD, lbl 00
+06DE, lbl 00
+06DF, lbl 00
+06E0, lbl 00
+06E1, lbl 00
+06E2, lbl 00
+06E3, lbl 00
+06E4, lbl 00
+06E5, lbl 00
+06E6, lbl 00
+06E7, lbl 00
+06E8, lbl 00
+06E9, lbl 00
+06EA, lbl 00
+06EB, lbl 00
+06EC, lbl 00
+06ED, lbl 00
+06EE, lbl 00
+06EF, lbl 00
+06F0, lbl 00
+06F1, lbl 00
+06F2, lbl 00
+06F3, lbl 00
+06F4, lbl 00
+06F5, lbl 00
+06F6, lbl 00
+06F7, lbl 00
+06F8, lbl 00
+06F9, lbl 00
+06FA, lbl 00
+06FB, lbl 00
+06FC, lbl 00
+06FD, lbl 00
+06FE, lbl 00
+06FF, lbl 00
+0700, lbl 00
+0701, lbl 00
+0702, lbl 00
+0703, lbl 00
+0704, lbl 00
+0705, lbl 00
+0706, lbl 00
+0707, lbl 00
+0708, lbl 00
+0709, lbl 00
+070A, lbl 00
+070B, lbl 00
+070C, lbl 00
+070D, lbl 00
+070E, lbl 00
+070F, lbl 00
+0710, lbl 00
+0711, lbl 00
+0712, lbl 00
+0713, lbl 00
+0714, lbl 00
+0715, lbl 00
+0716, lbl 00
+0717, lbl 00
+0718, lbl 00
+0719, lbl 00
+071A, lbl 00
+071B, lbl 00
+071C, lbl 00
+071D, lbl 00
+071E, lbl 00
+071F, lbl 00
+0720, lbl 00
+0721, lbl 00
+0722, lbl 00
+0723, lbl 00
+0724, lbl 00
+0725, lbl 00
+0726, lbl 00
+0727, lbl 00
+0728, lbl 00
+0729, lbl 00
+072A, lbl 00
+072B, lbl 00
+072C, lbl 00
+072D, lbl 00
+072E, lbl 00
+072F, lbl 00
+0730, lbl 00
+0731, lbl 00
+0732, lbl 00
+0733, lbl 00
+0734, lbl 00
+0735, lbl 00
+0736, lbl 00
+0737, lbl 00
+0738, lbl 00
+0739, lbl 00
+073A, lbl 00
+073B, lbl 00
+073C, lbl 00
+073D, lbl 00
+073E, lbl 00
+073F, lbl 00
+0740, lbl 00
+0741, lbl 00
+0742, lbl 00
+0743, lbl 00
+0744, lbl 00
+0745, lbl 00
+0746, lbl 00
+0747, lbl 00
+0748, lbl 00
+0749, lbl 00
+074A, lbl 00
+074B, lbl 00
+074C, lbl 00
+074D, lbl 00
+074E, lbl 00
+074F, lbl 00
+0750, lbl 00
+0751, lbl 00
+0752, lbl 00
+0753, lbl 00
+0754, lbl 00
+0755, lbl 00
+0756, lbl 00
+0757, lbl 00
+0758, lbl 00
+0759, lbl 00
+075A, lbl 00
+075B, lbl 00
+075C, lbl 00
+075D, lbl 00
+075E, lbl 00
+075F, lbl 00
+0760, lbl 00
+0761, lbl 00
+0762, lbl 00
+0763, lbl 00
+0764, lbl 00
+0765, lbl 00
+0766, lbl 00
+0767, lbl 00
+0768, lbl 00
+0769, lbl 00
+076A, lbl 00
+076B, lbl 00
+076C, lbl 00
+076D, lbl 00
+076E, lbl 00
+076F, lbl 00
+0770, lbl 00
+0771, lbl 00
+0772, lbl 00
+0773, lbl 00
+0774, lbl 00
+0775, lbl 00
+0776, lbl 00
+0777, lbl 00
+0778, lbl 00
+0779, lbl 00
+077A, lbl 00
+077B, lbl 00
+077C, lbl 00
+077D, lbl 00
+077E, lbl 00
+077F, lbl 00
+0780, lbl 00
+0781, lbl 00
+0782, lbl 00
+0783, lbl 00
+0784, lbl 00
+0785, lbl 00
+0786, lbl 00
+0787, lbl 00
+0788, lbl 00
+0789, lbl 00
+078A, lbl 00
+078B, lbl 00
+078C, lbl 00
+078D, lbl 00
+078E, lbl 00
+078F, lbl 00
+0790, lbl 00
+0791, lbl 00
+0792, lbl 00
+0793, lbl 00
+0794, lbl 00
+0795, lbl 00
+0796, lbl 00
+0797, lbl 00
+0798, lbl 00
+0799, lbl 00
+079A, lbl 00
+079B, lbl 00
+079C, lbl 00
+079D, lbl 00
+079E, lbl 00
+079F, lbl 00
+07A0, lbl 00
+07A1, lbl 00
+07A2, lbl 00
+07A3, lbl 00
+07A4, lbl 00
+07A5, lbl 00
+07A6, lbl 00
+07A7, lbl 00
+07A8, lbl 00
+07A9, lbl 00
+07AA, lbl 00
+07AB, lbl 00
+07AC, lbl 00
+07AD, lbl 00
+07AE, lbl 00
+07AF, lbl 00
+07B0, lbl 00
+07B1, lbl 00
+07B2, lbl 00
+07B3, lbl 00
+07B4, lbl 00
+07B5, lbl 00
+07B6, lbl 00
+07B7, lbl 00
+07B8, lbl 00
+07B9, lbl 00
+07BA, lbl 00
+07BB, lbl 00
+07BC, lbl 00
+07BD, lbl 00
+07BE, lbl 00
+07BF, lbl 00
+07C0, lbl 00
+07C1, lbl 00
+07C2, lbl 00
+07C3, lbl 00
+07C4, lbl 00
+07C5, lbl 00
+07C6, lbl 00
+07C7, lbl 00
+07C8, lbl 00
+07C9, lbl 00
+07CA, lbl 00
+07CB, lbl 00
+07CC, lbl 00
+07CD, lbl 00
+07CE, lbl 00
+07CF, lbl 00
+07D0, lbl 00
+07D1, lbl 00
+07D2, lbl 00
+07D3, lbl 00
+07D4, lbl 00
+07D5, lbl 00
+07D6, lbl 00
+07D7, lbl 00
+07D8, lbl 00
+07D9, lbl 00
+07DA, lbl 00
+07DB, lbl 00
+07DC, lbl 00
+07DD, lbl 00
+07DE, lbl 00
+07DF, lbl 00
+07E0, lbl 00
+07E1, lbl 00
+07E2, lbl 00
+07E3, lbl 00
+07E4, lbl 00
+07E5, lbl 00
+07E6, lbl 00
+07E7, lbl 00
+07E8, lbl 00
+07E9, lbl 00
+07EA, lbl 00
+07EB, lbl 00
+07EC, lbl 00
+07ED, lbl 00
+07EE, lbl 00
+07EF, lbl 00
+07F0, lbl 00
+07F1, lbl 00
+07F2, lbl 00
+07F3, lbl 00
+07F4, lbl 00
+07F5, lbl 00
+07F6, lbl 00
+07F7, lbl 00
+07F8, lbl 00
+07F9, lbl 00
+07FA, lbl 00
+07FB, lbl 00
+07FC, lbl 00
+07FD, lbl 00
+07FE, lbl 00
+07FF, lbl 00
+

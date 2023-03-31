@@ -9,6 +9,8 @@
  *****************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define OP(A)   opram[(A)]
 #define ARG(A)  opram[(A)]
@@ -148,15 +150,61 @@ void dis(void )
 
 
 
-int main(void)
+int main(int argc, char *argv[])
 {
   int i;
+  int numbytes = 0;
+  char op_filename[200];
   
-  for(i=0; i<30; i++)
+  FILE *fp;
+  FILE *op;
+
+  // Output file
+  strcpy(op_filename, argv[1]);
+  strcat(op_filename, ".lst");
+  
+  if( (op=fopen(op_filename, "wb")) == NULL )
     {
-      dis();
-      printf("\n%04d, %s", i, buffer);
+      printf("\nCould not open '%s'", argv[1]);
+      exit(-1);
+    }
+  
+  // Read the file with the data in
+  
+  if( (fp=fopen(argv[1], "rb")) == NULL )
+    {
+      printf("\nCould not open '%s'", argv[1]);
+      exit(-1);
     }
 
-  printf("\n\n");
+  unsigned char data[10];
+  
+  while( !feof(fp) )
+    {
+      if( fread(data, 1, 1, fp) != 1)
+	{
+	  break;
+	}
+      else
+	{
+	  opram[numbytes] = data[0];
+	  
+	  numbytes++;
+	  
+	}
+    }
+
+  printf("\n%d bytes read\n", numbytes);
+  
+  fclose(fp);
+  
+  for(i=0; i<numbytes; i++)
+    {
+      dis();
+      fprintf(op, "\n%04X, %s", i, buffer);
+    }
+
+  fprintf(op, "\n\n");
+
+  fclose(op);
 }
