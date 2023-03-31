@@ -211,21 +211,21 @@ PAS3
 Text GLabel 3225 4575 2    50   Input ~ 0
 PAS4
 Text GLabel 1125 3775 0    50   Input ~ 0
-PID1
+IP_ID1
 Text GLabel 1125 3875 0    50   Input ~ 0
-PID2
+IP_ID2
 Text GLabel 1125 4075 0    50   Input ~ 0
-PID3
+IP_ID3
 Text GLabel 1125 4175 0    50   Input ~ 0
-PID4
+IP_ID4
 Text GLabel 1125 4275 0    50   Input ~ 0
-PID5
+IP_ID5
 Text GLabel 1125 4375 0    50   Input ~ 0
-PID6
+IP_ID6
 Text GLabel 1125 4575 0    50   Input ~ 0
-PID7
+IP_ID7
 Text GLabel 1125 4675 0    50   Input ~ 0
-PID8
+IP_ID8
 Text GLabel 1125 5175 0    50   Input ~ 0
 PAB4
 Text GLabel 3175 5575 2    50   Input ~ 0
@@ -312,7 +312,7 @@ AR Path="/641A8E81" Ref="R35"  Part="1"
 AR Path="/630BAFD1/641A8E81" Ref="R?"  Part="1" 
 AR Path="/630E4C46/641A8E81" Ref="R?"  Part="1" 
 F 0 "R35" H 4209 2596 50  0000 L CNN
-F 1 "5k" H 4209 2505 50  0000 L CNN
+F 1 "220" H 4209 2505 50  0000 L CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" H 4150 2550 50  0001 C CNN
 F 3 "~" H 4150 2550 50  0001 C CNN
 	1    4150 2550
@@ -398,7 +398,7 @@ AR Path="/641A8EA5" Ref="R34"  Part="1"
 AR Path="/630BAFD1/641A8EA5" Ref="R?"  Part="1" 
 AR Path="/630E4C46/641A8EA5" Ref="R?"  Part="1" 
 F 0 "R34" H 4209 2146 50  0000 L CNN
-F 1 "100k" H 4209 2055 50  0000 L CNN
+F 1 "47k" H 4209 2055 50  0000 L CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" H 4150 2100 50  0001 C CNN
 F 3 "~" H 4150 2100 50  0001 C CNN
 	1    4150 2100
@@ -524,7 +524,7 @@ Wire Wire Line
 Wire Wire Line
 	1850 1800 2150 1800
 Text Notes 4250 1450 0    50   ~ 0
-JP1: leave open until output of U3 is confirmed\nat 10.5V
+JP1: leave open until output of U3 is confirmed\nat 17V
 $Comp
 L Device:R_Small R?
 U 1 1 641A8EE8
@@ -536,7 +536,7 @@ AR Path="/641A8EE8" Ref="R36"  Part="1"
 AR Path="/630BAFD1/641A8EE8" Ref="R?"  Part="1" 
 AR Path="/630E4C46/641A8EE8" Ref="R?"  Part="1" 
 F 0 "R36" H 4209 2871 50  0000 L CNN
-F 1 "1k" H 4209 2780 50  0000 L CNN
+F 1 "1500" H 4209 2780 50  0000 L CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" H 4150 2825 50  0001 C CNN
 F 3 "~" H 4150 2825 50  0001 C CNN
 	1    4150 2825

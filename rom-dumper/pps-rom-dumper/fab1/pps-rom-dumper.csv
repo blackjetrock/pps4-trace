@@ -1,0 +1,18 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"C6,C5,C4";"C_1210_3225Metric_Pad1.33x2.70mm_HandSolder";3;"100nF";;;
+2;"J1";"PinHeader_1x03_P2.54mm_Vertical";1;"Conn_01x03_Female";;;
+3;"U3";"SOT-23-6";1;"Regulator_Switching_MT3608";;;
+4;"R36";"R_0805_2012Metric";1;"1500";;;
+5;"R35";"R_0805_2012Metric";1;"220";;;
+6;"R34";"R_0805_2012Metric";1;"47k";;;
+7;"L1";"L_Coilcraft_LPS5030";1;"22uH";;;
+8;"JP2";"SolderJumper-2_P1.3mm_Open_Pad0.8x0.8mm";1;"SolderJumper_2_Open";;;
+9;"JP1";"SolderJumper-2_P1.3mm_Open_Pad0.8x0.8mm";1;"Jumper_NO_Small";;;
+10;"D1";"D_SOD-123";1;"SS36";;;
+11;"C3";"C_1210_3225Metric_Pad1.33x2.70mm_HandSolder";1;"10uF";;;
+12;"C2,C1";"C_1210_3225Metric_Pad1.33x2.70mm_HandSolder";2;"22uF";;;
+13;"U2";"qip42";1;"pps4-rom-a05";;;
+14;"U1";"RPi_Pico_SMD_TH";1;"Pico";;;
+15;"R33,R32,R31,R30,R28,R26,R24,R22,R20,R18,R16,R14,R13,R12,R11,R10,R9,R8,R7,R6,R5,R4,R3,R2,R1";"R_0805_2012Metric_Pad1.20x1.40mm_HandSolder";25;"47k";;;
+16;"R29,R27,R25,R23,R21,R19,R17,R15";"R_0805_2012Metric_Pad1.20x1.40mm_HandSolder";8;"10k";;;
+17;"TR17,TR16,TR15,TR14,TR13,TR12,TR11,TR10,TR9,TR8,TR7,TR6,TR5,TR4,TR3,TR2,TR1";"SOT-23";17;"Si2302CDS-n-channel";;;

@@ -1,0 +1,3 @@
+/tree/projects/github/pps4-trace/rom-dumper/firmware/build/pioasm/CMakeFiles/rebuild_cache.dir
+/tree/projects/github/pps4-trace/rom-dumper/firmware/build/pioasm/CMakeFiles/edit_cache.dir
+/tree/projects/github/pps4-trace/rom-dumper/firmware/build/pioasm/CMakeFiles/pioasm.dir
