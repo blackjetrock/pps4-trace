@@ -1,1 +1,1 @@
-./rockwell_920_simulator.tcl ../traces/romdata.lst.annotated
+./rockwell_920_simulator.tcl ../traces/pps4-920-3-dump-all-roms.romdata.lst

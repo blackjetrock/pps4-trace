@@ -16,6 +16,7 @@ set ::FLAG_DISPLAY_STATUS  1
 set ::FLAG_INTERACT        1
 set ::FLAG_BREAKPOINT      0
 set ::FLAG_BREAKPOINT_ADDR 0
+set ::R920_BANK_NO         0
 
 ################################################################################
 #
@@ -33,6 +34,9 @@ proc reset_pps {} {
     set ::PPS_F2 0
     set ::sag_zero 0
     set ::PPS_DOA 0
+
+    # Bank switch number
+    set ::R920_BANK_NO 0
     
     # Clear RAM
     for {set i 0} {$i <= 0xFFF} {incr i 1} {
@@ -43,13 +47,49 @@ proc reset_pps {} {
 proc pps_status {} {
 
     puts [format "P:%03X A:%01X X:%01X B:%03X SA:%03X SB:%03X CFF:%d F1:%d F2:%d" $::PPS_P $::PPS_A $::PPS_X $::PPS_B $::PPS_SA $::PPS_SB $::PPS_C_FF $::PPS_F1 $::PPS_F2]
-    puts [format "DOA:%01X" $::PPS_DOA]
+    puts [format "DOA:%01X BANK:%01X" $::PPS_DOA $::R920_BANK_NO]
 }
 
 ################################################################################
-# ::ROM holds the ROM (we may have to do some bank switching
-# ROM data came from bus traces so bank switching done for us by the hardware
-# but it does mean the ROM files may not be correct.
+#
+# Put the correct bank switch ROM data in ROM array
+#
+
+proc handle_bank_switching {} {
+    puts "--- Bank Switching ($::R920_BANK_NO) ---"
+    switch $::R920_BANK_NO  {
+	0 {
+	    puts "--- Entered Bank 0 ---"
+	    set j 0
+	    for { set i 0xC00 } { $i <= 0xFFF } {incr i 1} {
+		if { [info exists ::LINEOF_B0([expr $i - 0xC00])] } {
+		    set ::LINEOF($i) $::LINEOF_B0([expr $i - 0xC00])
+		}
+		set ::ROM($i) $::ROM_BANK_0($j)
+		incr j 1
+	    }
+	}
+
+	1 {
+	    puts "--- Entered Bank 1 ---"
+	    set j 0
+	    for { set i 0xC00 } { $i <= 0xFFF } {incr i 1} {
+		if { [info exists ::LINEOF_B1([expr $i - 0xC00])] } {
+		    set ::LINEOF($i) $::LINEOF_B1([expr $i - 0xC00])
+		}
+		set ::ROM($i) $::ROM_BANK_1($j)
+		incr j 1
+	    }
+	}
+    }
+}
+
+################################################################################
+# ::ROM holds the ROM and is the ROM after bank switching has been taken into
+# account. So the processor can execute from there.
+#
+# Extra buffers hold the two ROM pages
+#
 #
 ################################################################################
 
@@ -154,7 +194,16 @@ set f [open $rom_file]
 set rom_file_txt [read $f]
 close $f
 
+#
 # Process the code to get ROM data into the ROM array
+#
+# The memory up to BFF is normal memory
+# The memory from C00-FFF is bank swithed depending on the value
+#    of U14 OUT1
+#
+# Load the banks into two buffers and switch buffers in as required.
+#
+
 
 foreach line [split $rom_file_txt "\n"] {
     if { [regexp -- {([0-9a-fA-F]+)[ ]+(0x[0-9a-fA-F]+)} $line all addr opcode] } {
@@ -165,9 +214,25 @@ foreach line [split $rom_file_txt "\n"] {
 	set dec_addr   [expr 0x$addr]
 	set dec_opcode [expr $opcode]
 
-        # Store source for later debugging
-	set ::LINEOF($dec_addr) $line
-	set ::ROM($dec_addr) $dec_opcode
+	# Read ROM data into bank switch buffers if required
+	# the ROM files themselves put ROM data up to 13FF
+	
+	if { ($dec_addr >= 0xC00) && ($dec_addr <=0xFFF) } {
+	    # Bank 0
+	    # Store source for later debugging
+	    set ::LINEOF_B0([expr  $dec_addr  - 0xC00]) $line
+	    set ::ROM_BANK_0([expr $dec_addr  - 0xC00])  $dec_opcode
+	} else {
+	    if { ($dec_addr >= 0x1000) && ($dec_addr <=0x13FF) } {
+		# Bank 1
+		set ::LINEOF_B1([expr  $dec_addr  - 0x1000]) $line
+		set ::ROM_BANK_1([expr $dec_addr  - 0x1000]) $dec_opcode
+	    } else {
+		# Store source for later debugging
+		set ::LINEOF($dec_addr) $line
+		set ::ROM($dec_addr) $dec_opcode
+	    }
+	}
     }
 
     if { [regexp -- {([0-9a-fA-F]+)[ ]+(0x[0-9a-fA-F]+)[ ]+(0x[0-9a-fA-F]+)} $line all addr opcode arg1] } {
@@ -181,12 +246,31 @@ foreach line [split $rom_file_txt "\n"] {
 
         # Store source for later debugging
 	set ::LINEOF($dec_addr) $line
-	puts $dec_addr
-	set ::ROM($dec_addr)  $dec_opcode
-	set ::ROM($dec_addr1) $dec_arg1
+	#puts $dec_addr
+	
+	# Read ROM data into bank switch buffers if required
+	# the ROM files themselves put ROM data up to 13FF
+	
+	if { ($dec_addr >= 0xC00) && ($dec_addr <=0xFFF) } {
+	    # Bank 0
+	    set ::LINEOF_B0([expr  $dec_addr  - 0xC00]) $line
+	    set ::ROM_BANK_0([expr $dec_addr  - 0xC00])  $dec_opcode
+	    set ::ROM_BANK_0([expr $dec_addr1 - 0xC00])  $dec_arg1
+	} else {
+	    if { ($dec_addr >= 0x1000) && ($dec_addr <=0x13FF) } {
+		# Bank 1
+		set ::LINEOF_B1([expr  $dec_addr  - 0x1000]) $line
+		set ::ROM_BANK_1([expr $dec_addr  - 0x1000]) $dec_opcode
+		set ::ROM_BANK_1([expr $dec_addr1 - 0x1000]) $dec_arg1
+	    } else {
+		set ::ROM($dec_addr)  $dec_opcode
+		set ::ROM($dec_addr1) $dec_arg1
+	    }
+	}
     }
-    
 }
+
+#handle_bank_switching
 
 ################################################################################
 #
@@ -220,8 +304,10 @@ while { !$::DONE } {
 
     #    puts "$opcode $arg1"
     #puts [format "Getting line for %03x"  $::PPS_P]
-    puts $::LINEOF($::PPS_P)
-
+    if { [info exists ::LINEOF($::PPS_P)] } {
+	puts $::LINEOF($::PPS_P)
+    }
+    
     # Each instruction has to indicate how much to increment P after its done
     set inc 1
 
@@ -239,7 +325,7 @@ while { !$::DONE } {
 	    }
 	    set lbl_just_executed  0
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	}
 	
 	0A {
@@ -254,22 +340,22 @@ set ldi_just_executed 0
 	    }
 	    set lbl_just_executed  0
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	}
 	
 	09 {
-	    puts -nonewline "$addrstr   $op       "
-	    puts $opf "adsk"
+	    #puts -nonewline "$addrstr   $op       "
+	    #puts $opf "adsk"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	08  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "adcsk"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "adcsk"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -293,12 +379,12 @@ set ldi_just_executed 0
 	    if { $::PPS_A > 15 } {
 		set ::PPS_A [expr $::PPS_A % 16]
 		set skip_next_rom_word 1\
-	    } else {
-	    }
+		} else {
+		}
 	    
 	    set lbl_just_executed  0
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	}
 	
 	65 {
@@ -306,7 +392,7 @@ set ldi_just_executed 0
 	    #puts $opf "dc"
 	    set ::PPS_A [expr ($::PPS_A + 0xA) % 16]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 
@@ -315,7 +401,7 @@ set ldi_just_executed 0
 	    #puts $opf "and"
 	    set ::PPS_A [expr $::PPS_A & [read_ram $::PPS_B]]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -324,7 +410,7 @@ set ldi_just_executed 0
 	    #puts $opf "or"
 	    set ::PPS_A [expr $::PPS_A | [read_ram $::PPS_B]]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -333,7 +419,7 @@ set ldi_just_executed 0
 	    #puts $opf "eor"
 	    set ::PPS_A [expr $::PPS_A ^ [read_ram $::PPS_B]]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -342,16 +428,16 @@ set ldi_just_executed 0
 	    #puts $opf "comp"
 	    set ::PPS_A [expr $::PPS_A ^ 0xf]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	20  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "sc"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "sc"
 	    set ::PPS_C_FF 1
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -360,7 +446,7 @@ set ldi_just_executed 0
 	    #puts $opf "rc"
 	    set ::PPS_C_FF 0
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -369,7 +455,7 @@ set ldi_just_executed 0
 	    #puts $opf "sf1"
 	    set ::PPS_F1 1
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -378,7 +464,7 @@ set ldi_just_executed 0
 	    #puts $opf "rf1"
 	    set ::PPS_F1 0
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -387,7 +473,7 @@ set ldi_just_executed 0
 	    #puts $opf "sf2"
 	    set ::PPS_F2 1
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -396,7 +482,7 @@ set ldi_just_executed 0
 	    #puts $opf "rf2"
 	    set ::PPS_F2 0
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -413,7 +499,7 @@ set ldi_just_executed 0
 	    set ::PPS_A [expr [read_ram $::PPS_B]]
 	    set ::PPS_B [expr $::PPS_B ^ ((($opcode & 0x7)^0x7) << 4)]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -434,7 +520,7 @@ set ldi_just_executed 0
 	    set ::PPS_B [expr $::PPS_B ^ ((($opcode & 0x7)^0x7) << 4)]
 
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 
@@ -469,7 +555,7 @@ set ldi_just_executed 0
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #print_mask_arg_inv exd $op 07
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -504,7 +590,7 @@ set ldi_just_executed 0
 	    #puts $opf "lax"
 	    set ::PPS_X $::PPS_A
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -513,7 +599,7 @@ set ldi_just_executed 0
 	    #puts $opf "lxa"
 	    set ::PPS_X $::PPS_A
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -522,7 +608,7 @@ set ldi_just_executed 0
 	    #puts $opf "labl"
 	    set ::PPS_A [get_bl]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	}
 	
 	10 {
@@ -530,7 +616,7 @@ set ldi_just_executed 0
 	    #puts $opf "lbmx"
 	    set_bm $::PPS_X
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -540,7 +626,7 @@ set ldi_just_executed 0
 	    set_bu $::PPS_A
 	    set ::PPS_A [read_ram $::PPS_B]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -552,15 +638,15 @@ set ldi_just_executed 0
 	    set ::PPS_A [expr ($::PPS_B & 0xF)]
 	    set ::PPS_B [expr ($::PPS_B & 0xFF0) | $temp]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	18 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "xbmx"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "xbmx"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -571,23 +657,23 @@ set ldi_just_executed 0
 	    set ::PPS_A $::PPS_X
 	    set ::PPS_X $temp
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	06 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "xs"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "xs"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	6F {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "cys"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "cys"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -635,7 +721,7 @@ set ldi_just_executed 0
 
 	    set inc 2
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed 1
 	    puts "lbl:$lbl_just_executed"
 	}
@@ -649,7 +735,7 @@ set ldi_just_executed 0
 	    }
 	    
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -662,7 +748,7 @@ set ldi_just_executed 0
 	    }
 	    
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	    
 	}
@@ -734,7 +820,7 @@ set ldi_just_executed 0
 	    set ::PPS_P [expr ($::PPS_P & 0xfc0) | ($opcode & 0x3f)]
 	    set inc 0
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -794,7 +880,7 @@ set ldi_just_executed 0
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #print_mask_arg_noinv tm $op 3F
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	    set inc 0
 	}
@@ -821,11 +907,11 @@ set ldi_just_executed 0
 	    puts "TL"
 	    set ::PPS_P [expr (($opcode & 0xF)<<8) | $arg1]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set inc 0
 
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -838,16 +924,16 @@ set ldi_just_executed 0
 	    sb_eq_sa_sa_eq_p 2
 	    set ::PPS_P [expr (($opcode & 0xF)<<8) | $arg1]
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	    set inc 0
 	}
 	
 	15  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "skc"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "skc"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -860,7 +946,7 @@ set ldi_just_executed 0
 	    }
 	    
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -880,27 +966,27 @@ set ldi_just_executed 0
 	4D -
 	4E -
 	4F {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "skbi [expr $op & 0f]"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "skbi [expr $op & 0f]"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	
 	16 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "skf1"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "skf1"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	14  {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "skf2"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "skf2"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -910,26 +996,38 @@ set ldi_just_executed 0
 	    puts "**RETURN"
 	    p_eq_sa_sa_swap_sb  
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	    set inc 0
 	}
 	
 	07 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "rtnsk"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "rtnsk"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	1C {
-	    # IOL has a whoile lot of stuff to simulate
+	    # IOL has a whole lot of stuff to simulate
 	    # For now just list
 	    set iol_device [expr ($arg1 & 0xF0)>>4]
 	    set iol_cmd    [expr ($arg1 & 0x0F)>>0]
 	    
 	    puts "IOL: Device:$iol_device Cmd:$iol_cmd"
+
+	    # Set bank switching
+	    if { ($iol_device == 1) && ($iol_cmd == 0xE) } {
+		# Set bank switch line and copy data if it has changed
+		set new_bank [expr ($::PPS_A & 0x1) >> 0]
+
+		if { $new_bank != $::R920_BANK_NO } {
+		    # Copy data
+		}
+		set ::R920_BANK_NO $new_bank		
+		handle_bank_switching
+	    }
 	    
 	    set inc 2
 	    
@@ -937,32 +1035,32 @@ set ldi_just_executed 0
 	    #puts $opf "iol $arg1  "
 
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	27 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "dia"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "dia"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	23 {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "dib"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "dib"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
 	1D {
-	    puts -nonewline $opf "$addrstr   $op       "
-	    puts $opf "doa"
+	    #puts -nonewline $opf "$addrstr   $op       "
+	    #puts $opf "doa"
 	    set ::PPS_DOA $::PPS_A
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -973,14 +1071,14 @@ set ldi_just_executed 0
 	    # Just set the flag fo rthe next cycle
 	    set ::sag_zero 1
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 
 	default {
-	    puts "Unknown opcode $op"
+	    puts "Unknown opcode $hex_opcode"
 	    set lb_just_executed 0
-set ldi_just_executed 0
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -1004,6 +1102,11 @@ set ldi_just_executed 0
 
     if { $::FLAG_INTERACT } {
 	while {!$next } {
+	    if { $::PPS_P >= 0xc00} {
+		puts "** In bank switched area***"
+#		exit
+	    }
+	    
 	    set in [gets stdin]
 	    
 	    switch -regexp $in {
