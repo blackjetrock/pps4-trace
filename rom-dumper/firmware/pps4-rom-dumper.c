@@ -106,14 +106,14 @@ const int LED_PIN = 25;
 // This pin layout gives a rotation to the data
 // rather than do more dumps, I'll live with it and post process
 
-const int ID1_PIN = 1;
-const int ID2_PIN = 2;
-const int ID3_PIN = 3;
-const int ID4_PIN = 4;
-const int ID5_PIN = 5;
-const int ID6_PIN = 6;
-const int ID7_PIN = 7;
-const int ID8_PIN = 0;
+const int ID1_PIN = 0;
+const int ID2_PIN = 1;
+const int ID3_PIN = 2;
+const int ID4_PIN = 3;
+const int ID5_PIN = 4;
+const int ID6_PIN = 5;
+const int ID7_PIN = 6;
+const int ID8_PIN = 7;
 
 //
 // The address lines (always inputs)

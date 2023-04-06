@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 1
+Sheet 1 2
 Title ""
 Date ""
 Rev ""
@@ -318,18 +318,16 @@ Text GLabel 3500 6850 0    50   Input ~ 0
 U3_IN11
 Text GLabel 3500 6950 0    50   Input ~ 0
 U3_IN12
-Wire Wire Line
-	8300 1100 7900 1100
 Connection ~ 7900 1100
 $Comp
 L 4xxx:4023 U22
 U 1 1 601B10FE
-P 8800 4050
-F 0 "U22" H 8800 4375 50  0000 C CNN
-F 1 "4023" H 8800 4284 50  0000 C CNN
-F 2 "" H 8800 4050 50  0001 C CNN
-F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 8800 4050 50  0001 C CNN
-	1    8800 4050
+P 8750 2050
+F 0 "U22" H 8750 2375 50  0000 C CNN
+F 1 "4023" H 8750 2284 50  0000 C CNN
+F 2 "" H 8750 2050 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms-23bms.pdf" H 8750 2050 50  0001 C CNN
+	1    8750 2050
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -365,4 +363,31 @@ F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4011bms-12bms
 	4    5250 1100
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	7900 1100 8100 1100
+Wire Wire Line
+	8250 1150 8100 1150
+Wire Wire Line
+	8100 1150 8100 1100
+Connection ~ 8100 1100
+Wire Wire Line
+	8100 1100 8300 1100
+Wire Wire Line
+	8250 1150 8250 1450
+Wire Wire Line
+	8250 1450 8450 1450
+Wire Wire Line
+	8450 1450 8450 1850
+Wire Wire Line
+	8450 1850 8300 1850
+Wire Wire Line
+	8300 1850 8300 2050
+Wire Wire Line
+	8300 2050 8450 2050
+$Sheet
+S 10100 5750 875  525 
+U 642A1D82
+F0 "ROMs" 50
+F1 "roms.sch" 50
+$EndSheet
 $EndSCHEMATC

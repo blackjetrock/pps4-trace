@@ -1,12 +1,56 @@
-000     0x81       t 0x1
-001     0x82       t 0x2
-002     0x74       ldi 0xB
-003     0x1C 0x1E  iol 0x1E  
-005     0x7E       ldi 0x1
-006     0x1C 0x1D  iol 0x1D  
-008     0xCA       lb 0x5
-009     0xFD       tm 0x3D
+;================================================================================
+;
+; Rockwell 920/3 Calculator ROM
+;
+; This ROM has been put together from five ROM dumps of the ICs in a
+; Rockwell 920/3 calculator
+;
+; Three ROMs are at fixed addresses, the other two page in as the processor
+; only has 12 address lines.
+;
+; ROM Wiring
+;
+;      AS1  AS2  AS3  AS4  Responds to  Address range
+;                          (AS 1234)
+; U4   AB11 AB12 VSS  VSS  0000         0x000-0x3FF
+; U5   AB11 AB12 VSS  VSS  1000         0x400-0x7FF
+; U6   AB11 AB12 VSS  OUT2 0100         0x800-0x9FF (OUT2=0 OUT1=x) 
+; U7   AB11 AB12 OUT1 OUT2 1100         0xC00-0xFFF (OUT2=0 OUT1=0)
+; U8   AB11 AB12 OUT1 OUT2 1110         0xC00-0xFFF (OUT2=0 OUT1=1)
+;
+; From the above table, OUT1 pages in either U7 or U8 at 0xC00
+;
+;--------------------------------------------------------------------------------
+;
+;================================================================================
+;
+; Reset 
+;
+;================================================================================
+
+000     0x81       t 0x1        ; 5us delay to allow settling
+001     0x82       t 0x2        ; ... then another one just to make sure?
+
+002     0x74       ldi 0xB      ; Set up for IOL
+003     0x1C 0x1E  iol 0x1E     ; Device 1, command E : Set group A (U14, kd/disp) 0xB
+                                ; OUT1-4 : 0xB
+				; OUT4 = LE of MC14515 display digit select
+				; OUT1 and OUT2 are ROM select lines, so this sets ROM
+				; addresses
+				
+
+005     0x7E       ldi 0x1      ; Set up for IOL
+006     0x1C 0x1D  iol 0x1D       ; Device 1, command D: Set group B
+                                ; OUT5 : segment g gate
+				; OUT8 : segment g gate
+				
+
+008     0xCA       lb 0x5       ; Location CA accessed with ED as value. ED inverted
+                                ; to get 0x12. Opcode field does not seem to be inverted
+				; which agrees with the datasheet. So B contains 0x012
+009     0xFD       tm 0x3D      ; t to 1f6
 00A     0x02 0x44  tml 0x244
+
 00C     0xC4       lb 0xB
 00D     0xFD       tm 0x3D
 00E     0x00 0xE0  lbl 0xE0  
@@ -40,13 +84,19 @@
 032     0xB6       t 0x36
 033     0xC4       lb 0xB
 034     0x56 0x1A  tl 0x61A
-036     0x00 0xC2  lbl 0xC2  
+
+; reset thread
+036     0x00 0xC2  lbl 0xC2
+
+
 038     0x7C       ldi 0x3
 039     0x0D       and
 03A     0x67       adi 0x8
 03B     0x1C 0x1E  iol 0x1E  
+
 03D     0x01 0x3A  tml 0x13A
 03F     0x05       rtn
+
 040     0xE7       tm 0x27
 041     0x1C 0x3A  iol 0x3A  
 043     0xCD       lb 0x2
@@ -155,6 +205,16 @@
 0BC     0x05       rtn
 0BD     0xBE       t 0x3E
 0BE     0x5B 0x60  tl 0xB60
+
+
+;--------------------------------------------------------------------------------
+;
+; Page 3
+;
+; LB instruction Area
+;
+;--------------------------------------------------------------------------------
+
 0C0     0xC8       lb 0x7
 0C1     0xC6       lb 0x9
 0C2     0xC4       lb 0xB
@@ -216,20 +276,33 @@
 0FD     0xF6       tm 0x36
 0FE     0xF0       tm 0x30
 0FF     0xF2       tm 0x32
+
+;--------------------------------------------------------------------------------
+;
+; Subroutine Memory
+;
+; (TM instruction)
+;
+;--------------------------------------------------------------------------------
+
 100     0x00 0xCD  lbl 0xCD  
 102     0x00 0xB2  lbl 0xB2  
 104     0x2F       exd 0x0
 105     0x84       t 0x4
 106     0x05       rtn
 107     0x00 0x90  lbl 0x90  
-109     0x00 0xA0  lbl 0xA0  
+109     0x00 0xA0  lbl 0xA0
+
+; Storing memory
 10B     0x37       ld 0x0
 10C     0x13       sag
 10D     0x2F       exd 0x0
 10E     0x8B       t 0xB
 10F     0x05       rtn
+
 110     0x5F 0xFE  tl 0xFFE
 112     0x5F 0xBE  tl 0xFBE
+
 114     0x74       ldi 0xB
 115     0x75       ldi 0xA
 116     0x76       ldi 0x9
@@ -237,6 +310,7 @@
 118     0x1C 0x1E  iol 0x1E  
 11A     0x9B       t 0x1B
 11B     0x05       rtn
+
 11C     0x00 0xB0  lbl 0xB0  
 11E     0x0E       comp
 11F     0x09       adsk
@@ -270,6 +344,8 @@
 14B     0x4E       skbi 14
 14C     0x89       t 0x9
 14D     0x05       rtn
+
+; Called after loading ln(10)
 14E     0x7F       ldi 0x0
 14F     0x78       ldi 0x7
 150     0x74       ldi 0xB
@@ -412,10 +488,13 @@
 1EE     0x00 0xED  lbl 0xED  
 1F0     0x00 0xB0  lbl 0xB0  
 1F2     0x00 0x90  lbl 0x90  
-1F4     0x00 0xF0  lbl 0xF0  
+1F4     0x00 0xF0  lbl 0xF0
+
+; Reset thread
 1F6     0x7F       ldi 0x0
 1F7     0x2F       exd 0x0
 1F8     0xB6       t 0x36
+
 1F9     0x05       rtn
 1FA     0x00 0xFF  lbl 0xFF  
 1FC     0x3F       ex 0x0
@@ -479,6 +558,9 @@
 23E     0x58 0x80  tl 0x880
 240     0x50 0x80  tl 0x080
 242     0x5C 0x59  tl 0xC59
+
+; Reset thread 
+
 244     0x5C 0x6F  tl 0xC6F
 246     0xE1       tm 0x21
 247     0x02 0x10  tml 0x210
@@ -712,6 +794,11 @@
 39A     0x55 0x3B  tl 0x53B
 39C     0x5D 0x40  tl 0xD40
 39E     0x5D 0x45  tl 0xD45
+
+; Loads B with various lower 8 bits
+; BU is loaded with 8
+; various entry points give different BM and BL
+
 3A0     0x00 0xB1  lbl 0xB1  
 3A2     0x00 0xF9  lbl 0xF9  
 3A4     0x00 0xF0  lbl 0xF0  
@@ -1062,9 +1149,11 @@
 54F     0x1C 0x2E  iol 0x2E  
 551     0xE7       tm 0x27
 552     0x05       rtn
-553     0x00 0xA0  lbl 0xA0  
-555     0x73       ldi 0xC
-556     0x2F       exd 0x0
+
+
+553     0x00 0xA0  lbl 0xA0    ; Writes C04992905852032
+555     0x73       ldi 0xC     ; to A0 down to 91 or so
+556     0x2F       exd 0x0     ; This is ln(10)
 557     0x7F       ldi 0x0
 558     0x2F       exd 0x0
 559     0x7B       ldi 0x4
@@ -1095,6 +1184,7 @@
 572     0x2F       exd 0x0
 573     0xE9       tm 0x29
 574     0x05       rtn
+
 575     0x75       ldi 0xA
 576     0x3F       ex 0x0
 577     0x3F       ex 0x0
@@ -1830,12 +1920,15 @@
 8E9     0x33       ld 0x4
 8EA     0x0E       comp
 8EB     0x1D       doa
+
 8EC     0x74       ldi 0xB
 8ED     0x1C 0x1E  iol 0x1E  
 8EF     0x70       ldi 0xF
 8F0     0x1C 0x1E  iol 0x1E  
+
 8F2     0x12       lax
 8F3     0x0E       comp
+
 8F4     0x1D       doa
 8F5     0x37       ld 0x0
 8F6     0x1C 0x1D  iol 0x1D  
@@ -1843,6 +1936,13 @@
 8FA     0x5E 0x65  tl 0xE65
 8FC     0x03 0xA6  tml 0x3A6
 8FE     0x5A 0x7D  tl 0xA7D
+;--------------------------------------------------------------------------------
+;
+; Main Loop?
+;
+;--------------------------------------------------------------------------------
+
+
 900     0x21       sf2
 901     0x83       t 0x3
 902       0x25       rf2
@@ -2549,11 +2649,15 @@ C69     0x00 0xF1  lbl 0xF1
 C6B     0x75       ldi 0xA
 C6C     0x3F       ex 0x0
 C6D     0x52 0x7D  tl 0x27D
+
+; Reset thread
 C6F     0xC4       lb 0xB
 C70     0xCA       lb 0x5
 C71     0x02 0x59  tml 0x259
+
 C73     0xDA       tm 0x1A
 C74     0x03 0xBB  tml 0x3BB
+
 C76     0x00 0xFE  lbl 0xFE  
 C78     0xCA       lb 0x5
 C79     0x02 0x59  tml 0x259
@@ -3274,6 +3378,7 @@ FCB     0x5D 0xAC  tl 0xDAC
 FCD     0xD9       tm 0x19
 FCE     0xC1       lb 0xE
 FCF     0xEC       tm 0x2C
+
 FD0     0x03 0x72  tml 0x372
 FD2     0x96       t 0x16
 FD3     0x7E       ldi 0x1
@@ -3316,6 +3421,13 @@ FFC     0xB2       t 0x32
 FFD     0xCA       lb 0x5
 FFE     0xE6       tm 0x26
 FFF     0x22       sf1
+
+;================================================================================
+;
+; Paged ROM
+;
+;================================================================================
+
 1000     0xD2       tm 0x12
 1001     0x00 0xDD  lbl 0xDD  
 1003     0x02 0x53  tml 0x253
@@ -3710,6 +3822,7 @@ FFF     0x22       sf1
 11DB     0xED       tm 0x2D
 11DC     0xCF       lb 0x0
 11DD     0xED       tm 0x2D
+
 11DE     0x75       ldi 0xA
 11DF     0x1C 0x1E  iol 0x1E  
 11E1     0xC8       lb 0x7
@@ -3736,6 +3849,7 @@ FFF     0x22       sf1
 11FC     0x00 0x80  lbl 0x80  
 11FE     0xE5       tm 0x25
 11FF     0x05       rtn
+
 1200     0x7D       ldi 0x2
 1201     0x1C 0x1E  iol 0x1E  
 1203     0x26       rf1
@@ -3826,13 +3940,16 @@ FFF     0x22       sf1
 1266     0x7D       ldi 0x2
 1267     0x00 0xFF  lbl 0xFF  
 1269     0x0C       eor
+
 126A     0x1E       skz
 126B     0xAE       t 0x2E
+
 126C     0x5E 0x86  tl 0xE86
 126E     0x03 0x64  tml 0x364
 1270     0x5E 0x36  tl 0xE36
 1272     0x22       sf1
 1273     0x9F       t 0x1F
+
 1274     0x79       ldi 0x6
 1275     0x1C 0x1E  iol 0x1E  
 1277     0xFC       tm 0x3C

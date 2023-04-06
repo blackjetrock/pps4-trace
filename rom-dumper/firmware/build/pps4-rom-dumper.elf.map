@@ -166,7 +166,7 @@ Discarded input sections
                 0x0000000000000000      0x138 CMakeFiles/pps4-rom-dumper.dir/pps4-rom-dumper.c.obj
  .text.set_as   0x0000000000000000       0x70 CMakeFiles/pps4-rom-dumper.dir/pps4-rom-dumper.c.obj
  .text.read_data
-                0x0000000000000000       0x70 CMakeFiles/pps4-rom-dumper.dir/pps4-rom-dumper.c.obj
+                0x0000000000000000       0x6c CMakeFiles/pps4-rom-dumper.dir/pps4-rom-dumper.c.obj
  .text.print_hex
                 0x0000000000000000       0x48 CMakeFiles/pps4-rom-dumper.dir/pps4-rom-dumper.c.obj
  .text.prompt   0x0000000000000000       0x10 CMakeFiles/pps4-rom-dumper.dir/pps4-rom-dumper.c.obj
@@ -1244,9 +1244,9 @@ Discarded input sections
  .text          0x0000000000000000        0x0 CMakeFiles/pps4-rom-dumper.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
  .data          0x0000000000000000        0x0 CMakeFiles/pps4-rom-dumper.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
  .bss           0x0000000000000000        0x0 CMakeFiles/pps4-rom-dumper.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
- .text          0x0000000000000000        0x0 /tmp/cc9Qt1BK.o
- .data          0x0000000000000000        0x0 /tmp/cc9Qt1BK.o
- .bss           0x0000000000000000        0x0 /tmp/cc9Qt1BK.o
+ .text          0x0000000000000000        0x0 /tmp/cc7jlxRf.o
+ .data          0x0000000000000000        0x0 /tmp/cc7jlxRf.o
+ .bss           0x0000000000000000        0x0 /tmp/cc7jlxRf.o
  .data          0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .bss           0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .text          0x0000000000000000       0x10 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-atexit.o)
@@ -1489,7 +1489,7 @@ LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp
 .boot2          0x0000000010000000      0x100
                 0x0000000010000000                __boot2_start__ = .
  *(.boot2)
- .boot2         0x0000000010000000      0x100 /tmp/cc9Qt1BK.o
+ .boot2         0x0000000010000000      0x100 /tmp/cc7jlxRf.o
                 0x0000000010000100                __boot2_end__ = .
                 0x0000000000000001                ASSERT (((__boot2_end__ - __boot2_start__) == 0x100), ERROR: Pico second stage bootloader must be 256 bytes in size)
 
@@ -3005,7 +3005,7 @@ LOAD CMakeFiles/pps4-rom-dumper.dir/tree/downloaded_tools/pico/pico-sdk/lib/tiny
 LOAD CMakeFiles/pps4-rom-dumper.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj
 LOAD CMakeFiles/pps4-rom-dumper.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
 LOAD CMakeFiles/pps4-rom-dumper.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
-LOAD /tmp/cc9Qt1BK.o
+LOAD /tmp/cc7jlxRf.o
 LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libstdc++.a
 LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a
 START GROUP
@@ -3123,7 +3123,7 @@ LOAD linker stubs
  .ARM.attributes
                 0x00000000000007d4       0x2c CMakeFiles/pps4-rom-dumper.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
  .ARM.attributes
-                0x0000000000000800       0x22 /tmp/cc9Qt1BK.o
+                0x0000000000000800       0x22 /tmp/cc7jlxRf.o
  .ARM.attributes
                 0x0000000000000822       0x1e /usr/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .ARM.attributes

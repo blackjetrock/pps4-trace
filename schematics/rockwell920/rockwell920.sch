@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 1
+Sheet 1 2
 Title ""
 Date ""
 Rev ""
@@ -384,4 +384,10 @@ Wire Wire Line
 	8300 1850 8300 2050
 Wire Wire Line
 	8300 2050 8450 2050
+$Sheet
+S 10100 5750 875  525 
+U 642A1D82
+F0 "ROMs" 50
+F1 "roms.sch" 50
+$EndSheet
 $EndSCHEMATC
