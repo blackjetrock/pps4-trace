@@ -1110,6 +1110,30 @@ while { !$::DONE } {
 	    set in [gets stdin]
 	    
 	    switch -regexp $in {
+		"1" -
+		"0" {
+		    # Dump ROM bank 0
+
+		    set romvar "::ROM_BANK_$in"
+		    puts "ROM Bank $in"
+		    puts [lsort -integer [array names $romvar]]
+		    
+		    for {set x 0} {$x <= 0x3ff} {incr x 1} {
+			if { ($x % 32) == 0  } {
+			    puts -nonewline [format "%03X: " $x]
+			}
+			
+			puts -nonewline [format "%01X" [lindex [array get $romvar $x] 1]]
+			if { ($x % 64) == 63 } {
+			    puts -nonewline " "
+			}
+			if { ($x % 256) == 255 } {
+			    puts ""
+			}
+		    }
+		    puts ""
+		}
+		
 		"p\[0-9a-fA-F\]+" {
 		    # Load P register with value
 		    if { [regexp -- {[pP]([0-9a-fA-F]+)} $in all newp] } {
