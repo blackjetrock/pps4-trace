@@ -378,7 +378,7 @@ while { !$::DONE } {
 	    set ::PPS_A [expr $::PPS_A + (($opcode & 0xf) ^ 0xf)]
 	    if { $::PPS_A > 15 } {
 		set ::PPS_A [expr $::PPS_A % 16]
-		set skip_next_rom_word 1\
+		set skip_next_rom_word 1
 		} else {
 		}
 	    
@@ -932,6 +932,10 @@ while { !$::DONE } {
 	15  {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "skc"
+	    if { $::PPS_C_FF } {
+		set skip_next_rom_word 1
+	    }
+	    
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -968,6 +972,9 @@ while { !$::DONE } {
 	4F {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "skbi [expr $op & 0f]"
+	    if { ($::PPS_B & 0xF) == ($hex_opcode & 0xF) } {
+		set skip_next_rom_word 1
+	    }
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -977,6 +984,9 @@ while { !$::DONE } {
 	16 {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "skf1"
+	    if { $::PPS_F1 } {
+		set skip_next_rom_word 1
+	    }
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -985,6 +995,9 @@ while { !$::DONE } {
 	14  {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "skf2"
+	    if { $::PPS_F2 } {
+		set skip_next_rom_word 1
+	    }
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -1004,6 +1017,13 @@ while { !$::DONE } {
 	07 {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "rtnsk"
+
+	    # return
+	    p_eq_sa_sa_swap_sb
+
+	    # Then skip a ROM word
+	    p_eq_sa_sa_swap_sb  
+
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -1068,7 +1088,7 @@ while { !$::DONE } {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "sag"
 
-	    # Just set the flag fo rthe next cycle
+	    # Just set the flag for the next cycle
 	    set ::sag_zero 1
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
