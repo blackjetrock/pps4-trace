@@ -346,6 +346,15 @@ while { !$::DONE } {
 	09 {
 	    #puts -nonewline "$addrstr   $op       "
 	    #puts $opf "adsk"
+	    set ::PPS_A [expr $::PPS_A + [read_ram $::PPS_B]]
+	    
+	    if { $::PPS_A > 15 } {
+		set ::PPS_A [expr $::PPS_A % 16]
+		set ::PPS_C_FF 1
+		set skip_next_rom_word 1
+	    } else {
+		set ::PPS_C_FF 0
+	    }
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -354,6 +363,14 @@ while { !$::DONE } {
 	08  {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "adcsk"
+	    set ::PPS_A [expr $::PPS_A + [read_ram $::PPS_B]+$::PPS_C_FF]
+	    if { $::PPS_A > 15 } {
+		set ::PPS_A [expr $::PPS_A % 16]
+		set ::PPS_C_FF 1
+		set skip_next_rom_word 1
+	    } else {
+		set ::PPS_C_FF 0
+	    }
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -645,6 +662,9 @@ while { !$::DONE } {
 	18 {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "xbmx"
+	    set temp $::PPS_X
+	    set ::PPS_X [expr ($::PPS_B & 0xF0) >> 4]
+	    set ::PPS_B [expr ($::PPS_X & 0xF0F) | ($temp << 4)]
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -664,6 +684,9 @@ while { !$::DONE } {
 	06 {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "xs"
+	    set sa $::PPS_SA
+	    set ::PPS_SA $::PPS_SB
+	    set ::PPS_SB $sa
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -672,6 +695,10 @@ while { !$::DONE } {
 	6F {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "cys"
+	    set a $::PPS_A
+	    set ::PPS_A [expr $::PPS_SA & 0xF]
+	    set ::PPS_SA [expr $::PPS_SA >> 4]
+	    set ::PPS_SA [expr $::PPS_SA | ($a << 8)]
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -1062,6 +1089,7 @@ while { !$::DONE } {
 	27 {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "dia"
+	    puts "****DIA****"
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
@@ -1070,6 +1098,7 @@ while { !$::DONE } {
 	23 {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "dib"
+	    puts "****DIB****"
 	    set lb_just_executed 0
 	    set ldi_just_executed 0
 	    set lbl_just_executed  0
