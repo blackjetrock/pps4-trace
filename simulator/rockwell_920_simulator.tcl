@@ -48,6 +48,7 @@ proc pps_status {} {
 
     puts [format "P:%03X A:%01X X:%01X B:%03X SA:%03X SB:%03X CFF:%d F1:%d F2:%d" $::PPS_P $::PPS_A $::PPS_X $::PPS_B $::PPS_SA $::PPS_SB $::PPS_C_FF $::PPS_F1 $::PPS_F2]
     puts [format "DOA:%01X BANK:%01X" $::PPS_DOA $::R920_BANK_NO]
+    puts [format "Just Ex lb=%d ldi=%d lbl=%d" $::lb_just_executed $::ldi_just_executed $::lbl_just_executed]
 }
 
 ################################################################################
@@ -58,7 +59,7 @@ proc pps_status {} {
 proc handle_bank_switching {} {
     puts "--- Bank Switching ($::R920_BANK_NO) ---"
     switch $::R920_BANK_NO  {
-	0 {
+	1 {
 	    puts "--- Entered Bank 0 ---"
 	    set j 0
 	    for { set i 0xC00 } { $i <= 0xFFF } {incr i 1} {
@@ -70,7 +71,7 @@ proc handle_bank_switching {} {
 	    }
 	}
 
-	1 {
+	0 {
 	    puts "--- Entered Bank 1 ---"
 	    set j 0
 	    for { set i 0xC00 } { $i <= 0xFFF } {incr i 1} {
@@ -154,7 +155,7 @@ proc write_ram {addr data} {
     
     puts [format "Write RAM addr:%03X" $effaddr]
     
-    set $::RAM($effaddr) $data
+    set ::RAM($effaddr) $data
 }
 
 # Write and read data to and from RAM
@@ -311,6 +312,7 @@ while { !$::DONE } {
     # Each instruction has to indicate how much to increment P after its done
     set inc 1
 
+    puts "hex opcode:$hex_opcode"
     switch $hex_opcode {
 	0B  {
 	    #puts -nonewline $opf "$addrstr   $op       "
@@ -731,8 +733,10 @@ while { !$::DONE } {
 		set ::PPS_B [expr ($::ROM($::PPS_P) ^ 0xff)]
 
 		p_eq_sa_sa_swap_sb
+		puts "Setting lb je"
 		set lb_just_executed 1
 	    }
+	    set ldi_just_executed 0
 	    set lbl_just_executed  0
 	}
 	
@@ -933,8 +937,6 @@ while { !$::DONE } {
 	    #incr pc 1
 	    puts "TL"
 	    set ::PPS_P [expr (($opcode & 0xF)<<8) | $arg1]
-	    set lb_just_executed 0
-	    set ldi_just_executed 0
 	    set inc 0
 
 	    set lb_just_executed 0
@@ -999,7 +1001,7 @@ while { !$::DONE } {
 	4F {
 	    #puts -nonewline $opf "$addrstr   $op       "
 	    #puts $opf "skbi [expr $op & 0f]"
-	    if { ($::PPS_B & 0xF) == ($hex_opcode & 0xF) } {
+	    if { ($::PPS_B & 0xF) == ($opcode & 0xF) } {
 		set skip_next_rom_word 1
 	    }
 	    set lb_just_executed 0
