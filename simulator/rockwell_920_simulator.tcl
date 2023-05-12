@@ -40,7 +40,7 @@ proc reset_pps {} {
     
     # Clear RAM
     for {set i 0} {$i <= 0xFFF} {incr i 1} {
-	set ::RAM($i) 0xA
+	set ::RAM($i) 0xF
     }
 }
 
